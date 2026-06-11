@@ -329,6 +329,23 @@ We agree this needed to be made explicit and bounded. Our changes:
   because of these definitional differences and the ~200× schema-size gap. **[Manuscript:
   Sec. 4.x, Sec. 5.]**
 
+- **New analysis directly answering this critique (the reviewer's strongest point).** We
+  agree this concern is fundamental, and on reflection it reflects an assumption we carried
+  over from Bio2RDF (an OWL-style KG, where classes have instances) when we extended the
+  study to the item-based Wikidata. We now address it head-on with new analysis rather than
+  caveats. We classify every queried Wikidata entity by **position**: *class-position*
+  (object of `wdt:P31`/`wdt:P279`, incl. paths) vs. *value-position*. The result quantifies
+  exactly the reviewer's worry: of the items counted as Wikidata "used types", **~30% in
+  human queries are referenced only as values, never as classes** (vs. 7% for robotic) —
+  e.g. *actor*, *female*, *India*. We further compare query **demand** to KG **supply**
+  (instances/class) and find a **content–demand inversion**: the most heavily instantiated
+  classes (geographic/biological/structural bulk imports) are essentially unqueried, while
+  demand concentrates on a small class core. This is now a **new results subsection** and a
+  central discussion point — turning the reviewer's critique into one of the paper's main
+  contributions, and explicitly acknowledging that a single OWL-style coverage metric does
+  not transfer to an item-based KG. **[Manuscript: new Sec. "What Wikidata Coverage Actually
+  Measures" + Table/Figure; Sec. 3.2; Sec. 5; abstract/intro reframed.]**
+
 ### 2.2 When is a schema element "used"?
 
 **R2-1.2.** *You count an element as used iff it syntactically appears; but
