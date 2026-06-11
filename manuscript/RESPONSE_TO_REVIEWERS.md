@@ -476,12 +476,13 @@ connected core of drug/gene/disease types, leaving most of the schema gray/unuse
 **[Manuscript: Fig. 5 + caption + surrounding text.]**
 
 **R2-3g — Use logarithmic axis labels rather than plotting the value of the logarithm.**
-Agreed. The new rarefaction figure (Fig. R1) already uses log-scaled axes with
-natural-value tick labels (1, 10, 100, …). We will regenerate the existing
-frequency-distribution and top-element figures (currently plotting `log10(count)` on a
-linear axis) the same way, and we corrected the captions to state precisely what is
-plotted in the meantime. **[Manuscript: new Fig. R1 uses log axes; Figs. 6 and 8 to be
-re-rendered; captions corrected.]**
+Done. We regenerated the frequency-distribution figure (Fig. 6) and the top-frequent-types
+figure (Fig. 8) with **native log-scaled axes and natural-value tick labels** (1, 10, 100,
+…) instead of plotting `log10(count)` on a linear axis; Fig. 6 now uses log--log axes
+(normalized monthly usage vs. schema-element rank) and Fig. 8 a logarithmic count axis. The
+new rarefaction figure (Fig. R1) already followed this convention. Captions and axis
+descriptions were updated accordingly. **[Manuscript: Figs. 6 and 8 regenerated; captions
++ surrounding text corrected.]**
 
 ---
 
