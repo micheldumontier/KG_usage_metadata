@@ -1,0 +1,424 @@
+\begin{thebibliography}{29}
+% BibTex style file: ios1.bst, 2019-01-11
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1} \fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1} \fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{\textit{#1}}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1} \fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1} \fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1} \fi
+\ifx \bissue  \undefined \def \bissue#1{#1} \fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1} \fi
+\ifx \blpage  \undefined \def \blpage #1{#1} \fi
+\ifx \burl  \undefined \def \burl#1{#1} \fi
+\ifx \doiurl  \undefined \def \doiurl#1{#1} \fi
+\ifx \betal  \undefined \def \betal{et al.} \fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1} \fi
+\ifx \beditor  \undefined \def \beditor#1{#1} \fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1} \fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{\textit{#1}} \fi
+\ifx \bedition  \undefined \def \bedition#1{#1} \fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1} \fi
+\ifx \blocation  \undefined \def \blocation#1{#1} \fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1} \fi
+\ifx \bsnm \undefined \def \bsnm#1{#1} \fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1} \fi
+\ifx \bparticle \undefined \def \bparticle#1{#1} \fi
+\ifx \barticle \undefined \def \barticle#1{#1} \fi
+\ifx \botherref \undefined \def \botherref #1{#1} \fi
+\ifx \url \undefined \def \url#1{#1} \fi
+\ifx \bchapter \undefined \def \bchapter#1{#1} \fi
+\ifx \bbook \undefined \def \bbook#1{#1} \fi
+\ifx \bcomment \undefined \def \bcomment#1{#1} \fi
+\ifx \oauthor \undefined \def \oauthor#1{#1} \fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1} \fi
+\ifx \texttildelow  \undefined \def \texttildelow{\symbol{126}} \fi
+\def \endbibitem {}
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1} \fi
+
+\bibitem{abu2021domain}
+\begin{barticle}
+\bauthor{\binits{B.}~\bsnm{Abu-Salih}},
+\batitle{Domain-specific knowledge graphs: A survey},
+\bjtitle{Journal of Network and Computer Applications}
+\bvolume{185}
+(\byear{2021}),
+\bfpage{103076}.
+\end{barticle}
+\endbibitem
+
+\bibitem{ali2022survey}
+\begin{botherref}
+\oauthor{\binits{W.}~\bsnm{Ali}},
+\oauthor{\binits{M.}~\bsnm{Saleem}},
+\oauthor{\binits{B.}~\bsnm{Yao}},
+\oauthor{\binits{A.}~\bsnm{Hogan}} and
+\oauthor{\binits{A.-C.N.}~\bsnm{Ngomo}},
+A survey of RDF stores \& SPARQL engines for querying knowledge graphs,
+\textit{The VLDB Journal}
+(2022),
+1--26.
+\end{botherref}
+\endbibitem
+
+\bibitem{asprino2023your}
+\begin{bchapter}
+\bauthor{\binits{L.}~\bsnm{Asprino}} and
+\bauthor{\binits{M.}~\bsnm{Ceriani}},
+\bctitle{How is Your Knowledge Graph Used: Content-Centric Analysis of SPARQL
+  Query Logs},
+in: \bbtitle{International Semantic Web Conference},
+\binstitute{Springer},
+\byear{2023},
+pp.~\bfpage{197}--\blpage{215}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{belleau2008bio2rdf}
+\begin{barticle}
+\bauthor{\binits{F.}~\bsnm{Belleau}},
+\bauthor{\binits{M.-A.}~\bsnm{Nolin}},
+\bauthor{\binits{N.}~\bsnm{Tourigny}},
+\bauthor{\binits{P.}~\bsnm{Rigault}} and
+\bauthor{\binits{J.}~\bsnm{Morissette}},
+\batitle{Bio2RDF: towards a mashup to build bioinformatics knowledge systems},
+\bjtitle{Journal of biomedical informatics}
+\bvolume{41}(\bissue{5})
+(\byear{2008}),
+\bfpage{706}--\blpage{716}.
+\end{barticle}
+\endbibitem
+
+\bibitem{bielefeldt2018practical}
+\begin{bchapter}
+\bauthor{\binits{A.}~\bsnm{Bielefeldt}},
+\bauthor{\binits{J.}~\bsnm{Gonsior}} and
+\bauthor{\binits{M.}~\bsnm{Kr{\"o}tzsch}},
+\bctitle{Practical Linked Data Access via SPARQL: The Case of Wikidata.},
+in: \bbtitle{LDOW@ WWW},
+\byear{2018}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{bonifati2017analytical}
+\begin{barticle}
+\bauthor{\binits{A.}~\bsnm{Bonifati}},
+\bauthor{\binits{W.}~\bsnm{Martens}} and
+\bauthor{\binits{T.}~\bsnm{Timm}},
+\batitle{An Analytical Study of Large SPARQL Query Logs},
+\bjtitle{Proceedings of the VLDB Endowment}
+\bvolume{11}(\bissue{2})
+(\byear{2017}),
+\bfpage{149}--\blpage{161}.
+\url{https://www.vldb.org/pvldb/vol11/p149-bonifati.pdf}.
+\end{barticle}
+\endbibitem
+
+\bibitem{bonifati2019navigating}
+\begin{bchapter}
+\bauthor{\binits{A.}~\bsnm{Bonifati}},
+\bauthor{\binits{W.}~\bsnm{Martens}} and
+\bauthor{\binits{T.}~\bsnm{Timm}},
+\bctitle{Navigating the Maze of Wikidata Query Logs},
+in: \bbtitle{The World Wide Web Conference (WWW)},
+\binstitute{ACM},
+\byear{2019},
+pp.~\bfpage{127}--\blpage{138}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{bonifati2020analytical}
+\begin{barticle}
+\bauthor{\binits{A.}~\bsnm{Bonifati}},
+\bauthor{\binits{W.}~\bsnm{Martens}} and
+\bauthor{\binits{T.}~\bsnm{Timm}},
+\batitle{An analytical study of large SPARQL query logs},
+\bjtitle{The VLDB Journal}
+\bvolume{29}(\bissue{2})
+(\byear{2020}),
+\bfpage{655}--\blpage{679}.
+\end{barticle}
+\endbibitem
+
+\bibitem{brasileiro2016applying}
+\begin{bchapter}
+\bauthor{\binits{F.}~\bsnm{Brasileiro}},
+\bauthor{\binits{J.P.A.}~\bsnm{Almeida}},
+\bauthor{\binits{V.A.}~\bsnm{de~Carvalho}} and
+\bauthor{\binits{G.}~\bsnm{Guizzardi}},
+\bctitle{Applying a Multi-Level Modeling Theory to Assess Taxonomic Hierarchies
+  in Wikidata},
+in: \bbtitle{Proceedings of the 25th International Conference Companion on
+  World Wide Web (WWW Companion)},
+\binstitute{ACM},
+\byear{2016},
+pp.~\bfpage{975}--\blpage{980}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{buil2015preliminary}
+\begin{bchapter}
+\bauthor{\binits{C.}~\bsnm{Buil-Aranda}},
+\bauthor{\binits{M.}~\bsnm{Ugarte}},
+\bauthor{\binits{M.}~\bsnm{Arenas}} and
+\bauthor{\binits{M.}~\bsnm{Dumontier}},
+\bctitle{A preliminary investigation into SPARQL query complexity and
+  federation in Bio2RDF},
+in: \bbtitle{Alberto mendelzon international workshop on foundations of data
+  management},
+\byear{2015},
+p.~\bfpage{196}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{chao1984nonparametric}
+\begin{barticle}
+\bauthor{\binits{A.}~\bsnm{Chao}},
+\batitle{Nonparametric Estimation of the Number of Classes in a Population},
+\bjtitle{Scandinavian Journal of Statistics}
+\bvolume{11}(\bissue{4})
+(\byear{1984}),
+\bfpage{265}--\blpage{270}.
+\end{barticle}
+\endbibitem
+
+\bibitem{hammerer2025compendium}
+\begin{bchapter}
+\bauthor{\binits{J.}~\bsnm{Hammerer}} and
+\bauthor{\binits{W.}~\bsnm{Martens}},
+\bctitle{A Compendium of Regular Expression Shapes in SPARQL Queries},
+in: \bbtitle{Proceedings of the 8th Joint Workshop on Graph Data Management
+  Experiences \& Systems (GRADES) and Network Data Analytics (NDA)},
+\binstitute{ACM},
+\byear{2025},
+pp.~\bfpage{4:1}--\blpage{4:10}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{Handschuh2010LearningFL}
+\begin{bchapter}
+\bauthor{\binits{S.}~\bsnm{Handschuh}},
+\bauthor{\binits{M.}~\bsnm{Hausenblas}},
+\bauthor{\binits{R.}~\bsnm{Cyganiak}} and
+\bauthor{\binits{K.}~\bsnm{M{\"o}ller}},
+\bctitle{Learning from Linked Open Data Usage: Patterns \& Metrics},
+\byear{2010}.
+\url{https://api.semanticscholar.org/CorpusID:15563610}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{hogan2021knowledge}
+\begin{barticle}
+\bauthor{\binits{A.}~\bsnm{Hogan}},
+\bauthor{\binits{E.}~\bsnm{Blomqvist}},
+\bauthor{\binits{M.}~\bsnm{Cochez}},
+\bauthor{\binits{C.}~\bsnm{d’Amato}},
+\bauthor{\binits{G.D.}~\bsnm{Melo}},
+\bauthor{\binits{C.}~\bsnm{Gutierrez}},
+\bauthor{\binits{S.}~\bsnm{Kirrane}},
+\bauthor{\binits{J.E.L.}~\bsnm{Gayo}},
+\bauthor{\binits{R.}~\bsnm{Navigli}},
+\bauthor{\binits{S.}~\bsnm{Neumaier}} \betal,
+\batitle{Knowledge graphs},
+\bjtitle{ACM Computing Surveys (Csur)}
+\bvolume{54}(\bissue{4})
+(\byear{2021}),
+\bfpage{1}--\blpage{37}.
+\end{barticle}
+\endbibitem
+
+\bibitem{hurlbert1971nonconcept}
+\begin{barticle}
+\bauthor{\binits{S.H.}~\bsnm{Hurlbert}},
+\batitle{The Nonconcept of Species Diversity: A Critique and Alternative
+  Parameters},
+\bjtitle{Ecology}
+\bvolume{52}(\bissue{4})
+(\byear{1971}),
+\bfpage{577}--\blpage{586}.
+\end{barticle}
+\endbibitem
+
+\bibitem{kaminski2018complexity}
+\begin{barticle}
+\bauthor{\binits{M.}~\bsnm{Kaminski}} and
+\bauthor{\binits{E.V.}~\bsnm{Kostylev}},
+\batitle{Complexity and Expressive Power of Weakly Well-Designed SPARQL},
+\bjtitle{Theory of computing systems}
+\bvolume{62}
+(\byear{2018}),
+\bfpage{772}--\blpage{809}.
+\url{https://doi.org/10.1007/s00224-017-9802-9}.
+\end{barticle}
+\endbibitem
+
+\bibitem{lorey2013detecting}
+\begin{bchapter}
+\bauthor{\binits{J.}~\bsnm{Lorey}} and
+\bauthor{\binits{F.}~\bsnm{Naumann}},
+\bctitle{Detecting SPARQL query templates for data prefetching},
+in: \bbtitle{The Semantic Web: Semantics and Big Data: 10th International
+  Conference, ESWC 2013, Montpellier, France, May 26-30, 2013. Proceedings 10},
+\binstitute{Springer},
+\byear{2013},
+pp.~\bfpage{124}--\blpage{139}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{malyshev2018getting}
+\begin{bchapter}
+\bauthor{\binits{S.}~\bsnm{Malyshev}},
+\bauthor{\binits{M.}~\bsnm{Kr{\"o}tzsch}},
+\bauthor{\binits{L.}~\bsnm{Gonz{\'a}lez}},
+\bauthor{\binits{J.}~\bsnm{Gonsior}} and
+\bauthor{\binits{A.}~\bsnm{Bielefeldt}},
+\bctitle{Getting the most out of Wikidata: Semantic technology usage in
+  Wikipedia’s knowledge graph},
+in: \bbtitle{The Semantic Web--ISWC 2018: 17th International Semantic Web
+  Conference, Monterey, CA, USA, October 8--12, 2018, Proceedings, Part II 17},
+\binstitute{Springer},
+\byear{2018},
+pp.~\bfpage{376}--\blpage{394}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{mohammadi2022semi}
+\begin{bchapter}
+\bauthor{\binits{M.}~\bsnm{Mohammadi}},
+\bctitle{(Semi-) Automatic Construction of Knowledge Graph Metadata},
+in: \bbtitle{European Semantic Web Conference},
+\binstitute{Springer},
+\byear{2022},
+pp.~\bfpage{171}--\blpage{178}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{mohammadi2024analyzing}
+\begin{bchapter}
+\bauthor{\binits{M.}~\bsnm{Mohammadi}} and
+\bauthor{\binits{M.}~\bsnm{Dumontier}},
+\bctitle{Analyzing SPARQL Query Logs: A Study on Schema Coverage and Query
+  Content},
+in: \bbtitle{Semantic Web Applications and Tools for Health Care and Life
+  Sciences (SWAT4HCLS)},
+\byear{2024}.
+\url{https://ceur-ws.org/Vol-3890/paper-14.pdf}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{patelschneider2024class}
+\begin{botherref}
+\oauthor{\binits{P.F.}~\bsnm{Patel-Schneider}} and
+\oauthor{\binits{E.A.}~\bsnm{Dogan}},
+Class Order Disorder in Wikidata and First Fixes,
+\textit{CoRR}
+\textbf{abs/2411.15550}
+(2024).
+\url{https://arxiv.org/abs/2411.15550}.
+\end{botherref}
+\endbibitem
+
+\bibitem{peng2023knowledge}
+\begin{barticle}
+\bauthor{\binits{C.}~\bsnm{Peng}},
+\bauthor{\binits{F.}~\bsnm{Xia}},
+\bauthor{\binits{M.}~\bsnm{Naseriparsa}} and
+\bauthor{\binits{F.}~\bsnm{Osborne}},
+\batitle{Knowledge graphs: Opportunities and challenges},
+\bjtitle{Artificial Intelligence Review}
+\bvolume{56}(\bissue{11})
+(\byear{2023}),
+\bfpage{13071}--\blpage{13102}.
+\end{barticle}
+\endbibitem
+
+\bibitem{picalausa2011real}
+\begin{bchapter}
+\bauthor{\binits{F.}~\bsnm{Picalausa}} and
+\bauthor{\binits{S.}~\bsnm{Vansummeren}},
+\bctitle{What are real SPARQL queries like?},
+in: \bbtitle{Proceedings of the International Workshop on Semantic Web
+  Information Management},
+\byear{2011},
+pp.~\bfpage{1}--\blpage{6}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{piscopo2018who}
+\begin{barticle}
+\bauthor{\binits{A.}~\bsnm{Piscopo}} and
+\bauthor{\binits{E.}~\bsnm{Simperl}},
+\batitle{Who Models the World?: Collaborative Ontology Creation and User Roles
+  in Wikidata},
+\bjtitle{Proceedings of the ACM on Human-Computer Interaction}
+\bvolume{2}(\bissue{CSCW})
+(\byear{2018}),
+\bfpage{141:1}--\blpage{141:18}.
+\end{barticle}
+\endbibitem
+
+\bibitem{raghuveer2012characterizing}
+\begin{bchapter}
+\bauthor{\binits{A.}~\bsnm{Raghuveer}},
+\bctitle{Characterizing machine agent behavior through SPARQL query mining},
+in: \bbtitle{Proceedings of the International Workshop on Usage Analysis and
+  the Web of Data, Lyon, France},
+\binstitute{Citeseer},
+\byear{2012}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{rietveld2014man}
+\begin{bchapter}
+\bauthor{\binits{L.}~\bsnm{Rietveld}},
+\bauthor{\binits{R.}~\bsnm{Hoekstra}} \betal,
+\bctitle{Man vs. machine: Differences in SPARQL queries},
+in: \bbtitle{Proceedings of the 4th USEWOD Workshop on Usage Analysis and the
+  Web of of Data, ESWC},
+\byear{2014}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{saleem2015lsq}
+\begin{bchapter}
+\bauthor{\binits{M.}~\bsnm{Saleem}},
+\bauthor{\binits{M.I.}~\bsnm{Ali}},
+\bauthor{\binits{A.}~\bsnm{Hogan}},
+\bauthor{\binits{Q.}~\bsnm{Mehmood}} and
+\bauthor{\binits{A.-C.N.}~\bsnm{Ngomo}},
+\bctitle{LSQ: the linked SPARQL queries dataset},
+in: \bbtitle{The Semantic Web-ISWC 2015: 14th International Semantic Web
+  Conference, Bethlehem, PA, USA, October 11-15, 2015, Proceedings, Part II
+  14},
+\binstitute{Springer},
+\byear{2015},
+pp.~\bfpage{261}--\blpage{269}.
+\end{bchapter}
+\endbibitem
+
+\bibitem{spearman1961proof}
+\begin{botherref}
+\oauthor{\binits{C.}~\bsnm{Spearman}},
+The proof and measurement of association between two things.
+(1961).
+\end{botherref}
+\endbibitem
+
+\bibitem{stadler2024lsq}
+\begin{botherref}
+\oauthor{\binits{C.}~\bsnm{Stadler}},
+\oauthor{\binits{M.}~\bsnm{Saleem}},
+\oauthor{\binits{Q.}~\bsnm{Mehmood}},
+\oauthor{\binits{C.}~\bsnm{Buil-Aranda}},
+\oauthor{\binits{M.}~\bsnm{Dumontier}},
+\oauthor{\binits{A.}~\bsnm{Hogan}} and
+\oauthor{\binits{A.-C.}~\bsnm{Ngonga~Ngomo}},
+LSQ 2.0: A linked dataset of SPARQL query logs,
+\textit{Semantic Web}
+(2024),
+1--23.
+\end{botherref}
+\endbibitem
+
+\end{thebibliography}

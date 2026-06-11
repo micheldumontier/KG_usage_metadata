@@ -1,0 +1,11 @@
+
+# large original data files (downloaded, not versioned)
+data/
+out/
+.DS_Store
+*.aux
+*.log
+*.out
+*.fls
+*.blg
+*.synctex.gz
