@@ -1,0 +1,151 @@
+Anonymous submitted on 16/Jul/2025
+Suggestion:
+Major Revision
+Review Comment:
+
+Summary
+-------
+This article studies which parts of the Wikidata and Bio2RDF knowledge graphs (KGs) are queried by queries in their respective query logs. The main questions the research tries to pursue are how the usage of a KG can be quantified and whether frequency distribution and ranking analyses reveal usage patterns over different (robotic vs organic) query types. I agree that both Wikidata and Bio2RDF are highly interesting for such a study, since Wikidata covers a very broad range of information, whereas Bio2RDF is more specialized. Furthermore, the authors seem to have many queries of each of these data sets available.
+
+Assessment
+----------
+I think that this is a useful study that deserves publishing, but still needs some work. In particular, the paper needs to clarify or define several of the objects it is studying (such as schema elements or schema type patterns), since it is difficult to interpret the paper's results otherwise. Furthermore, certain analytical tests need to be better motivated (see detailed comments). I believe that interleaving the description of the tests that are going to be run with the test results will clearer motivate why certain analytical tests later are going to be done. As a bonus, such a presentation may render the discussion of the analytical results less dry.
+
+The provided artifacts are well-organized, are hosted on Github, and appear to be complete.
+
+Overall comments and questions to the authors
+---------------------------------------------
+- A premise of the paper is that other work often overlooked the actual entities that are queried in KGs. I agree that research did not yet emphasize this aspect much, so the present study is well-justified, but would like to point out that papers [A,B], which the submission does not mention, treated this aspect. The study [A] is fairly broad, covers it in Section 4, and provides an interactive diagram at https://podmr.github.io/darql/property-sunburst/. The study [B], which is more recent, lists the Wikidata IRIs that are used for transitive navigation.
+
+- I found the phrasing "Separated organic and robotic queries to explore [...]" on p2 misleading, since it makes the reader believe that this separation is a contribution of the present paper. The separation for Wikidata was done by the authors of [C,D] and, as far as I can see, the present paper simply applies the method of [D] to Bio2RDF. The authors could consider removing this item from the list of main contributions, but adding below the items that all studies are done separately on robotic and organic query logs, where the Wikidata logs already have this division and they have applied the same algorithm to Bio2RDF to also obtain it for these query logs.
+
+- Per data set, how many queries did this study use? I find such information very relevant to give me an idea of coverage. This discussion would fit in early Section 3, under "SPARQL Query Logs".
+
+- This may be personal taste, but I would consider integrating Sections 3.5-3.6 into Section 4. The reasons are that (1) while reading Sections 3.5-3.6 I was often wondering *why* a certain test is useful and (2) Section 4 (especially p14) is very dry. So I wonder if seeing the results of some of the studies help me understand why certain other metrics make sense to investigate. Also, I feel that this interleaving will lead to a paper that is better at telling a story, which is what I prefer.
+
+Detailed comments and questions to the authors
+----------------------------------------------
+- p2:5 I don't understand what you mean by "type, predicate, and individual." I understand "predicate", as in (s,p,o) triples, but I don't understand what you mean by "type" or "individual".
+
+- p2:26 "[...] schema coverage computation by refining the query log triple pattern extraction [...]" I don't understand what you mean by this. Triple pattern extraction from queries seems trivial to me. Why is it so important to merit its presence in your list of main contributions. Where is this refined triple pattern extraction described?
+
+- p3:19 "...over 200 million SPARQL queries..." By now, this is closer to 500 million SPARQL queries.
+
+- p3:38 by ensuring that
+
+- p4:10 Since LSQ has query logs from many more data sets, I would explain here why Bio2RDF was chosen. I suspect that the reasons are that (1) it gives you a data set with a relatively specific topic, which contrasts Wikidata and (2) you have many Bio2RDF queries available.
+
+- p4:15 Can you provide a justification why you only considered intervals 1 and 7 for the Dresden query logs?
+
+- p4:Listing1 The information provided in this figure is not very crucial, is it?
+
+- p5:1-10 Could you please define "schema element" and what you are actually extracting here?
+
+- p5:1-10 Could you provide examples of extracted info on Wikidata for Query 1 and Query 2? (Incidentally, why write Query_1 and Query_2 instead of Query 1 and Query 2, as you do in the caption of Listing 2? I would keep the readers' mental model and the naming scheme in the implementation separated.)
+
+- p5:33 Could you specify whether you do whitespace normalization? It's perhaps not crucial, but gives readers a better idea what you consider to be duplicates. "We extract unique queries based on their text [...]" is vague.
+
+- p6:Fig 2 The variable standardization you describe here is the same as in the Wikidata logs. This should be mentioned. Also, I'm not sure if this requires such an elaborate figure.
+
+- p6:Section 3.5 To understand what's happening here, I need an explanation of what is a "schema element". Please be precise.
+
+- p7:1 Please explain what the Shapiro-Wild test measures. I hope that it is possible to provide an explanation for those readers who don't have a background in statistics and who don't know how to interpret "the normality of the differences in the frequencies of common schema elements". For instance: what are important properties of this test that led you to choosing it?
+
+- p7:9 I don't understand your explanation of x_i. The provided explanation
+x_i = diff = Normalized_schema... - Normalized_schema...
+seems to use variables that you use internally in your code, but I don't know the semantics of. Also, what is "diff" supposed to tell me, apart from the fact that you are using a minus operator, which I can infer immediately from the expression.
+Can you make the description of the a_i (they are "constants based on the sample size") more concrete?
+
+- p7:12 [...] differences are not normally distributed. This confuses me. Doesn't a normal distribution assume an ordering on the domain? (Height of humans has an ordering on "height", and we measure the number of people that have this height.) What's the ordering here?
+Since I don't understand the normal distribution point, I would also appreciate more explanation as to why we need the Wilcoxon signed-rank test here.
+
+- p7:25 What is the "rank of a schema element" ?
+
+- p7:25 [...] across these two time points [...] It is unclear to me which time points are intended. We are talking about two intervals here, so we have four time points.
+
+- p7:26 Please don't start a sentence with a mathematical symbol
+
+- p7:27 n is the number -> $n$ is the number
+
+- p7:27 Any other intuition you can provide me about Spearman's rank correlation (and why we do it) is welcome.
+
+- p7:33-45 Your envisioned way of dealing with frequent schema elements bears some resemblance to what's done in [A], whereas [A] did not consider time intervals.
+
+- p8:9 log_2013 and log_2019 are mentioned but it's not clear at all to me what these refer to. I would like to ask the authors to give the (slices of) query logs meaningful names for readers (not necessarily the internal names in the code).
+
+- p8:8 What are "schema type patterns"? Please define.
+
+- p8:26-39 I found the description of the data sets to be confusing. For one thing, "It contains a total of [...] queries, of which 3,212 are server logs, and do not contain SPARQL queries." is a very confusing sentence, which seems to contradict itself. Further, "Wikidata organic log2017" on p8:35 (again, not nicely formatted) has different characteristics than the log with the same name on p8:36.
+
+- p8:26-39 This paper focuses on research of time intervals in query logs. It is quite unclear to me why the partitioning in time intervals is done the way it is. To me as a reader, the partitioning seems fairly random. Why not partition the query logs into time intervals that have the same length?
+
+- p9:Table 1. Please improve the naming convention. Judging on the names, "Wikidata All organic log2017" seems to subsume "Wikidata organic log2017". Does it? I find the overview in this table to be rather unclear.
+
+- p10:Table3: Same remark as for Table 1
+
+- p10-18: Throughout this entire section, I would have appreciated more discussion about what the results of these tests teach us in less technical terms.
+
+References
+
+[A] Angela Bonifati, Wim Martens, Thomas Timm: Navigating the Maze of Wikidata Query Logs. WWW 2019: 127-138
+[B] Janik Hammerer, Wim Martens: A Compendium of Regular Expression Shapes in SPARQL Queries. GRADES/NDA 2025: 4:1-4:10
+[C] Stanislav Malyshev, Markus Krötzsch, Larry González, Julius Gonsior, Adrian Bielefeldt: Getting the Most Out of Wikidata: Semantic Technology Usage in Wikipedia's Knowledge Graph. ISWC (2) 2018: 376-394
+[D] Adrian Bielefeldt, Julius Gonsior, Markus Krötzsch: Practical Linked Data Access via SPARQL: The Case of Wikidata. LDOW@WWW 2018
+Review #2
+Anonymous submitted on 19/Oct/2025
+Suggestion:
+Reject
+Review Comment:
+
+The paper studies SPARQL query logs for several RDF databases over Wikidata and (subgraphs of) Bio2RDF, with the goal of obtaining insights on the usage of schema-related vocabulary elements (classes and properties). The main approach for doing so is to count how often elements appear in queries of various sets, and to compare these counts across datasets (normalised for time). Concrete vocabulary elements are only mentioned in the context of a top-10 list that is computed for each dataset, while all other analyses focus on the general distribution of values. Some further statistical measures are considered, e.g., to see if ranks of elements have changed.
+
+In spite of the convincing motivation and good fit for the journal, the paper suffers from three main problems:
+
+1. An overly simplistic view on the key terms "schema elements" and "being used in a query"
+2. A lack of relevant or interesting findings
+3. Lack of clarity and motivation for main methods that were used
+
+Details follow. Unfortunately, my overall assessment is therefore quite critical, and I do not see a clear path to make even major changes to the paper for it to become acceptable. Rather, some completely new ideas for how to approach this might be needed. It is hoped that the below details are somewhat inspiring towards this.
+
+1.1 What is a "schema element"?
+
+The authors are interested in "properties" and "classes", but these concepts are treated in very different ways in Wikidata and Bio2RDF. The latter follows a more classical ontology design with OWL-style schema elements that have special IRIs. A good way for getting these elements would be to collect all IRIs with that schema from the graphs, or maybe just to use existing documentation. Wikidata is different. Properties there are declared explicitly (and could again be taken from the KG with very little effort), whereas "classes" only exist informally as special individuals.
+
+The question of what constitutes a "class" in Wikidata has been discussed in many other works (some examples I found: Freddy Brasileiro, João Paulo A. Almeida, Victorio Albani de Carvalho, and Giancarlo Guizzardi. 2016. Applying a Multi-Level Modeling Theory to Assess Taxonomic Hierarchies in Wikidata. In WWW (Companion Volume). ACM, 975–980.; Alessandro Piscopo, Elena Simperl: Who Models the World?: Collaborative Ontology Creation and User Roles in Wikidata. Proc. ACM Hum. Comput. Interact. 2(CSCW): 141:1-141:18 (2018); recently Peter F. Patel-Schneider, Ege Atacan Dogan: Class Order Disorder in Wikidata and First Fixes. CoRR abs/2411.15550 (2024)). Two challenging aspects stand out: (a) the property "subclass of" has a number of subproperties on Wikidata; (b) knowledge for some domains in Wikidata is made up entirely of "classes" with hardly any instances. Due to (a), subclass of is not enough to find all "class-like elements", but due to (b), it is not convincing to treat all classes in Wikidata as "schema" in the usual sense. The situation in these domains is rather similar to that in medical ontologies that in some cases also consist of nothing but classes and properties.
+
+Clearly, classes that have instances are much more important as "proper" schema elements in queries, whereas individuals that were merely modelled as classes but have no instances at all will only appear in queries when seeking information about the class-element itself. It does not seem meaningful to compute "schema coverage" based on the sum of vocabulary elements with such very different functions.
+
+In addition, any data-based method for extracting classes from Wikidata must take into account that Wikidata may contain errors. If an element is used as a class only once, then it could well be a momentary glitch in the data. This might be hard to distinguish from valid classes in small domains (e.g., there are not many concrete instances of specific animal species in Wikidata), but one should at least quantify the risk that this poses to the validity of the overall statistics.
+
+1.2 When is a schema element "used"?
+
+The authors count a vocabulary element as used if it syntactically appears in a query. Given that properties and classes are organised in hierarchies, this seems too simplistic to get meaningful results. The second example query given on the Wikidata Query Service contains this line:
+
+?horse wdt:P31/wdt:P279* wd:Q726 . # Instance of and subclasses of Q726 (horse)
+
+According to the authors, this query only uses Q726 (horse) as a schema element. However, there are many subclasses of horse, e.g., wd:Q2442470 (racehorse), and if they would be removed from the graph, there would be fewer results for this query too. If the motivation is to find out which schema information is important to answer user queries, then such classes should be taken into account when determining what is "used". Similar effects exist with property hierarchies (and with the subproperties of subclass of).
+
+2. Lack of concrete insights
+
+In the light of the practical motivation, the insights (for practitioners or future analysers of queries) are very limited. Many "counts" follow standard long-tail distributions, as is typical for counts in emerging/user data. Moreover, the usage has changed more between several-years-apart Bio2RDF logs than between 1-year-apart Wikidata logs. Some vocabulary elements have changed ranks significantly over time, others not so much.
+
+Moreover, one of the main findings is that organic queries use fewer vocabulary elements than robotic ones, which the authors take as evidence for "distinct interaction patterns between machine-driven and user-driven queries". However, the most notable difference between organic and robotic logs is their size. Therefore, the most obvious explanation for the different coverage rates is: "more queries tend to cover more vocabulary". Intuitively, one would expect other differences and indeed different patterns behind how queries are created, but the analysis done in the paper does not give us any indication either way.
+
+Even these modest findings all have to be interpreted under the limitations imposed by the methodological issues mentioned for 1. above. In particular, the observation that queries cover less of the schema for Wikidata than for Bio2RDF seems to be a direct consequence of 1.1 (the overcounting of schema elements on Wikidata).
+
+What is altogether missing is a more thorough investigation of why certain patterns are observed (on the content level) and how the observations relate to relevant domains (maybe leading to natural "groups" of schema elements). For example, Fig. 7 lists "female" as a major "schema element" in organic Wikidata queries, which might be an indication that such queries were dominated by example and demonstration queries (otherwise it seems hard to explain why the symmetric concept "male" is so much less used). Several example queries in Wikidata female, but none mentions male. A study that aims to understand what we can learn from usage patterns does need to go down to this level to clarify confounding factors.
+
+(Note: "female" is another example of an element that the authors consider as a class here, but that is almost certainly not used as such in queries.)
+
+3. Lack of clarity/motivation for methods used
+
+Leaving aside the general design of the study, there are also many details where it is not very clear how/why things have been done as they were. Examples:
+
+- The key measure "normalized count" (Eq 2) is based on the "log collection period", but it is unclear what this period is. Note that the "normalized count" is a dimensionless quantity in the study, so it does make a difference if the period is measures in seconds or days.
+- Log collection periods later are measured in "months" with two-digit precision. It is not clear how long such a "month" is in the scope of this paper (astronomical average? calendar average? legal month length?).
+- It remains unclear why the normalisation is based on time and not on number of queries. It does not seem that any of the motivating questions are affected by whether users send their queries in a shorter or longer period of time.
+- The study seems to use normalised unique queries for all counting purposes (Table 2), but this is not very clear. It is not discussed why unique queries are more relevant than non-unique ones for the motivating questions (if a user checks the same query every day to see if changes have happened, or if many users ask for the same information every month, should we not somehow weigh this in for assessing usage counts of relevant vocabulary?).
+- Table 4 has a column labeled "datasets", but I was not sure what these datasets contain. It seemed to me that each line of the table is based on two datasets (queries, KG) rather than on one.
+- It is unclear what one can learn from Fig. 5. Also note that the description before says that yellow is "least used" whereas the yellow vertices are the biggest.
+
+There are more cases where clarity could be improved, also in terms of readability (e.g., it is standard to label diagrams with logarithmic scales rather than making up a linear scale that shows the value of the logarithm). But this should not be the main concern now.

@@ -7,32 +7,50 @@ substantially improved the paper. Below we respond to every point. Reviewer text
 quoted in *italics*; our response follows, and **[Manuscript]** indicates the
 corresponding change in the revised manuscript.
 
-We summarize the four most important changes first, because they address the comments
-that several individual points share:
+We summarize the most important changes first, because they address the comments that
+several individual points share. The first four reframe and substantiate the study; they
+are backed by **five new analyses**, each prompted by a specific reviewer concern.
 
-1. **Precise definitions.** We now define *schema element*, *type/class*,
-   *predicate*, *individual*, *schema (type) pattern*, and *used / coverage* explicitly
-   in Section 3, with worked examples on the two Wikidata Query Service example queries
-   (Sec. 3.2, 3.4). We also scope our notion of usage as **explicit schema reference**
-   and discuss what this does and does not capture (new Sec. 3.4, 5).
+1. **A reframing around what coverage means on an item-based KG, with new analysis.**
+   Reviewer 2's central concern — that summing heterogeneous Wikidata "classes" into one
+   coverage number is not meaningful — was correct, and on reflection reflected a Bio2RDF
+   (OWL-style) assumption we carried into Wikidata. We now classify every queried entity
+   by **position** (class-position vs. value-position) and find that **~30% of the items
+   counted as queried "classes" in human queries are referenced only as values**; we
+   compare query **demand** to KG **supply** and expose a **content–demand inversion**.
+   This is now a central contribution, not a caveat (new Sec. 4.7 "What Wikidata Coverage
+   Actually Measures"; R2-1.1).
 
-2. **Size-controlled comparison of organic vs. robotic coverage (new analysis).**
-   Reviewer 2 correctly noted that the raw coverage gap between organic and robotic
-   logs could be a pure sampling-size artifact. We added an **individual-based
-   rarefaction and Chao1 richness analysis** (new Section 4.x, Fig. R1) that controls
-   for sampling effort. The result is more nuanced and more interesting than our
-   original blanket claim, and we have rewritten the relevant findings accordingly
-   (see R2-#2 below).
+2. **Generality across modeling styles — a third KG (DBpedia, new analysis).** To show
+   the above is about the *modeling style* and not Wikidata's quirks or size, we added
+   DBpedia (large and broad like Wikidata, OWL-style like Bio2RDF): only **6.5%** of its
+   queried classes are value-only, near Bio2RDF's ~0% and far below Wikidata's ~30%
+   (R2-1.1).
 
-3. **Validity of the Wikidata "class" extraction.** We now explain how classes are
-   operationalized, acknowledge the known difficulty of defining "class" in Wikidata
-   (with citations), quantify the conflation of instantiated classes vs. class-like
-   individuals, and report a robustness check (R2-#1.1).
+3. **Size-controlled organic-vs-robotic coverage (new analysis).** We added an
+   **individual-based rarefaction and Chao1** analysis controlling for sampling effort
+   (new Sec. 4.6). The result is KG-dependent and more interesting than our original
+   blanket claim: a real behavioral difference on Bio2RDF, largely a size artifact on
+   Wikidata (R2-2).
 
-4. **Clarity and motivation.** We interleaved the description of each statistical test
-   with the motivation for running it, renamed all datasets with human-readable names,
-   fixed the factual errors and self-contradictions the reviewers flagged, and added
-   plain-language interpretation throughout Section 4 (R1 general comments).
+4. **When is an element "used"? — a closure bound (new analysis).** For R2-1.2 (property
+   paths "use" subclasses too) we built the `P279` hierarchy from the dump and computed
+   that a closure-based notion would credit **~62% of all Wikidata classes**, driven by a
+   few queries rooted at near-root classes — concrete evidence that explicit reference is
+   the right primitive for an item-based KG (Sec. 3.4; R2-1.2).
+
+5. **Robustness over equal-length intervals + a utility demonstration (new analyses).**
+   For R1-D25 we verified the two-endpoint temporal result against **seven consecutive
+   equal-length 28-day windows** (stable coverage and ranking; new Sec. 4.8.2). For R2-2
+   ("lack of concrete insights") we added a **forecasting experiment** showing the usage
+   metadata predicts next-year demand far better than KG content statistics (new
+   Sec. 4.9 "Utility…").
+
+6. **Precise definitions and clarity.** We now define *schema element*, *type/class*,
+   *predicate*, *individual*, *schema (type) pattern*, and *used / coverage* explicitly,
+   with worked examples; scope usage as **explicit schema reference**; interleave each
+   statistical test with its motivation; rename all datasets with human-readable names;
+   and fix the factual errors, units, and figure issues both reviewers flagged.
 
 New references added: Bonifati, Martens & Timm (WWW 2019) [A]; Hammerer & Martens
 (GRADES/NDA 2025) [B]; Brasileiro et al. (WWW 2016), Piscopo & Simperl (CSCW 2018),
@@ -73,11 +91,12 @@ organic and robotic logs. **[Manuscript: Sec. 1 contribution list; Sec. 3.1.]**
 **R1-G3.** *How many queries per dataset? Relevant for coverage; belongs early in
 Section 3 under "SPARQL Query Logs".*
 
-The per-dataset query counts were previously only in Table 1/Table 2 (Results). We now
+The per-dataset query counts were previously only in the Results tables (Table 1 data
+retrieval; Table 3 unique/valid counts). We now
 also summarize them where the logs are introduced (Sec. 3.1) and, importantly, we tie
 coverage to sampling effort throughout, since the number of (unique) queries strongly
 conditions coverage — this is the subject of the new rarefaction analysis (R2-#2).
-**[Manuscript: Sec. 3.1; Tables 1–2 cross-referenced earlier.]**
+**[Manuscript: Sec. 3.1; Tables 1 and 3 cross-referenced earlier.]**
 
 **R1-G4.** *Consider integrating Sections 3.5–3.6 into Section 4; Section 4 (p14) is
 very dry; interleaving tests with results tells a better story.*
@@ -243,15 +262,21 @@ months); they now have distinct names. **[Manuscript: Sec. 4.1; Tables 1, 4.]**
 
 **R1-D25 (p8:26-39) — Why are the time intervals partitioned unevenly? Why not equal
 length?**
-The interval boundaries are **not** chosen by us; they are inherited from the upstream
-releases (the Dresden/ICCL organic-robotic intervals, and the LSQ vs. Dumontier-lab
-Bio2RDF log dumps). We could not re-cut them to equal lengths without re-deriving the
-organic/robotic split on raw logs we do not fully hold. To prevent this from distorting
-the comparison, all frequency analyses use the **time-normalized** monthly counts
-(Eq. 2), and we now (a) state the provenance of the boundaries explicitly and (b) added
-the equal-effort rarefaction analysis (R2-#2) which removes the dependence on interval
-length/volume altogether. We also list "equal-length time windows" as future work.
-**[Manuscript: Sec. 3.1, 4.1, Sec. 5 limitations.]**
+The cross-KG interval boundaries (Bio2RDF 2013 vs. 2019) are inherited from upstream log
+dumps. But the reviewer's core worry — that an uneven two-endpoint comparison could
+distort the temporal conclusions — we now address **directly with new analysis**. The
+ICCL/Dresden release also segments the organic Wikidata log into consecutive **equal-length
+28-day windows**, and we analyze **seven** of them spanning 2017-06 to 2018-03 (a ≥3-time-point
+trajectory), holding the schema universe fixed at the 2017 dump so differences reflect query
+behavior, not schema drift. The result confirms the two-endpoint conclusion is robust, not an
+artifact: (i) coverage is stable at 3.7–4.6% despite a 4.7× range in query volume (192K→896K),
+corroborating the rarefaction saturation result; (ii) consecutive-window Spearman ρ stays in a
+narrow 0.47–0.51 band for all six adjacent pairs, decaying only mildly to 0.44 over the full
+9-month gap; (iii) the Wilcoxon test is non-significant for most adjacent windows, with shifts
+only across the Dec–Jan boundary; and (iv) 14 types persist in the top-50 of **every** window,
+a far stronger "stable core" demonstration than pairwise overlaps. We also continue to use
+time-normalized counts (Eq. 2) and the equal-effort rarefaction analysis (R2-#2).
+**[Manuscript: new Sec. 4.8.2 "Robustness over equal-length intervals" + Table 10; Sec. 3.1, 5.]**
 
 **R1-T1 (p9:Table 1 & p10:Table 3) — Naming convention; "Wikidata All organic log2017"
 seems to subsume "Wikidata organic log2017".**
@@ -319,7 +344,23 @@ We agree this needed to be made explicit and bounded. Our changes:
   robotic coverage is essentially singleton-free (1 element), i.e., that breadth is
   *repeatedly* exercised and robust. We now report both columns and draw this
   distinction explicitly; it dovetails with the size-controlled analysis in 2.3.
-  **[Manuscript: Sec. 4 (coverage) + new robustness table; Sec. 5.]**
+  **[Manuscript: Sec. 4.5–4.6 (coverage) + new robustness Table 7; Sec. 5.]**
+
+- **(b′) Direct validation of the extracted classes.** To quantify the reviewer's
+  glitch/uninstantiated-class concern at the source (not just on used elements), we
+  characterized every extracted 2017 class by its **support** = #times it is the object
+  of `wdt:P31` or `wdt:P279` (instances + subclasses). Of the 103,355 classes: 42.3% are
+  instantiated, 88.2% are embedded in the subclass hierarchy, and 30.3% are **singletons**
+  (used as a class exactly once). But **querying selects for genuine classes**: among
+  classes referenced in organic-2017 queries, 72.5% are instantiated (vs. 42.3% in the
+  universe), median support is **9 vs. 3**, and only 15.8% are singletons. We then
+  **manually validated** a random sample of 100 *queried singletons* via the Wikidata API:
+  **80% carry an explicit `subclass of` (P279) statement or a metaclass marker** — they
+  were intentionally modelled as classes — and inspection of the rest finds mostly genuine
+  but rare concepts/taxa (*Quercus velutina*, *Pinales*, *ghat*), with only occasional
+  noise (e.g. a disambiguation item). So the glitch risk is real but small and lives in an
+  uninstantiated tail that query demand largely avoids. **[Manuscript: Sec. 4.6 "Validity
+  of the extracted classes"; code `KG-Usage-analysis/wd_class_validation.py`.]**
 
 - **Meaningfulness of summing.** We reframed schema coverage as a property of a
   *clearly delimited reference set* (the extracted type+predicate set), reported
@@ -327,7 +368,7 @@ We agree this needed to be made explicit and bounded. Our changes:
   imply that all vocabulary elements have the same semantic weight. We explicitly state
   that cross-KG coverage numbers (Wikidata vs. Bio2RDF) are **not** directly comparable
   because of these definitional differences and the ~200× schema-size gap. **[Manuscript:
-  Sec. 4.x, Sec. 5.]**
+  Sec. 4.5, Sec. 5.]**
 
 - **New analysis directly answering this critique (the reviewer's strongest point).** We
   agree this concern is fundamental, and on reflection it reflects an assumption we carried
@@ -343,8 +384,18 @@ We agree this needed to be made explicit and bounded. Our changes:
   demand concentrates on a small class core. This is now a **new results subsection** and a
   central discussion point — turning the reviewer's critique into one of the paper's main
   contributions, and explicitly acknowledging that a single OWL-style coverage metric does
-  not transfer to an item-based KG. **[Manuscript: new Sec. "What Wikidata Coverage Actually
-  Measures" + Table/Figure; Sec. 3.2; Sec. 5; abstract/intro reframed.]**
+  not transfer to an item-based KG. **[Manuscript: new Sec. 4.7 "What Wikidata Coverage
+  Actually Measures" + Table 8 and Fig. 7; Sec. 3.2; Sec. 5; abstract/intro reframed.]**
+- **We test generality with a third KG (DBpedia).** To show this is about the *modeling
+  style* and not Wikidata's idiosyncrasies or its size, we added DBpedia — large and broad
+  like Wikidata, but OWL-style like Bio2RDF — and ran the identical class- vs. value-position
+  analysis over its full executed query log (LSQ 2.0; 4.26M distinct queries). Of the 722
+  `dbo:` classes referenced, **only 6.5% are value-only** (675/722 used in class position),
+  close to Bio2RDF's ~0% and far below Wikidata's 29.8%. The same content–demand inversion
+  recurs (rich-but-unqueried *Tenure*, *WikimediaTemplate*; demand on *Place*, *Person*,
+  *Film*). Value-position inflation therefore tracks the schema model, not KG size — directly
+  answering the reviewer's worry. **[Manuscript: new Table 9 (generality) + paragraph in
+  Sec. 4.7; Sec. 5.]**
 
 ### 2.2 When is a schema element "used"?
 
@@ -363,20 +414,31 @@ This is a fair and important distinction. Our response:
   *closure/answer-based* notion of usage. **[Manuscript: Sec. 3.4, Sec. 5.]**
 
 - **We quantified the phenomenon the reviewer raises.** The two notions diverge exactly
-  when a query uses a property path (`*`/`+`, e.g. `wdt:P31/wdt:P279*`). We measured path
-  usage across the logs: property paths appear in only **~1.2% of valid Bio2RDF organic
-  queries (98/8,140)**, but in **21.1% of Wikidata organic 2017 (18,705/88,491)** and
-  **13.7% of 2018 (25,351/185,443)**. So the explicit-reference notion is essentially
-  exact for Bio2RDF, while for Wikidata a non-trivial fraction of queries use paths whose
-  traversed subclasses a closure-based notion would additionally credit — which fairly
-  bounds how much the reviewer's concern could change the Wikidata numbers, and is now
-  stated in the manuscript. **[Manuscript: Sec. 3.4.]**
+  when a query uses a transitively-traversing path (`*`/`+`, e.g. `wdt:P31/wdt:P279*`).
+  Property paths of any kind appear in only **~1.2% of valid Bio2RDF organic queries
+  (98/8,140)**, but in **21.1% of Wikidata organic 2017 (18,705/88,491)** and **13.7% of
+  2018 (25,351/185,443)**; restricting to the `*`/`+` operators that actually pull in extra
+  elements, the 2017 figure is **16.6% (14,696/88,491)**. (We also corrected the manuscript
+  prose, which had labeled the 21.1% figure as `*`/`+` when it counts all path operators.)
+  So the explicit notion is essentially exact for Bio2RDF, while for Wikidata a non-trivial
+  fraction of queries traverse the subclass hierarchy. **[Manuscript: Sec. 3.4.]**
 
-- **Future work.** A full closure-based "effective usage" (expanding each path against
-  the KG to attribute usage to every subclass/subproperty actually contributing answers)
-  is a substantial separate study; we now name it as the natural next step and explain
-  why it is out of scope for the present, reference-based analysis. **[Manuscript:
-  Sec. 5.]**
+- **We now compute the bound directly — and it makes a strong case *for* explicit
+  reference.** Rather than leaving the magnitude to future work, we built the `P279`
+  subclass hierarchy from the 2017 dump (**2.08M edges**) and computed the transitive
+  closure of every class anchored by a `wdt:P279*`/`wdt:P31/wdt:P279*` path in the organic
+  2017 queries. Result: those paths are anchored at **1,276 distinct classes** whose combined
+  subclass closure spans **64,843 of the ~103,000 KG classes**; crediting them would raise
+  organic coverage from ~4% to **~62% (+60 percentage points)**. Critically, this is
+  **dominated by a handful of queries rooted at near-top classes**: `wdt:P279*` from *entity*
+  (`Q35120`), used in just **13 queries**, alone closes over **64,356 classes**; *concept*
+  closes 49,828; whereas typical anchors are tiny (*city* 96, *film* 94, *organization*
+  3,538). A naive closure metric is therefore not merely costlier but **ill-behaved on an
+  item-based KG** — a single query rooted at *entity* would mark most of the ontology as
+  "used," conflating *queried* with *reachable in principle*. This is concrete, positive
+  evidence for the explicit-reference choice. A **partially-credited** closure measure
+  (weighting by answer contribution, or capping anchor generality) remains the natural next
+  step. **[Manuscript: Sec. 3.4 (new bound + named anchors), Sec. 5 (refined future work).]**
 
 ### 2.3 Lack of concrete insights / the organic-vs-robotic size confound
 
@@ -408,35 +470,55 @@ queries". The result is genuinely informative and KG-dependent:
 - For **Wikidata** (huge schema), the picture is the opposite of our original framing:
   at equal effort organic and robotic are **nearly identical** (13.3% vs. 12.8%), and at
   *smaller* sampling effort organic is actually **richer per query** than robotic
-  (Fig. R1). The large raw gap (57% vs. 13%) is therefore **almost entirely a
+  (Fig. 6). The large raw gap (57% vs. 13%) is therefore **almost entirely a
   sampling-size effect** — the reviewer's intuition is correct for Wikidata.
 
 We rewrote the Discussion to make exactly this distinction, replacing the blanket claim
 of "distinct interaction patterns" with the size-controlled, KG-dependent conclusion.
-This is now one of the paper's more concrete and defensible findings. **[Manuscript:
-new Sec. 4.x "Size-controlled coverage", Fig. R1; Discussion rewritten; new refs
-Hurlbert 1971, Chao 1984; analysis code `KG-Usage-analysis/rarefaction_size_control.py`
-added to the repository.]**
+A **Monte-Carlo subsampling bootstrap** (400 replicates) gives the equal-effort
+robotic/organic ratio with confidence intervals: **Bio2RDF 1.79× (95% CI [1.62, 1.96])**
+— a real, large effect — vs. **Wikidata 1.03× (95% CI [1.02, 1.05])** — i.e. the raw 4.4×
+gap collapses to ~3% at equal effort (negligible, even though the huge n makes it formally
+distinguishable from 1.0). This is now one of the paper's more concrete and defensible
+findings. **[Manuscript: new Sec. 4.6 "Size-Controlled Coverage", Fig. 6, Tables 6–7;
+Discussion rewritten; new refs Hurlbert 1971, Chao 1984; analysis code
+`KG-Usage-analysis/rarefaction_size_control.py` and `wd_rarefaction_ci.py`.]**
 
 **(ii) Wikidata vs. Bio2RDF coverage difference.** We now explicitly attribute the
 lower Wikidata coverage partly to the over-counting discussed in 2.1 (the denominator
 includes ~10^5 class-like items, many barely instantiated) and partly to schema scale,
 and we state that the two KGs' coverage numbers are not directly comparable. We
 therefore present coverage primarily *within* each KG (organic vs. robotic, over time)
-rather than as a cross-KG ranking. **[Manuscript: Sec. 4.x, Sec. 5.]**
+rather than as a cross-KG ranking. **[Manuscript: Sec. 4.5, Sec. 5.]**
 
-**(iii) Content-level interpretation ("female").** We added a short content analysis of
-the top organic Wikidata elements, and the data confirm the reviewer's hypothesis
-sharply: *female* (Q6581072) is recorded **9,331** times in the organic 2017 log, while
-the symmetric *male* (Q6581080) **does not appear at all** (0 occurrences, in either the
-organic or the robotic log). Such a perfect asymmetry between two otherwise
-interchangeable values is not plausible for genuine end-user information needs; it is
-the signature of **demonstration/example queries** (the Wikidata Query Service example
-set queries *female* but not *male*) dominating part of the organic log. We now (a) flag
-*female* as exactly the kind of element counted as a "class" but almost certainly not
-used as one (linking back to 2.1/2.2), and (b) discuss example-query contamination of
-organic logs as a confounding factor that any usage study must control for.
-**[Manuscript: Sec. 4 (frequent elements), Sec. 5.]**
+**(iii) Content-level interpretation ("female") — now measured, not asserted.** The
+reviewer's instinct that example queries contaminate the log is right and important, so
+rather than assert it from one anecdote we **measured** it. We matched the full organic
+log against the Wikidata Query Service example set for our exact period (the 2017-06-30
+revision of the examples page: 348 templates, 313 fingerprinted) using a variable- and
+literal-invariant canonical fingerprint. Findings:
+
+- **Contamination is bounded.** Verbatim example runs are **2.5% of unique organic
+  queries and 1.4% of executions**. Removing them changes the used-type count by a single
+  element (12,773 → 12,772) and leaves the top-type ranking unchanged — so example traffic
+  is present but does **not** distort the aggregate coverage or frequency results (our
+  deduplicated counts further limit its influence).
+- **The *female*/*male* anecdote was partly a wrong-identifier artifact, which we now
+  correct.** *female* (`Q6581072`) is referenced in **9,753** unique organic queries; its
+  true counterpart *male* (`Q6581097`) is queried **2,931** times — less, but far from
+  zero (≈3:1). The "perfect asymmetry" arises only from comparing against **`Q6581080`,
+  which is not "male" at all but *Pirhasan*, an administrative quarter in Erzurum, Turkey**
+  (verified against the 2017 dump and the Wikidata API). The genuine skew reflects the
+  female-weighting of the example set (women-focused examples that users *adapt*, so they
+  escape verbatim matching) plus real gender-gap research interest — a content signal, not
+  a parsing artifact.
+
+This is a stronger response to the reviewer's underlying concern than the original
+anecdote: it bounds contamination, shows the headline results are robust to it, and fixes
+an error. The lower-bound caveat (adapted-but-not-verbatim example copies are not caught)
+is stated explicitly. **[Manuscript: Sec. 4.8.3 (frequent types), Sec. 5; code
+`KG-Usage-analysis/wd_decontaminate.py`, `~/.local/sparqljs-worker/fingerprint_worker.js`,
+example set under `data/wdqs_examples/`.]**
 
 **(iv) Long-tail is expected — what we add.** We agree the long-tail itself is
 unsurprising. We reframed it not as a finding in itself but as the premise for the
@@ -444,6 +526,39 @@ unsurprising. We reframed it not as a finding in itself but as the premise for t
 over time and query type) and the size-controlled breadth comparison above, which are
 the practitioner-relevant outputs (what to document/optimize, what is safe to deprecate).
 **[Manuscript: Sec. 4–5.]**
+
+**(v) A concrete utility demonstration (new).** To show the metadata is not merely
+descriptive, we added a **forecasting experiment** (new Sec. 4.9). We rank schema
+types by their 2017 usage and ask how much of the *2018* query demand a top-$k$
+suggestion list (e.g. an autocomplete) would capture, against a baseline that ranks the
+same types by KG content (instances per class). Result: the **top-50 usage-ranked types
+cover 54% of next-year demand** (80% at top-1000), while the content-ranked list covers
+only 42% and needs **3× as many suggestions (top-148) to match** — because the
+highest-supply classes (*scholarly article*, *Wikimedia category*, *taxon*,
+*disambiguation page*, *gene*, *protein*) are bulk/bot-imported and rarely queried by
+humans. This directly demonstrates that the usage metadata has predictive value that KG
+content statistics do **not**, operationalizing the content–demand inversion of 2.1.
+To keep the evaluation honest (cf. the *female* example in (iii)), demand is computed
+over **deduplicated** queries so no single hammered template dominates. The gap is well
+outside sampling noise: a query-level bootstrap (2,000 resamples) gives the usage-minus-
+supply advantage as **+11.8 points at top-50 (95% CI [11.2, 12.4])**, positive at every
+list length.
+**[Manuscript: new Sec. 4.9 "Utility: Usage Metadata Forecasts Demand Better Than KG
+Content", Fig. 12 + Table 11; code `KG-Usage-analysis/wd_utility.py`.]**
+
+**(vi) "Natural groups of schema elements" — a domain-level account (new).** The reviewer
+asked for content-level explanation relating observations to *domains*. We added exactly
+this: each class is assigned to a top-level domain by walking up its `wdt:P279` ancestry to
+a curated anchor set, and we tabulate each domain's share of KG **content** (instances) vs.
+**query demand** (new Table in Sec. 4.7). The inversion is a clean domain phenomenon: the
+bulk-imported **scientific/bibliographic** domains (*taxon*, *gene/protein*, *astronomical
+object*, *scholarly publication*) hold **32% of all instances but only ~5% of organic
+demand** (taxon: 7.6% of content, 0.4% of demand), whereas **person + organization** hold
+15% of content but **~39% of organic demand**. It also sharpens the organic/robotic
+contrast — humans skew to *person* (29.8% vs. 14.4% for bots), bots to *scholarly*
+(14.3% vs. 2.4%) and *geographic* (21.9% vs. 11.1%), i.e. automated bibliographic/gazetteer
+harvesting. **[Manuscript: Sec. 4.7 + new domain table; code
+`KG-Usage-analysis/wd_domains.py`.]**
 
 ### 2.4 Clarity / motivation of methods
 
@@ -465,12 +580,14 @@ across logs of different durations interpretable as a rate, but the reviewer is 
 that for the *coverage/breadth* questions, query count is the more relevant denominator.
 We therefore now use **both**: time-normalized rates for the frequency-distribution
 figures, and **query-count-controlled** rarefaction for the coverage comparison (2.3-i).
-We added a sentence motivating each choice. **[Manuscript: Sec. 3.5, 4.x.]**
+We added a sentence motivating each choice. **[Manuscript: Sec. 3.5, 4.6.]**
 
 **R2-3d — Are counts based on unique queries (Table 2)? Why are unique queries more
 relevant? Repeated queries arguably reflect usage too.**
 Clarified: yes, frequency counts are over **unique normalized queries** (each distinct
-query counted once), which measures the *diversity of intent* rather than execution
+query counted once; the unique/valid counts are now Table 3 in the revised manuscript,
+after the addition of the total-schema-elements table as Table 2), which measures the
+*diversity of intent* rather than execution
 volume and avoids a handful of high-frequency automated queries dominating the
 distribution. We agree repetition is itself meaningful, so we now (a) state this design
 choice and its rationale explicitly and (b) note that a complementary volume-weighted
@@ -493,13 +610,13 @@ connected core of drug/gene/disease types, leaving most of the schema gray/unuse
 **[Manuscript: Fig. 5 + caption + surrounding text.]**
 
 **R2-3g — Use logarithmic axis labels rather than plotting the value of the logarithm.**
-Done. We regenerated the frequency-distribution figure (Fig. 6) and the top-frequent-types
-figure (Fig. 8) with **native log-scaled axes and natural-value tick labels** (1, 10, 100,
-…) instead of plotting `log10(count)` on a linear axis; Fig. 6 now uses log--log axes
-(normalized monthly usage vs. schema-element rank) and Fig. 8 a logarithmic count axis. The
-new rarefaction figure (Fig. R1) already followed this convention. Captions and axis
-descriptions were updated accordingly. **[Manuscript: Figs. 6 and 8 regenerated; captions
-+ surrounding text corrected.]**
+Done. We regenerated the frequency-distribution figure (Fig. 8) and the top-frequent-types
+figure (Fig. 9) with **native log-scaled axes and natural-value tick labels** (1, 10, 100,
+…) instead of plotting `log10(count)` on a linear axis; Fig. 8 now uses log--log axes
+(normalized monthly usage vs. schema-element rank) and Fig. 9 a logarithmic count axis. The
+new rarefaction figure (Fig. 6) and utility figure (Fig. 12) already follow this convention.
+Captions and axis descriptions were updated accordingly. **[Manuscript: Figs. 8 and 9
+regenerated; captions + surrounding text corrected.]**
 
 ---
 
@@ -526,7 +643,7 @@ layer of the paper is therefore sound.
 
 **Corrections made.**
 
-1. **Query-preparation defect (affects `#Valid`, Table 2).** The logged query text retained
+1. **Query-preparation defect (affects `#Valid`, Table 3).** The logged query text retained
    the trailing HTTP query-string parameters from GET requests
    (`…&format=…&timeout=…&callback=…`). The previous preprocessing stripped only a fixed
    subset and, in particular, missed `&callback` (the single most common leaked
@@ -545,7 +662,7 @@ layer of the paper is therefore sound.
    In other words, the old pipeline discarded ~400,000 robotic queries as "unparseable"
    that are in fact valid SPARQL — they merely carried appended HTTP parameters
    (`&format=…&timeout=…`, robotic clients send these consistently, hence the large
-   robotic effect) and relative IRIs. We have **regenerated all nine rows of Table 2** from
+   robotic effect) and relative IRIs. We have **regenerated all nine rows of Table 3** from
    the raw logs with the corrected pipeline. The result is clear-cut: **only the three
    Bio2RDF-2019 rows change**; every LSQ-sourced (Bio2RDF~2013) and Dresden-sourced
    (Wikidata) row reproduces the published figures to within rounding (e.g., Bio2RDF~2013
@@ -554,8 +671,8 @@ layer of the paper is therefore sound.
    parsing defect was specific to the raw Bio2RDF-2019 server logs. **Crucially, schema
    coverage is unaffected** (robotic coverage is 98.2% with or without the fix), because
    the recovered queries reference schema elements already covered; the defect corrupts
-   the validity counts in Table 2 but not the usage findings. Table 2 in the manuscript now
-   carries the regenerated values. **[Manuscript: Sec. 3.3, Table 2.]**
+   the validity counts in Table 3 but not the usage findings. Table 3 in the manuscript now
+   carries the regenerated values. **[Manuscript: Sec. 3.3 / Sec. 4.3, Table 3.]**
 
 2. **Organic/robotic classification rule.** The stated criterion (robotic = agent
    containing a keyword list) differs from the operational rule actually used (robotic =
@@ -593,7 +710,8 @@ layer of the paper is therefore sound.
 7. **TSE reproducibility.**
    - *Wikidata (validated end-to-end).* We re-extracted the Wikidata schema directly from
      the 2017 and 2018 RDF dumps (objects of `wdt:P31`/`wdt:P279` for types; object-valued
-     `wdt:` properties for predicates). The published **Table 3** counts reproduce: 2017
+     `wdt:` properties for predicates). The published **Table 2** (total schema elements)
+     counts reproduce: 2017
      types 103,355 vs.\ 103,380, predicates 931 vs.\ 934; 2018 types 97,445 vs.\ 97,470,
      predicates 991 vs.\ 992 (differences $\le$0.03%). We then re-derived the **used**
      schema elements (Table 4) by intersecting the elements referenced in the query logs
@@ -614,7 +732,7 @@ layer of the paper is therefore sound.
      which includes a class such as `ctd_vocabulary:Gene-Disease-Association` that is
      queried but does not itself appear in a typed-to-typed pattern. With these definitions
      the committed data yields exactly **350 types and 195 predicates (545 total)**, matching
-     Table 3. We committed the canonical flat lists under
+     Table 2. We committed the canonical flat lists under
      `generated-usage-metadata/bio2rdf-schema/`, and validated against the published
      used-element sets they reproduce Table 5 **exactly**: Bio2RDF robotic/all-2019
      **97.06\%** (529/545) and organic-2019 **21.28\%** (116/545). Bio2RDF coverage is
