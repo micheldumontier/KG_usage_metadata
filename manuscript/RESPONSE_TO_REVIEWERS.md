@@ -578,6 +578,19 @@ we attribute to the 2013 per-dataset-endpoint architecture spreading human explo
 across subgraphs. **[Manuscript: new Sec. 4.8 "Organic vs. Robotic in the 2013-era Bio2RDF
 Log" + composition table; Sec. 3.1; code `KG-Usage-analysis/bio2rdf2013_organic_coverage.py`.]**
 
+  We also checked the **schema-version** alignment of the Bio2RDF coverage (which version
+  was queried). The 2019 log hit the same release (R4) the 2024 endpoint still serves, so
+  those numbers are version-matched; only 2013 (Release 2) is cross-version. The mismatch is
+  real — only 17.5% of vocabulary referenced by 2013 queries appears in the 2024 schema, and
+  38 of 59 queried datasets are gone by 2024 — so we recovered the **Release-2 schema** from
+  Bio2RDF's published per-dataset statistics files and recomputed: it recognizes 29.6% of the
+  referenced vocabulary and 2013 organic coverage rises to **64.1%**. We keep the 2024-schema
+  numbers in the tables for cross-period consistency and present the Release-2 recomputation as
+  a **robustness check** showing the 2024-based 2013 figure is a conservative cross-version
+  estimate (version alignment raises, not lowers, it). **[Manuscript: Sec. 4.8 "Schema-version
+  robustness"; code `KG-Schema-extractors/bio2rdf_release_schema.py`; Release-2 schema in
+  `generated-usage-metadata/bio2rdf-schema-release2/`.]**
+
 ### 2.4 Clarity / motivation of methods
 
 **R2-3a — Eq. 2 "log collection period": what period, and in what units? The normalized
