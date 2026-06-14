@@ -578,18 +578,22 @@ we attribute to the 2013 per-dataset-endpoint architecture spreading human explo
 across subgraphs. **[Manuscript: new Sec. 4.8 "Organic vs. Robotic in the 2013-era Bio2RDF
 Log" + composition table; Sec. 3.1; code `KG-Usage-analysis/bio2rdf2013_organic_coverage.py`.]**
 
-  We also checked the **schema-version** alignment of the Bio2RDF coverage (which version
-  was queried). The 2019 log hit the same release (R4) the 2024 endpoint still serves, so
-  those numbers are version-matched; only 2013 (Release 2) is cross-version. The mismatch is
-  real — only 17.5% of vocabulary referenced by 2013 queries appears in the 2024 schema, and
-  38 of 59 queried datasets are gone by 2024 — so we recovered the **Release-2 schema** from
-  Bio2RDF's published per-dataset statistics files and recomputed: it recognizes 29.6% of the
-  referenced vocabulary and 2013 organic coverage rises to **64.1%**. We keep the 2024-schema
-  numbers in the tables for cross-period consistency and present the Release-2 recomputation as
-  a **robustness check** showing the 2024-based 2013 figure is a conservative cross-version
-  estimate (version alignment raises, not lowers, it). **[Manuscript: Sec. 4.8 "Schema-version
-  robustness"; code `KG-Schema-extractors/bio2rdf_release_schema.py`; Release-2 schema in
-  `generated-usage-metadata/bio2rdf-schema-release2/`.]**
+  We also checked the **schema-version** alignment (which version was queried). 2019 hit the
+  same release (R4) the 2024 endpoint serves, so it is version-matched; only 2013 is
+  cross-version, and badly so — only **17.5%** of the vocabulary 2013 queries reference exists
+  in the 2024 schema (38 of 59 queried datasets are gone by 2024). The raw 2013–2015 log also
+  **straddles two releases** (Release 2 until Release 3 deployed mid-2014, which grew the corpus
+  25→35 datasets). We recovered **both** schemas from Bio2RDF's published per-dataset statistics
+  files (R2: 157T+628P; R3: 351T+1744P), split the organic log at the mid-2014 boundary, and
+  matched each part to the release it queried. Version alignment recovers ~3× more vocabulary:
+  the in-schema fraction rises from 17.5% (vs 2024) to **48%** (R2-period vs R2) and **62%**
+  (R3-period vs R3). So the 2024-based 2013 figure is a conservative cross-version estimate; we
+  keep it in the tables for consistency and present the version-matched recomputation as a
+  **robustness check**. (The release-statistics schemas use a broader predicate definition than
+  the restrictive 2024 extraction, so absolute %s aren't strictly comparable; the point is
+  directional.) **[Manuscript: Sec. 4.8 "Schema-version robustness"; code
+  `KG-Schema-extractors/bio2rdf_release_schema.py`, `KG-Usage-analysis/{bio2rdf_coverage_vs_schema,split_organic}.py`;
+  Release-2/3 schemas in `generated-usage-metadata/bio2rdf-schema-release{2,3}/`.]**
 
 ### 2.4 Clarity / motivation of methods
 
