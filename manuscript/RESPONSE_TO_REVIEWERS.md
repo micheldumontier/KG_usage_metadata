@@ -560,6 +560,24 @@ contrast — humans skew to *person* (29.8% vs. 14.4% for bots), bots to *schola
 harvesting. **[Manuscript: Sec. 4.7 + new domain table; code
 `KG-Usage-analysis/wd_domains.py`.]**
 
+**(vii) Splitting the 2013-era Bio2RDF log + what the raw log really contains (new).** Our
+submitted manuscript noted that the LSQ-derived Bio2RDF-2013 log is anonymized and *cannot*
+be split organic/robotic. We have since obtained the **raw Bio2RDF server access log**
+(the upstream source of LSQ, May 2013–Sep 2015, 127.2M executed requests *with* user
+agents) and lifted that limitation. The composition is itself a concrete-insight finding
+of the kind the reviewer asked for: **organic (browser) queries are only 0.09%** of
+executed traffic; ~24% is Bio2RDF's *own* Virtuoso engine making federated/dereferencing
+calls (99.6% from one host in the hosting institution's network, with single-entity
+lookup bodies), and ~22% is a sustained empty-UA crawl from the LSQ project's own network
+(the harvest that built the dataset). So a statistic computed over the raw log without
+removing infrastructure traffic would mostly measure the infrastructure — a concrete
+illustration of the contamination point. Restricting to the 115,420 organic queries
+(61,628 unique), organic-2013 covers **53.6%** of the schema; controlling for effort
+(rarefaction), it recovers 33.7% vs. organic-2019's 21.3% — a genuine **1.58×** difference
+we attribute to the 2013 per-dataset-endpoint architecture spreading human exploration
+across subgraphs. **[Manuscript: new Sec. 4.8 "Organic vs. Robotic in the 2013-era Bio2RDF
+Log" + composition table; Sec. 3.1; code `KG-Usage-analysis/bio2rdf2013_organic_coverage.py`.]**
+
 ### 2.4 Clarity / motivation of methods
 
 **R2-3a — Eq. 2 "log collection period": what period, and in what units? The normalized
