@@ -18,7 +18,7 @@ are backed by **five new analyses**, each prompted by a specific reviewer concer
    by **position** (class-position vs. value-position) and find that **~30% of the items
    counted as queried "classes" in human queries are referenced only as values**; we
    compare query **demand** to KG **supply** and expose a **content–demand inversion**.
-   This is now a central contribution, not a caveat (new Sec. 4.7 "What Wikidata Coverage
+   This is now a central contribution, not a caveat (new Sec. 4.8 "What Wikidata Coverage
    Actually Measures"; R2-1.1).
 
 2. **Generality across modeling styles — a third KG (DBpedia, new analysis).** To show
@@ -41,10 +41,10 @@ are backed by **five new analyses**, each prompted by a specific reviewer concer
 
 5. **Robustness over equal-length intervals + a utility demonstration (new analyses).**
    For R1-D25 we verified the two-endpoint temporal result against **seven consecutive
-   equal-length 28-day windows** (stable coverage and ranking; new Sec. 4.8.2). For R2-2
+   equal-length 28-day windows** (stable coverage and ranking; new Sec. 4.9.2). For R2-2
    ("lack of concrete insights") we added a **forecasting experiment** showing the usage
    metadata predicts next-year demand far better than KG content statistics (new
-   Sec. 4.9 "Utility…").
+   Sec. 4.10 "Utility…").
 
 6. **Precise definitions and clarity.** We now define *schema element*, *type/class*,
    *predicate*, *individual*, *schema (type) pattern*, and *used / coverage* explicitly,
@@ -276,7 +276,7 @@ narrow 0.47–0.51 band for all six adjacent pairs, decaying only mildly to 0.44
 only across the Dec–Jan boundary; and (iv) 14 types persist in the top-50 of **every** window,
 a far stronger "stable core" demonstration than pairwise overlaps. We also continue to use
 time-normalized counts (Eq. 2) and the equal-effort rarefaction analysis (R2-#2).
-**[Manuscript: new Sec. 4.8.2 "Robustness over equal-length intervals" + Table 10; Sec. 3.1, 5.]**
+**[Manuscript: new Sec. 4.9.2 "Robustness over equal-length intervals" + Table 10; Sec. 3.1, 5.]**
 
 **R1-T1 (p9:Table 1 & p10:Table 3) — Naming convention; "Wikidata All organic log2017"
 seems to subsume "Wikidata organic log2017".**
@@ -384,7 +384,7 @@ We agree this needed to be made explicit and bounded. Our changes:
   demand concentrates on a small class core. This is now a **new results subsection** and a
   central discussion point — turning the reviewer's critique into one of the paper's main
   contributions, and explicitly acknowledging that a single OWL-style coverage metric does
-  not transfer to an item-based KG. **[Manuscript: new Sec. 4.7 "What Wikidata Coverage
+  not transfer to an item-based KG. **[Manuscript: new Sec. 4.8 "What Wikidata Coverage
   Actually Measures" + Table 8 and Fig. 7; Sec. 3.2; Sec. 5; abstract/intro reframed.]**
 - **We test generality with a third KG (DBpedia).** To show this is about the *modeling
   style* and not Wikidata's idiosyncrasies or its size, we added DBpedia — large and broad
@@ -395,7 +395,7 @@ We agree this needed to be made explicit and bounded. Our changes:
   recurs (rich-but-unqueried *Tenure*, *WikimediaTemplate*; demand on *Place*, *Person*,
   *Film*). Value-position inflation therefore tracks the schema model, not KG size — directly
   answering the reviewer's worry. **[Manuscript: new Table 9 (generality) + paragraph in
-  Sec. 4.7; Sec. 5.]**
+  Sec. 4.8; Sec. 5.]**
 
 ### 2.2 When is a schema element "used"?
 
@@ -516,9 +516,9 @@ literal-invariant canonical fingerprint. Findings:
 This is a stronger response to the reviewer's underlying concern than the original
 anecdote: it bounds contamination, shows the headline results are robust to it, and fixes
 an error. The lower-bound caveat (adapted-but-not-verbatim example copies are not caught)
-is stated explicitly. **[Manuscript: Sec. 4.8.3 (frequent types), Sec. 5; code
-`KG-Usage-analysis/wd_decontaminate.py`, `~/.local/sparqljs-worker/fingerprint_worker.js`,
-example set under `data/wdqs_examples/`.]**
+is stated explicitly. **[Manuscript: Sec. 4.9.3 (frequent types), Sec. 5; code
+`KG-Usage-analysis/wd_decontaminate.py`, `Schema-coverage-method/sparqljs-worker/fingerprint_worker.js`,
+example set under `generated-usage-metadata/wdqs-examples/`.]**
 
 **(iv) Long-tail is expected — what we add.** We agree the long-tail itself is
 unsurprising. We reframed it not as a finding in itself but as the premise for the
@@ -528,7 +528,7 @@ the practitioner-relevant outputs (what to document/optimize, what is safe to de
 **[Manuscript: Sec. 4–5.]**
 
 **(v) A concrete utility demonstration (new).** To show the metadata is not merely
-descriptive, we added a **forecasting experiment** (new Sec. 4.9). We rank schema
+descriptive, we added a **forecasting experiment** (new Sec. 4.10). We rank schema
 types by their 2017 usage and ask how much of the *2018* query demand a top-$k$
 suggestion list (e.g. an autocomplete) would capture, against a baseline that ranks the
 same types by KG content (instances per class). Result: the **top-50 usage-ranked types
@@ -543,21 +543,21 @@ over **deduplicated** queries so no single hammered template dominates. The gap 
 outside sampling noise: a query-level bootstrap (2,000 resamples) gives the usage-minus-
 supply advantage as **+11.8 points at top-50 (95% CI [11.2, 12.4])**, positive at every
 list length.
-**[Manuscript: new Sec. 4.9 "Utility: Usage Metadata Forecasts Demand Better Than KG
+**[Manuscript: new Sec. 4.10 "Utility: Usage Metadata Forecasts Demand Better Than KG
 Content", Fig. 12 + Table 11; code `KG-Usage-analysis/wd_utility.py`.]**
 
 **(vi) "Natural groups of schema elements" — a domain-level account (new).** The reviewer
 asked for content-level explanation relating observations to *domains*. We added exactly
 this: each class is assigned to a top-level domain by walking up its `wdt:P279` ancestry to
 a curated anchor set, and we tabulate each domain's share of KG **content** (instances) vs.
-**query demand** (new Table in Sec. 4.7). The inversion is a clean domain phenomenon: the
+**query demand** (new Table in Sec. 4.8). The inversion is a clean domain phenomenon: the
 bulk-imported **scientific/bibliographic** domains (*taxon*, *gene/protein*, *astronomical
 object*, *scholarly publication*) hold **32% of all instances but only ~5% of organic
 demand** (taxon: 7.6% of content, 0.4% of demand), whereas **person + organization** hold
 15% of content but **~39% of organic demand**. It also sharpens the organic/robotic
 contrast — humans skew to *person* (29.8% vs. 14.4% for bots), bots to *scholarly*
 (14.3% vs. 2.4%) and *geographic* (21.9% vs. 11.1%), i.e. automated bibliographic/gazetteer
-harvesting. **[Manuscript: Sec. 4.7 + new domain table; code
+harvesting. **[Manuscript: Sec. 4.8 + new domain table; code
 `KG-Usage-analysis/wd_domains.py`.]**
 
 **(vii) Splitting the 2013-era Bio2RDF log + what the raw log really contains (new).** Our
@@ -575,7 +575,7 @@ illustration of the contamination point. Restricting to the 115,420 organic quer
 (61,628 unique), organic-2013 covers **53.6%** of the schema; controlling for effort
 (rarefaction), it recovers 33.7% vs. organic-2019's 21.3% — a genuine **1.58×** difference
 we attribute to the 2013 per-dataset-endpoint architecture spreading human exploration
-across subgraphs. **[Manuscript: new Sec. 4.8 "Organic vs. Robotic in the 2013-era Bio2RDF
+across subgraphs. **[Manuscript: new Sec. 4.7 "Organic vs. Robotic in the 2013-era Bio2RDF
 Log" + composition table; Sec. 3.1; code `KG-Usage-analysis/bio2rdf2013_organic_coverage.py`.]**
 
   We also checked the **schema-version** alignment (which version was queried). 2019 hit the
@@ -591,7 +591,7 @@ Log" + composition table; Sec. 3.1; code `KG-Usage-analysis/bio2rdf2013_organic_
   keep it in the tables for consistency and present the version-matched recomputation as a
   **robustness check**. (The release-statistics schemas use a broader predicate definition than
   the restrictive 2024 extraction, so absolute %s aren't strictly comparable; the point is
-  directional.) **[Manuscript: Sec. 4.8 "Schema-version robustness"; code
+  directional.) **[Manuscript: Sec. 4.7 "Schema-version robustness"; code
   `KG-Schema-extractors/bio2rdf_release_schema.py`, `KG-Usage-analysis/{bio2rdf_coverage_vs_schema,split_organic}.py`;
   Release-2/3 schemas in `generated-usage-metadata/bio2rdf-schema-release{2,3}/`.]**
 
