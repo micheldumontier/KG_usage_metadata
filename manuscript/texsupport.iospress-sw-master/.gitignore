@@ -1,0 +1,4 @@
+# Review/diff artifacts — kept local, excluded from the Overleaf-synced paper repo
+diff.tex
+*_changemarked.tex
+*_changemarked.pdf
