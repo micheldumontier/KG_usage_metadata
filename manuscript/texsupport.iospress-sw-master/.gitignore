@@ -2,3 +2,8 @@
 diff.tex
 *_changemarked.tex
 *_changemarked.pdf
+
+# Non-source extras kept local (untracked earlier), excluded from the paper repo
+iosart2x.pdf
+test.tex
+Screenshot 2025-01-07 012021.png
