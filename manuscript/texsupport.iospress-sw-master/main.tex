@@ -89,10 +89,7 @@
 
 \begin{abstract}
 Knowledge Graphs (KGs) are key technologies that enable enhanced understanding, knowledge representation, reasoning, and interpretation of complex data. The use of RDF KGs relies heavily on SPARQL queries for knowledge retrieval and manipulation. Analyzing SPARQL query logs can provide valuable insights into KG usage, revealing patterns in user behavior and interactions with the data. Prior studies have analyzed these logs in terms of their syntax and structure, but little is known about what parts of a KG are queried by users. This paper introduces content-based methods for analyzing KG usage, specifically examining the extent to which SPARQL queries cover the KG schema over defined time periods. We examine organic and robotic queries of Wikidata and Bio2RDF. Raw schema coverage
-\begin{comment}
-"Raw schema coverage" is presented without being defined upfront, so somehow looks abrupt and might be difficult for reader to follow. it can be defined as " the extent to which SPARQL queries cover the KG schema over defined time periods"
-\end{comment}
-is higher for robotic queries (60--97\%) than organic ones (typically 13--21\%), but because the two query types differ greatly in volume, we control for sampling effort using individual-based rarefaction. The outcome differs between the two: on Bio2RDF the broader robotic coverage persists at equal effort (robotic exercises $\sim$1.8$\times$ more of the schema), whereas on Wikidata the gap is largely attributable to sampling size. Crucially, coverage is not directly comparable across the two: Bio2RDF has an OWL-style schema (classes with instances), whereas Wikidata is item-based, and we find that a large share of the items counted as queried ``classes'' which is about 30\% of those in human queries, are in fact referenced as property values, not as classes. Comparing query demand against KG supply exposes a structural inversion: the most heavily instantiated Wikidata classes (e.g.\ geographic features) are rarely queried, while demand concentrates on a small, intuitive core. A third KG, DBpedia, suggests that this value-position effect is associated with the modeling style (item-based vs.\ OWL) rather than with KG size. Both datasets exhibit a sharp long-tailed decline in usage frequency: usage is highly concentrated (Gini $\geq 0.90$ everywhere, with a fraction of a percent to a few percent of used elements accounting for 80\% of all references), so a high coverage figure reflects breadth of reach rather than even demand. We use statistical assessments, validated across seven equal-length intervals, to track shifts in schema-element usage across KG versions, and query types. Finally, we show the usage metadata has concrete predictive value: a type-suggestion ranking learned from one year of logs captures most of the next year's query demand and substantially outperforms a ranking by KG content. Our work sheds light on what is and is not queried in a KG, surfaces the mismatch between KG content and query demand, and provides guidance for documentation, schema design, and the interpretation of usage metrics on item-based KGs.
+Raw schema coverage, the proportion of a KG's schema elements that queries explicitly reference in a given period, is higher for robotic queries (60--97\%) than organic ones (typically 13--21\%), but because the two query types differ greatly in volume, we control for sampling effort using individual-based rarefaction. The outcome differs between the two: on Bio2RDF the broader robotic coverage persists at equal effort (robotic exercises $\sim$1.8$\times$ more of the schema), whereas on Wikidata the gap is largely attributable to sampling size. Crucially, coverage is not directly comparable across the two: Bio2RDF has an OWL-style schema (classes with instances), whereas Wikidata is item-based, and we find that a large share of the items counted as queried ``classes'' which is about 30\% of those in human queries, are in fact referenced as property values, not as classes. Comparing query demand against KG supply exposes a structural inversion: the most heavily instantiated Wikidata classes (e.g.\ geographic features) are rarely queried, while demand concentrates on a small, intuitive core. A third KG, DBpedia, suggests that this value-position effect is associated with the modeling style (item-based vs.\ OWL) rather than with KG size. Both datasets exhibit a sharp long-tailed decline in usage frequency: usage is highly concentrated (Gini $\geq 0.90$ everywhere, with a fraction of a percent to a few percent of used elements accounting for 80\% of all references), so a high coverage figure reflects breadth of reach rather than even demand. We use statistical assessments, validated across seven equal-length intervals, to track shifts in schema-element usage across KG versions, and query types. Finally, we show the usage metadata has concrete predictive value: a type-suggestion ranking learned from one year of logs captures most of the next year's query demand and substantially outperforms a ranking by KG content. Our work sheds light on what is and is not queried in a KG, surfaces the mismatch between KG content and query demand, and provides guidance for documentation, schema design, and the interpretation of usage metrics on item-based KGs.
 \end{abstract}
 
 \begin{keyword}
@@ -736,7 +733,7 @@ Other / unclassified         & 2.2\%  & 17.9\% &, & 7.2\%  &, \\
 \end{tabular}
 \end{table}
 
-\paragraph{\textbf{A third KG DBpedia.}} An alternative explanation is that the observed value-position usage is specific to Wikidata's modeling conventions, or to its size, rather than to the item-based modeling style as such. To test this we added a third KG, DBpedia, and ran the same class- vs.\ value-position analysis over its public query log (LSQ~2.0). DBpedia is a useful control: like Bio2RDF it is OWL-style: its classes are dedicated ontology IRIs (\texttt{dbo:}) used as the object of \texttt{rdf:type}/\texttt{rdfs:subClassOf}, but like Wikidata it is large, broad, and crowd-curated, so it separates the effect of \emph{schema model} from that of \emph{size and breadth}. Across 4.26M distinct executed queries, of the 722 \texttt{dbo:} classes referenced anywhere, \textbf{675 (93.5\%) are used in class position and only 47 (6.5\%) are value-only}, close to Bio2RDF's near-zero and far below Wikidata's 29.8\% for human queries (Table~\ref{tab:generality}). These results suggest that the value-only fraction is more closely associated with the data model than with KG size: across the three KGs analysed, the two OWL-style ones both keep classes in class position, whereas the item-based Wikidata routinely surfaces type-items as values. The content--demand inversion also recurs on DBpedia: its most heavily instantiated classes (\emph{Tenure}, $\sim$1.3M instances; \emph{WikimediaTemplate}, $\sim$223k; \emph{MilitaryService}; \emph{Academic}) draw essentially no class-position demand, while queries concentrate on a small intuitive core (\emph{Place}, \emph{Person}, \emph{Film}, \emph{Company}, \emph{MusicalArtist}). These findings indicate that the phenomenon is not unique to Wikidata.
+\paragraph{\textbf{A third KG DBpedia.}} An alternative explanation is that the observed value-position usage is specific to Wikidata's modeling conventions, or to its size, rather than to the item-based modeling style as such. To test this we added a third KG, DBpedia, and ran the same class- vs.\ value-position analysis over its public query log (LSQ~2.0). DBpedia is a useful control: like Bio2RDF it is OWL-style: its classes are dedicated ontology IRIs (\texttt{dbo:}) used as the object of \texttt{rdf:type}/\texttt{rdfs:subClassOf}, but like Wikidata it is large, broad, and crowd-curated, so it separates the effect of \emph{schema model} from that of \emph{size and breadth}. Across 4.26M distinct executed queries, of the 722 \texttt{dbo:} classes referenced anywhere, \textbf{675 (93.5\%) are used in class position and only 47 (6.5\%) are value-only}, close to Bio2RDF's near-zero and far below Wikidata's 29.8\% for human queries (Table~\ref{tab:generality}). These results suggest that the value-only fraction is more closely associated with the data model than with KG size: across the three KGs analysed, the two OWL-style ones both keep classes in class position, whereas the item-based Wikidata routinely surfaces type-items as values. The content--demand inversion also recurs on DBpedia: its most heavily instantiated classes (\emph{Tenure}, $\sim$1.3M instances; \emph{WikimediaTemplate}, $\sim$223k; \emph{MilitaryService}; \emph{Academic}) draw essentially no class-position demand, while queries concentrate on a small intuitive core (\emph{Place}, \emph{Airport}, \emph{Person}, \emph{MusicalArtist}, \emph{PopulatedPlace}, \emph{Film}). These findings indicate that the phenomenon is not unique to Wikidata.
 
 \begin{table}[ht]
 \centering
@@ -965,6 +962,8 @@ The preceding analyses point to a concrete application: a type-suggestion featur
 
 As a simple content-based baseline, we rank the same types by KG \emph{supply}, measured as the number of instances per class in the 2017 dump. This provides a ranking derived from the KG itself, without using query-log information, and allows us to compare usage-based prioritization with a readily available content signal.
 
+We should be explicit about how this relates to existing autocompletion work, because the comparison we run is narrower than that literature. Dedicated SPARQL autocompletion systems already rank suggestions, and do so with machinery we do not attempt to match: Bast et al.~\cite{bast2022autocompletion} evaluate context-sensitive and context-agnostic ranked autocompletion on Wikidata at interactive latencies, and de la Parra and Hogan~\cite{delaparra2021autocompletion} derive suggestions from KG structure with approximate, content-derived ranking signals. Both rank against the KG (and, in the context-sensitive case, against the partially written query); neither draws on what users have historically queried, because query-log usage statistics of the kind we generate have not been available to them. Our experiment is therefore not a system comparison and should not be read as one. It isolates a single question those systems leave open: given a ranking problem they already solve from KG-side signals, how much is added by a signal derived from past usage? The content-based supply ranking stands in for the KG-side signal in its simplest form, so the gap we measure is a lower bound on what a usage-aware ranker could contribute to a system such as theirs, not a claim to outperform one. Integrating usage priors into a full autocompletion system, and evaluating them against these baselines under their latency constraints, is the natural follow-up.
+
 \begin{table}[ht]
 \centering
 \caption{Percentage of 2018 organic class-type demand (deduplicated) captured by the top-$k$ suggested types, ranked by past (2017) usage or by KG supply (instances/class).}
@@ -1018,10 +1017,45 @@ The experiment covers one KG, one schema-element type, and one temporal split, s
     \label{fig:utility}
 \end{figure}
 
-\begin{comment}
-    If this experiment is intended to demonstrate the practical utility of usage metadata for autocomplete, I think the evaluation should be better connected to existing SPARQL-autocomplete work. Using class size as a simple content-based baseline is reasonable, and content-derived signals have also been used in previous autocomplete approaches. However, there are more closely related methods that explicitly rank autocomplete suggestions. For example, Bast et al., *Efficient and Effective SPARQL Autocompletion on Very Large Knowledge Graphs* (CIKM 2022), evaluate ranked context-sensitive and context-agnostic autocomplete on Wikidata, while de la Parra and Hogan, *Fast Approximate Autocompletion for SPARQL Query Builders* (2021), derive autocomplete suggestions from KG structure and use content-based ranking signals. It would therefore be useful to compare the proposed usage-based ranking with such approaches where feasible, or at least position the present experiment with respect to them and clarify what additional role usage metadata could play. Otherwise, the experiment may be better framed more narrowly as showing that historical usage provides a useful alternative to a simple KG-content ranking, rather than as demonstrating utility for autocomplete more generally. It is also unclear why only type/class suggestions are evaluated, while the generated usage metadata also covers predicates and predicate suggestion is equally relevant to SPARQL autocomplete. Either predicate ranking should also be evaluated or the restriction to classes should be acknowledged and presented as a demonstration.  
+\paragraph{\textbf{Predicate suggestion.}}
+The evaluation above ranks types, but the usage metadata covers predicates too, and predicate
+suggestion matters at least as much in a query builder. We therefore repeated the experiment over
+predicates, with the same train/test split and the content-side analogue of instances-per-class,
+namely triples per predicate in the 2017 dump (Table~\ref{tab:predranking}). Usage again wins, but
+by a visibly smaller margin than for types, and the gap closes as the list grows: nDCG@10 is 85.9\%
+against 58.6\%, and top-10 demand coverage 43.3\% against 23.0\%, yet by top-1000 the two rankings
+are nearly indistinguishable (94.8\% vs 93.3\%). Demand-weighted MRR is $0.258$ against $0.202$, a
+$1.3\times$ ratio rather than the $2.9\times$ seen for types.
 
-\end{comment}
+The asymmetry is informative rather than disappointing, and it has a straightforward explanation.
+Wikidata has roughly a thousand predicates against a hundred thousand classes, so a content-ranked
+predicate list runs out of room to be wrong: even an indifferent ordering reaches most of the demand
+within a few hundred suggestions. The content--demand inversion of Section~\ref{sec:classvalue} is
+also specifically a class-side pathology, driven by bulk- and bot-imported categories that carry
+enormous instance counts and attract no queries; predicates have no comparable population of
+heavily-instantiated-but-unqueried members. Usage metadata therefore helps most exactly where the
+content signal is weakest, which is on the class side. Reporting only the type experiment would have
+overstated how uniform that benefit is.
+
+\begin{table}[ht]
+\centering
+\caption{Predicate-suggestion counterpart to Table~\ref{tab:ranking}, same train/test split. Predicates are ranked by past usage or by KG supply (triples per predicate). The usage advantage is real but smaller than for types, and narrows as $k$ grows.}
+\label{tab:predranking}
+\begin{tabular}{r|r|r|r|r}
+\hline
+Top-$k$ & nDCG@$k$ (past usage) & nDCG@$k$ (KG supply) & Coverage (usage) & Coverage (supply) \\
+\hline
+10   & 85.9\% & 58.6\% & 43.3\% & 23.0\% \\
+50   & 90.4\% & 67.1\% & 73.1\% & 54.3\% \\
+100  & 90.9\% & 72.6\% & 81.4\% & 72.5\% \\
+500  & 91.3\% & 75.3\% & 92.3\% & 88.7\% \\
+1000 & 91.6\% & 76.1\% & 94.8\% & 93.3\% \\
+\hline
+\multicolumn{5}{l}{$\mathrm{MRR}_w$: past usage $0.258$ \quad KG supply $0.202$ \quad (ratio $1.3\times$)} \\
+\hline
+\end{tabular}
+\end{table}
+
 
 
 \section{Discussion}\label{s5}

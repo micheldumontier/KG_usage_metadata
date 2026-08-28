@@ -1,6 +1,7 @@
 # WDQS example-query set (for example-query decontamination, R2-2iii)
 
 Source: Wikidata:SPARQL_query_service/queries/examples, revision **509986548**
+(permalink: <https://www.wikidata.org/w/index.php?title=Wikidata:SPARQL_query_service/queries/examples&oldid=509986548>)
 (timestamp **2017-06-30T00:32:28Z**), the latest revision before the organic log period.
 
 - `examples_2017_queries.ndjson` — 348 unique example query templates extracted from the
