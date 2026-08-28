@@ -66,7 +66,8 @@ A survey of RDF stores \& SPARQL engines for querying knowledge graphs,
 \begin{bchapter}
 \bauthor{\binits{L.}~\bsnm{Asprino}} and
 \bauthor{\binits{M.}~\bsnm{Ceriani}},
-\bctitle{How is Your Knowledge Graph Used: Content-Centric Analysis of SPARQL Query Logs},
+\bctitle{How is Your Knowledge Graph Used: Content-Centric Analysis of SPARQL
+  Query Logs},
 in: \bbtitle{International Semantic Web Conference},
 \binstitute{Springer},
 \byear{2023},
@@ -81,8 +82,10 @@ pp.~\bfpage{197}--\blpage{215}.
 \bauthor{\binits{T.}~\bsnm{Klumpp}},
 \bauthor{\binits{F.}~\bsnm{Kramer}} and
 \bauthor{\binits{N.}~\bsnm{Schnelle}},
-\bctitle{Efficient and Effective SPARQL Autocompletion on Very Large Knowledge Graphs},
-in: \bbtitle{Proceedings of the 31st ACM International Conference on Information and Knowledge Management (CIKM)},
+\bctitle{Efficient and Effective SPARQL Autocompletion on Very Large Knowledge
+  Graphs},
+in: \bbtitle{Proceedings of the 31st ACM International Conference on
+  Information and Knowledge Management (CIKM)},
 \bpublisher{ACM},
 \byear{2022},
 pp.~\bfpage{46}--\blpage{55}.
@@ -161,8 +164,10 @@ pp.~\bfpage{127}--\blpage{138}.
 \bauthor{\binits{J.P.A.}~\bsnm{Almeida}},
 \bauthor{\binits{V.A.}~\bsnm{de~Carvalho}} and
 \bauthor{\binits{G.}~\bsnm{Guizzardi}},
-\bctitle{Applying a Multi-Level Modeling Theory to Assess Taxonomic Hierarchies in Wikidata},
-in: \bbtitle{Proceedings of the 25th International Conference Companion on World Wide Web (WWW Companion)},
+\bctitle{Applying a Multi-Level Modeling Theory to Assess Taxonomic Hierarchies
+  in Wikidata},
+in: \bbtitle{Proceedings of the 25th International Conference Companion on
+  World Wide Web (WWW Companion)},
 \binstitute{ACM},
 \byear{2016},
 pp.~\bfpage{975}--\blpage{980}.
@@ -175,8 +180,10 @@ pp.~\bfpage{975}--\blpage{980}.
 \bauthor{\binits{M.}~\bsnm{Ugarte}},
 \bauthor{\binits{M.}~\bsnm{Arenas}} and
 \bauthor{\binits{M.}~\bsnm{Dumontier}},
-\bctitle{A preliminary investigation into SPARQL query complexity and federation in Bio2RDF},
-in: \bbtitle{Alberto mendelzon international workshop on foundations of data management},
+\bctitle{A preliminary investigation into SPARQL query complexity and
+  federation in Bio2RDF},
+in: \bbtitle{Alberto mendelzon international workshop on foundations of data
+  management},
 \byear{2015},
 p.~\bfpage{196}.
 \end{bchapter}
@@ -198,7 +205,8 @@ p.~\bfpage{196}.
 \bauthor{\binits{F.}~\bsnm{de~la Parra}} and
 \bauthor{\binits{A.}~\bsnm{Hogan}},
 \bctitle{Fast Approximate Autocompletion for SPARQL Query Builders},
-in: \bbtitle{Proceedings of the 15th IEEE International Conference on Semantic Computing (ICSC)},
+in: \bbtitle{Proceedings of the 15th IEEE International Conference on Semantic
+  Computing (ICSC)},
 \bpublisher{IEEE},
 \byear{2021}.
 \end{bchapter}
@@ -209,7 +217,8 @@ in: \bbtitle{Proceedings of the 15th IEEE International Conference on Semantic C
 \bauthor{\binits{J.}~\bsnm{Hammerer}} and
 \bauthor{\binits{W.}~\bsnm{Martens}},
 \bctitle{A Compendium of Regular Expression Shapes in SPARQL Queries},
-in: \bbtitle{Proceedings of the 8th Joint Workshop on Graph Data Management Experiences \& Systems (GRADES) and Network Data Analytics (NDA)},
+in: \bbtitle{Proceedings of the 8th Joint Workshop on Graph Data Management
+  Experiences \& Systems (GRADES) and Network Data Analytics (NDA)},
 \binstitute{ACM},
 \byear{2025},
 pp.~\bfpage{4:1}--\blpage{4:10}.
@@ -251,7 +260,8 @@ pp.~\bfpage{4:1}--\blpage{4:10}.
 \bibitem{hurlbert1971nonconcept}
 \begin{barticle}
 \bauthor{\binits{S.H.}~\bsnm{Hurlbert}},
-\batitle{The Nonconcept of Species Diversity: A Critique and Alternative Parameters},
+\batitle{The Nonconcept of Species Diversity: A Critique and Alternative
+  Parameters},
 \bjtitle{Ecology}
 \bvolume{52}(\bissue{4})
 (\byear{1971}),
@@ -277,7 +287,8 @@ pp.~\bfpage{4:1}--\blpage{4:10}.
 \bauthor{\binits{J.}~\bsnm{Lorey}} and
 \bauthor{\binits{F.}~\bsnm{Naumann}},
 \bctitle{Detecting SPARQL query templates for data prefetching},
-in: \bbtitle{The Semantic Web: Semantics and Big Data: 10th International Conference, ESWC 2013, Montpellier, France, May 26-30, 2013. Proceedings 10},
+in: \bbtitle{The Semantic Web: Semantics and Big Data: 10th International
+  Conference, ESWC 2013, Montpellier, France, May 26-30, 2013. Proceedings 10},
 \binstitute{Springer},
 \byear{2013},
 pp.~\bfpage{124}--\blpage{139}.
@@ -291,8 +302,10 @@ pp.~\bfpage{124}--\blpage{139}.
 \bauthor{\binits{L.}~\bsnm{Gonz{\'a}lez}},
 \bauthor{\binits{J.}~\bsnm{Gonsior}} and
 \bauthor{\binits{A.}~\bsnm{Bielefeldt}},
-\bctitle{Getting the most out of Wikidata: Semantic technology usage in Wikipedia’s knowledge graph},
-in: \bbtitle{The Semantic Web--ISWC 2018: 17th International Semantic Web Conference, Monterey, CA, USA, October 8--12, 2018, Proceedings, Part II 17},
+\bctitle{Getting the most out of Wikidata: Semantic technology usage in
+  Wikipedia’s knowledge graph},
+in: \bbtitle{The Semantic Web--ISWC 2018: 17th International Semantic Web
+  Conference, Monterey, CA, USA, October 8--12, 2018, Proceedings, Part II 17},
 \binstitute{Springer},
 \byear{2018},
 pp.~\bfpage{376}--\blpage{394}.
@@ -314,8 +327,10 @@ pp.~\bfpage{171}--\blpage{178}.
 \begin{bchapter}
 \bauthor{\binits{M.}~\bsnm{Mohammadi}} and
 \bauthor{\binits{M.}~\bsnm{Dumontier}},
-\bctitle{Analyzing SPARQL Query Logs: A Study on Schema Coverage and Query Content},
-in: \bbtitle{Semantic Web Applications and Tools for Health Care and Life Sciences (SWAT4HCLS)},
+\bctitle{Analyzing SPARQL Query Logs: A Study on Schema Coverage and Query
+  Content},
+in: \bbtitle{Semantic Web Applications and Tools for Health Care and Life
+  Sciences (SWAT4HCLS)},
 \byear{2024}.
 \url{https://ceur-ws.org/Vol-3890/paper-14.pdf}.
 \end{bchapter}
@@ -352,7 +367,8 @@ Class Order Disorder in Wikidata and First Fixes,
 \bauthor{\binits{F.}~\bsnm{Picalausa}} and
 \bauthor{\binits{S.}~\bsnm{Vansummeren}},
 \bctitle{What are real SPARQL queries like?},
-in: \bbtitle{Proceedings of the International Workshop on Semantic Web Information Management},
+in: \bbtitle{Proceedings of the International Workshop on Semantic Web
+  Information Management},
 \byear{2011},
 pp.~\bfpage{1}--\blpage{6}.
 \end{bchapter}
@@ -362,7 +378,8 @@ pp.~\bfpage{1}--\blpage{6}.
 \begin{barticle}
 \bauthor{\binits{A.}~\bsnm{Piscopo}} and
 \bauthor{\binits{E.}~\bsnm{Simperl}},
-\batitle{Who Models the World?: Collaborative Ontology Creation and User Roles in Wikidata},
+\batitle{Who Models the World?: Collaborative Ontology Creation and User Roles
+  in Wikidata},
 \bjtitle{Proceedings of the ACM on Human-Computer Interaction}
 \bvolume{2}(\bissue{CSCW})
 (\byear{2018}),
@@ -374,7 +391,8 @@ pp.~\bfpage{1}--\blpage{6}.
 \begin{bchapter}
 \bauthor{\binits{A.}~\bsnm{Raghuveer}},
 \bctitle{Characterizing machine agent behavior through SPARQL query mining},
-in: \bbtitle{Proceedings of the International Workshop on Usage Analysis and the Web of Data, Lyon, France},
+in: \bbtitle{Proceedings of the International Workshop on Usage Analysis and
+  the Web of Data, Lyon, France},
 \binstitute{Citeseer},
 \byear{2012}.
 \end{bchapter}
@@ -385,7 +403,8 @@ in: \bbtitle{Proceedings of the International Workshop on Usage Analysis and the
 \bauthor{\binits{L.}~\bsnm{Rietveld}},
 \bauthor{\binits{R.}~\bsnm{Hoekstra}} \betal,
 \bctitle{Man vs. machine: Differences in SPARQL queries},
-in: \bbtitle{Proceedings of the 4th USEWOD Workshop on Usage Analysis and the Web of of Data, ESWC},
+in: \bbtitle{Proceedings of the 4th USEWOD Workshop on Usage Analysis and the
+  Web of of Data, ESWC},
 \byear{2014}.
 \end{bchapter}
 \endbibitem
@@ -398,7 +417,9 @@ in: \bbtitle{Proceedings of the 4th USEWOD Workshop on Usage Analysis and the We
 \bauthor{\binits{Q.}~\bsnm{Mehmood}} and
 \bauthor{\binits{A.-C.N.}~\bsnm{Ngomo}},
 \bctitle{LSQ: the linked SPARQL queries dataset},
-in: \bbtitle{The Semantic Web-ISWC 2015: 14th International Semantic Web Conference, Bethlehem, PA, USA, October 11-15, 2015, Proceedings, Part II 14},
+in: \bbtitle{The Semantic Web-ISWC 2015: 14th International Semantic Web
+  Conference, Bethlehem, PA, USA, October 11-15, 2015, Proceedings, Part II
+  14},
 \binstitute{Springer},
 \byear{2015},
 pp.~\bfpage{261}--\blpage{269}.

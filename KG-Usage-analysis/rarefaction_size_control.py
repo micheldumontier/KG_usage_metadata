@@ -26,7 +26,7 @@ PAIRS = [
     ("Bio2RDF 2019",
      "Bio2RDF organic log2019KG2024_combined_schema_elements.csv",
      "Bio2RDF robotic log2019_kg2024_combined_schema_elements.csv",
-     545),
+     541),   # conforming Bio2RDF schema: 350 types + 191 predicates (Section 3.2)
     ("Wikidata 2017",
      "Wikidata log2017kg2017_combined_schema_elements.csv",
      "Wikidata robotic log2017_kg2017_combined_schema_elements.csv",
