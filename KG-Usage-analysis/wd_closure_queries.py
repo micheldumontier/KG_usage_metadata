@@ -25,9 +25,14 @@ pv = importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE = os.path.expanduser("~/.local/bin/node")
 PAW  = os.path.expanduser("~/.local/sparqljs-worker/pathanchor_worker.js")
 WD = "data/logs/wikidata"
-FILES = [f"{WD}/int1_2017_organic.tsv.gz",
-         f"{WD}/2017-07-10_2017-08-06_organic.tsv.gz",
-         f"{WD}/2017-08-07_2017-09-03_organic.tsv.gz"]
+# Default scope is the 2017 organic log (interval 1), which is the scope of the closure-bound
+# claim in Section 3.4. Pass "pooled" as argv[1] to use the three early-2017 windows instead.
+import sys
+FILES = ([f"{WD}/int1_2017_organic.tsv.gz",
+          f"{WD}/2017-07-10_2017-08-06_organic.tsv.gz",
+          f"{WD}/2017-08-07_2017-09-03_organic.tsv.gz"]
+         if len(sys.argv) > 1 and sys.argv[1] == "pooled"
+         else [f"{WD}/int1_2017_organic.tsv.gz"])
 
 # Near-root anchors: classes so general that crediting their whole subclass closure would
 # mark most of the ontology as "used". These are the ones the manuscript's argument rests on.
