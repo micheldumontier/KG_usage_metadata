@@ -25,9 +25,16 @@ def parallel(prepped,nw=14):
         for x in ch: ti.write(json.dumps(x)+"\n")
         ti.close(); to=ti.name+".o"
         procs.append((subprocess.Popen([NODE,CVW],stdin=open(ti.name),stdout=open(to,'w')),ti.name,to))
-    res=[]
-    for p,ti,to in procs: p.wait(); res+=[json.loads(l) for l in open(to)]; os.remove(ti); os.remove(to)
-    return res
+    # Results must be returned in the SAME order as `prepped`. Chunks are strided
+    # (prepped[i::nw]), so chunk i holds original positions i, i+nw, i+2nw, ...; concatenating
+    # the chunks would scramble the mapping and silently misalign any later zip(queries, results).
+    out=[None]*len(prepped)
+    for i,(p,ti,to) in enumerate(procs):
+        p.wait()
+        rs=[json.loads(l) for l in open(to)]
+        for j,r in enumerate(rs): out[i+j*nw]=r
+        os.remove(ti); os.remove(to)
+    return out
 
 # dedup query texts (clean: LSQ texts are raw, not URL-encoded)
 TEXTS=sys.argv[1] if len(sys.argv)>1 else "data/logs/dbpedia/dbpedia_texts.txt"

@@ -12,3 +12,4 @@ out/
 
 # large, regenerable from the KG dump via KG-Schema-extractors/wd_p279_edges.py
 generated-usage-metadata/wikidata-schema/p279_edges_*.tsv
+__pycache__/
