@@ -119,6 +119,18 @@ with open('schema.csv', mode='w', newline='') as file, \
                             for result in results["results"]["bindings"]:
                                 otype = result["otype"]["value"]
                                 predicate = result["p"]["value"]
+                                # Section 3.2 restricts the Bio2RDF schema to IRIs matching
+                                # http://Bio2RDF.org/DATASET_vocabulary:ELEMENT. That filter was
+                                # applied to `stype` above but originally not to the predicate,
+                                # which let W3C terms (rdf:type, rdfs:subClassOf, owl:sameAs,
+                                # owl:sourceIndividual) into the predicate universe via
+                                # meta-statements such as
+                                #   sgd_vocabulary:Resource rdf:type owl:Class .
+                                # Those are statements *about* the vocabulary, not Bio2RDF schema,
+                                # and Bio2RDF cannot document or deprecate them. Apply the same
+                                # filter here so types and predicates are treated consistently.
+                                if "_vocabulary:" not in predicate:
+                                    continue
                                 writer.writerow([stype, predicate, otype])
 
 print("CSV files '16_March_kg_schema_optimized.csv' and 'all_classes.csv' have been created.")

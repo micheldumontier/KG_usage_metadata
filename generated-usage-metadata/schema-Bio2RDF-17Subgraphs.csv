@@ -3,7 +3,6 @@ http://bio2rdf.org/goa_vocabulary:target
 http://bio2rdf.org/sgd_vocabulary:is-proper-part-of
 http://bio2rdf.org/sgd_vocabulary:chromosome
 http://bio2rdf.org/sgd_vocabulary:strand
-http://www.w3.org/2002/07/owl#sameAs
 http://bio2rdf.org/sgd_vocabulary:query
 http://bio2rdf.org/sgd_vocabulary:has-proper-part
 http://bio2rdf.org/sgd_vocabulary:has-participant
@@ -59,9 +58,7 @@ http://bio2rdf.org/ctd_vocabulary:disease
 http://bio2rdf.org/ctd_vocabulary:chemical
 http://bio2rdf.org/ctd_vocabulary:gene
 http://bio2rdf.org/ctd_vocabulary:pathway
-http://www.w3.org/2000/01/rdf-schema#subClassOf
 http://bio2rdf.org/drugbank_vocabulary:source
-http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 http://bio2rdf.org/drugbank_vocabulary:enzyme
 http://bio2rdf.org/drugbank_vocabulary:dosage
 http://bio2rdf.org/drugbank_vocabulary:absorption
@@ -109,7 +106,6 @@ http://bio2rdf.org/wormbase_vocabulary:publication
 http://bio2rdf.org/wormbase_vocabulary:involves
 http://bio2rdf.org/wormbase_vocabulary:associated-gene-variant
 http://bio2rdf.org/wormbase_vocabulary:associated-rnai-knockdown-experiment
-http://www.w3.org/2002/07/owl#sourceIndividual
 http://bio2rdf.org/wormbase_vocabulary:rnai
 http://bio2rdf.org/wormbase_vocabulary:target-gene
 http://bio2rdf.org/affymetrix_vocabulary:genechip-array

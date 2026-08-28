@@ -112,6 +112,3 @@ http://bio2rdf.org/sgd_vocabulary:Record,33
 http://bio2rdf.org/sgd_vocabulary:SequenceLength,6
 http://bio2rdf.org/wormbase_vocabulary:Gene,1
 http://bio2rdf.org/wormbase_vocabulary:RNAi,1
-http://www.w3.org/1999/02/22-rdf-syntax-ns#type,3603
-http://www.w3.org/2000/01/rdf-schema#subClassOf,20
-http://www.w3.org/2002/07/owl#sameAs,12
