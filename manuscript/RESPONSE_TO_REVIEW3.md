@@ -254,10 +254,28 @@ but it is now unambiguous which is meant.
 
 1. **[4]** justification for the supply–demand analysis.
 2. **[9.1]** data provenance and figure→script mapping; **[9.2]** the rename.
-3. **`wd_classvalue` and `wd_temporal` are fixed for D2 but not re-run.** They feed the
-   volume-weighted class/value statement in §4.8.1 and the seven-window trajectory in
-   Table 13. Set-based columns should be unaffected; the volume-weighted ones are exactly
-   what D2 corrupted. **These must be re-run before submission.**
+3. **`wd_classvalue` and `wd_temporal` have now been re-run.** The prediction held in
+   both cases: everything set-based reproduced, and everything count-weighted had to be
+   corrected.
+
+   *Table 9 (class vs value) reproduces exactly* — 12,773 used types, 8,968 (70.2%) in
+   class position, 3,805 (29.8%) value-only.
+
+   *Table 13 (seven windows) reproduces exactly* on all four columns across all seven rows.
+
+   The frequency-derived statistics in §4.9.4 did not, and all three were wrong. The
+   consecutive-window Spearman band was reported as ρ = 0.47–0.51 with endpoint 0.44; it is
+   **0.52–0.59** with endpoint **0.43**. The persistent top-50 core is **fifteen** types, not
+   fourteen, with *actor* and *airport* out and *year*, *television film* and *scientific
+   article* in. And the Wilcoxon claim **inverted**: the paper reported the test as not
+   significant for most adjacent windows and concluded that usage magnitude is "largely
+   stationary month-to-month", whereas five of six adjacent windows are in fact significant
+   (only December–January is not, p = 0.23). That conclusion is withdrawn. The stability
+   finding itself stands on the effect-oriented measures, which is where the paper's own
+   argument about large-N p-values says it should have rested: coverage varies by under a
+   percentage point and the rank correlation stays in a narrow, slightly *higher* band.
+
+   The volume-weighted class/value share in §4.8.1 is still being reconciled; see below.
 4. **`RESPONSE_TO_REVIEW2.md` is superseded** wherever it quotes the Bio2RDF rarefaction
    (it still says 1.80×), and `main_review2_diff.pdf` diffs against an older baseline. Both
    should be regenerated once the remaining items settle.

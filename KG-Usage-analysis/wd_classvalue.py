@@ -67,8 +67,24 @@ print(f"  ...ever used in CLASS position (object of P31/P279):        {len(cls_e
 print(f"  ...VALUE-only (never class position):                       {len(value_only):,} ({100*len(value_only)/len(all_ent):.1f}%)")
 print(f"  class-position entities that are actually instantiated:     {len(inst_classpos):,}")
 tot_cls=sum(cls_dem.values()); tot_val=sum(val_dem.values())
-print(f"  demand-weighted: class-position refs={tot_cls:,}  value-position refs={tot_val:,} "
+print(f"  demand-weighted (all referenced entities): class-position refs={tot_cls:,}  value-position refs={tot_val:,} "
       f"({100*tot_cls/(tot_cls+tot_val):.1f}% of references are class-position)")
+# Same measure restricted to KG-schema types, which is the basis the manuscript's
+# "type-item references" claim is stated on. Reported separately because the two
+# denominators give very different shares.
+t_cls=sum(v for e,v in cls_dem.items() if e in tse)
+t_val=sum(v for e,v in val_dem.items() if e in tse)
+print(f"  demand-weighted (KG-schema types only):    class-position refs={t_cls:,}  value-position refs={t_val:,} "
+      f"({100*t_cls/max(1,t_cls+t_val):.1f}% of type-item references are class-position)")
+# Persist the per-entity demand vectors so downstream questions about these numbers can be
+# answered without re-parsing the logs, which takes tens of minutes.
+import json as _json
+_out = f"out/wd_classvalue_demand_{src}.json"
+os.makedirs("out", exist_ok=True)
+_json.dump({"cls_dem": cls_dem, "val_dem": val_dem,
+            "used_types": sorted(used_types), "class_used": sorted(class_used)},
+           open(_out, "w"))
+print(f"  wrote {_out}")
 print("  top class-position (genuine class demand):")
 for e,c in sorted(cls_dem.items(),key=lambda x:-x[1])[:8]:
     print(f"     {e} demand={c:,} instances={inst.get(e,0):,}")
