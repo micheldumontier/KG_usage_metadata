@@ -8,7 +8,7 @@ predictive where content volume is not -- operationalizing the content-demand in
 the paper's documentation/autocomplete motivation."""
 import csv, gzip, os, json, subprocess, tempfile, urllib.parse, importlib.util
 csv.field_size_limit(1<<30)
-spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/parse_validate_bio2rdf2019.py")
+spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); PAW=os.path.expanduser("~/.local/sparqljs-worker/pathanchor_worker.js")
 WD="data/logs/wikidata"

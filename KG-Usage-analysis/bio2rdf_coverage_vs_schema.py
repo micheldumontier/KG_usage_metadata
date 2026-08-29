@@ -2,7 +2,7 @@
 Usage: python3 bio2rdf_coverage_vs_schema.py <queries.txt> <types.txt> <preds.txt> <label>"""
 import csv, sys, json, os, subprocess, tempfile, importlib.util, re
 csv.field_size_limit(sys.maxsize)
-spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/parse_validate_bio2rdf2019.py")
+spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); EXW=os.path.expanduser("~/.local/sparqljs-worker/extract_worker.js")
 QF,TF,PF,LABEL=sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4]

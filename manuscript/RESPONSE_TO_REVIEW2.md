@@ -31,7 +31,7 @@ ranges rather than punctuation.
 
 ### V1. "which parser is used, `rdflib` or `sparqljs`?"
 
-**You were right that the repository is ambiguous.** `parse_validate_bio2rdf2019.py`
+**You were right that the repository is ambiguous.** `sparql_log_preprocess.py`
 exposes `--parser {rdflib,pyoxigraph,sparqljs}` and **defaults to `rdflib`**, which is
 almost certainly what you found. The reported numbers, however, all come from the
 `sparqljs` path (`Schema-coverage-method/sparqljs-worker/extract_worker.js`). The other

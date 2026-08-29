@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """
-Clean, reproducible pipeline: Bio2RDF 2019 SPARQL log  ->  used-schema-element usage.
+Clean, reproducible pipeline: raw SPARQL query log  ->  used-schema-element usage.
 
-This replaces the notebook chain (Schema_coverage_calculation_BIO2RDF.ipynb) with a
+Despite its origin as a Bio2RDF-2019 script (and its former name,
+parse_validate_bio2rdf2019.py, which review correctly flagged as misleading), this is the
+general preprocessing and validation path used for *all three* KGs in the paper. The
+Wikidata and DBpedia analyses in KG-Usage-analysis/ import it for `normalize_ws`,
+`add_prefixes`, `clean` and `HTTP_TAIL`; only the CSV-streaming entry point below is
+Bio2RDF-log-specific.
+
+It replaces the notebook chain (Schema_coverage_calculation_BIO2RDF.ipynb) with a
 single, streaming, parameterized command. It addresses the issues found in that chain:
 
   * NUL-safe, quote/newline-safe CSV streaming (the raw log has embedded newlines,
@@ -25,7 +32,7 @@ keyword list stated in the methods): organic = browser UA; none = empty UA;
 robotic = everything else. Use --strict-robotic to require the stated keyword list.
 
 Usage:
-  python3 parse_validate_bio2rdf2019.py \
+  python3 sparql_log_preprocess.py \
       --log   data/logs/bio2rdf_2019-2021.csv \
       --schema generated-usage-metadata/schema-Bio2RDF-26Subgraphs.csv \
       --agent organic --out out/bio2rdf2019_organic

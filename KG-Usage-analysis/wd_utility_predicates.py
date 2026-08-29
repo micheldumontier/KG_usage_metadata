@@ -15,7 +15,7 @@ Reports top-k demand coverage, nDCG@k with graded relevance, and demand-weighted
 """
 import csv, gzip, os, json, subprocess, tempfile, urllib.parse, importlib.util, math
 csv.field_size_limit(1 << 30)
-spec = importlib.util.spec_from_file_location("pv", "Schema-coverage-method/parse_validate_bio2rdf2019.py")
+spec = importlib.util.spec_from_file_location("pv", "Schema-coverage-method/sparql_log_preprocess.py")
 pv = importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE = os.path.expanduser("~/.local/bin/node")
 EXW  = os.path.expanduser("~/.local/sparqljs-worker/extract_worker.js")

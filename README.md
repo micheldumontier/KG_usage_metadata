@@ -48,6 +48,12 @@ To perform the **usage pattern analysis** as proposed in the paper, run the code
 The **generated usage metadata** for **Bio2RDF** and **Wikidata** KGs can be found in the **`generated-usage-metadata`** folder.  
 
 
+## Reproducing the analyses
+
+`REPRODUCIBILITY.md` lists where every input dataset comes from (the ~60 GB under `data/`
+is git-ignored), which script produced each figure and table, and the environment quirks
+worth knowing about before running anything.
+
 ## Manuscript (Overleaf sync)
 
 The LaTeX manuscript lives in `manuscript/texsupport.iospress-sw-master/`, which is a

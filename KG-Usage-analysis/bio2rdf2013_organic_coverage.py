@@ -4,7 +4,7 @@ referenced bio2rdf vocabulary elements, intersect with the canonical 545-element
 report coverage. Mirrors the 2019 organic method (extract_worker, TSE intersection)."""
 import csv, sys, json, os, subprocess, tempfile, importlib.util, re
 csv.field_size_limit(sys.maxsize)
-spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/parse_validate_bio2rdf2019.py")
+spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); EXW=os.path.expanduser("~/.local/sparqljs-worker/extract_worker.js")
 ORG=os.path.expanduser("~/data/bio2rdf.logs/derived/organic_2013_queries.txt")

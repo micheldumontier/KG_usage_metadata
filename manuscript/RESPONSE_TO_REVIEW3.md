@@ -217,7 +217,7 @@ counterpart. Usage metadata helps most exactly where the content signal is weake
 
 **[9.1] Data provenance and a figure→script map — not yet done.** Accepted; tracked below.
 
-**[9.2] `parse_validate_bio2rdf2019.py` is misleadingly named — not yet done.** Accepted:
+**[9.2] `sparql_log_preprocess.py` is misleadingly named — not yet done.** Accepted:
 it is the general preprocessing path for Wikidata and DBpedia too, and the name suggests
 otherwise. Rename pending.
 

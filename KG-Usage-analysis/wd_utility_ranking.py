@@ -11,7 +11,7 @@ Rankings compared: (U) 2017 usage frequency, (S) KG supply (instances/class).
 Caches the parsed demand vectors so the expensive log parse runs once."""
 import csv, gzip, os, json, subprocess, tempfile, urllib.parse, importlib.util, math
 csv.field_size_limit(1<<30)
-spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/parse_validate_bio2rdf2019.py")
+spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); PAW=os.path.expanduser("~/.local/sparqljs-worker/pathanchor_worker.js")
 WD="data/logs/wikidata"

@@ -8,7 +8,7 @@ number of additional types a closure notion could credit, as an absolute count a
 import csv, gzip, sys, json, os, subprocess, tempfile, urllib.parse, re, importlib.util
 from collections import deque
 csv.field_size_limit(sys.maxsize)
-spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/parse_validate_bio2rdf2019.py")
+spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); PAW=os.path.expanduser("~/.local/sparqljs-worker/pathanchor_worker.js")
 WD="data/logs/wikidata"; YEAR="2017"
