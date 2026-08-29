@@ -691,10 +691,11 @@ Wikidata robotic 2017 & 58,689 & 54,534 (92.9\%) & 4,155 (7.1\%) \\
 \end{tabular}
 \end{table}
 
-Beyond the position of reference, comparing query \emph{demand} against KG \emph{supply} (instances per class, extracted from the dump) reveals a pronounced inversion (Figure~\ref{fig:mismatch}). The most heavily instantiated Wikidata classes are almost never queried: e.g.\ \emph{ravine} ($\sim$17{,}000 instances), \emph{reef}, \emph{cairn}, \emph{qanat}, \emph{shoal}, and (for bots) \emph{Wikimedia navigational template} ($\sim$27{,}000), \emph{protein domain}, and \emph{microRNA}, all bulk- or bot-imported categories with essentially zero human or robotic class-position demand. Conversely, the genuinely class-queried core is small and intuitive: \emph{human} (\texttt{Q5}), \emph{city}, \emph{film}, \emph{country}, \emph{painting} for organic queries, and \emph{human-geographic territorial entity}, \emph{film}, \emph{album}, \emph{church building}, \emph{book}, \emph{business} for robotic. In other words, the bulk of what Wikidata \emph{contains} is not what users \emph{query}, and much of what users query as ``types'' the model does not treat as classes at all.
-\begin{comment}
-    the paragraph starting with "Beyond the position of reference...", I belive that the supply-demand analysis is introduced abruptly, with no relation to the schema coverage or wikidata specific analysis. why would we not calculated this supply-demnd analysis for Bio2RDf, I dont sugesst doing it, instead my question is in first place why did we do it for wikidata? in the current presentation it seems unrelevant and not justified. 
-\end{comment}
+The position analysis above establishes that Wikidata's coverage figure over-counts, but it leaves a second question open, and the two together are what make the coverage number interpretable. Coverage asks how much of the schema is reached; it says nothing about whether the parts that are reached are the parts the KG is actually built around. If the heavily populated regions of the KG were also the heavily queried ones, a low coverage figure would simply mean users query a small but well-chosen core. We therefore compare query \emph{demand} against KG \emph{supply} (instances per class, extracted from the dump).
+
+We run this comparison on Wikidata, and later on DBpedia, rather than on Bio2RDF, for a reason specific to what coverage looks like on each. A supply--demand inversion can only exist where a substantial part of the schema goes unqueried, and on Bio2RDF it does not: the union of 2019 queries reaches 97\% of the schema (Table~\ref{tab:5}), leaving 16 elements of 541 untouched. There is no appreciable body of Bio2RDF content that nobody queries, so the comparison would have nothing to find. On Wikidata, organic queries reach about 4\% of the class universe, which leaves the overwhelming majority of the KG's content unqueried and makes the question of \emph{which} content that is a substantive one.
+
+The answer is a pronounced inversion (Figure~\ref{fig:mismatch}). The most heavily instantiated Wikidata classes are almost never queried: e.g.\ \emph{ravine} ($\sim$17{,}000 instances), \emph{reef}, \emph{cairn}, \emph{qanat}, \emph{shoal}, and (for bots) \emph{Wikimedia navigational template} ($\sim$27{,}000), \emph{protein domain}, and \emph{microRNA}, all bulk- or bot-imported categories with essentially zero human or robotic class-position demand. Conversely, the genuinely class-queried core is small and intuitive: \emph{human} (\texttt{Q5}), \emph{city}, \emph{film}, \emph{country}, \emph{painting} for organic queries, and \emph{human-geographic territorial entity}, \emph{film}, \emph{album}, \emph{church building}, \emph{book}, \emph{business} for robotic. In other words, the bulk of what Wikidata \emph{contains} is not what users \emph{query}, and much of what users query as ``types'' the model does not treat as classes at all.
 
 \begin{figure}
     \centering
@@ -752,34 +753,11 @@ These observations reframe the coverage results for Wikidata: a single ``schema 
 \subsection{Knowledge Graph Usage Patterns }
 Thus far, we have introduced a method for calculating SPARQL schema coverage, which quantifies interactions with KGs through SPARQL queries. This measure may provide only a superficial view of KG usage, as it does not capture how usage is distributed across schema elements or how these patterns change over time. In this section, we present the results of the methods described in Section \ref{sec:s6}, focusing on the frequency distribution and temporal changes in KG usage. For this analysis, we have used unique queries.
 
-\paragraph{\textbf{Basis of the frequency analyses, and its robustness to the corrected preprocessing.}}
-All frequency-based results in this section (Figures~\ref{fig:l6} and~\ref{fig:l8}, Table~\ref{tab:concentration},
-and the Wilcoxon and Spearman statistics) are computed from the released per-element usage-count files rather
-than recomputed from the logs. Because the corrected parameter stripping of Section~\ref{s3}.3 substantially
-raises the number of \emph{valid} queries for Bio2RDF~2019 (Table~\ref{tab:2}), it is reasonable to ask whether
-it also changes these per-element counts. We therefore re-derived the per-element usage vector for
-\emph{Bio2RDF-organic-2019} directly from the corrected valid-query set and compared it against the released
-one. The two agree closely: the Spearman rank correlation between them is $\rho = 0.954$ over the 111 shared
-schema elements, the ten most-used elements are identical and in almost the same order, and the largest
-absolute difference in any single element's count is 21. The recomputed used-element set differs from the released
-one by seven elements in total (four present only in the released set, three only in the recomputed one, all of
-them referenced by between one and four queries), a net change of one element out of 116, which leaves coverage
-at 21.1\% against the reported 21.3\%. Two properties of this log explain why so large a change in valid-query
-count leaves the usage vector nearly fixed. The correction adds 11\% to the valid organic queries (7{,}357 to
-8{,}140), a far smaller relative gain than for the robotic log, and 86.9\% of valid organic queries reference no
-Bio2RDF schema element at all (Section~\ref{sec:bio2rdfresults}), so most of what is recovered contributes
-nothing to any element's count. We therefore retain the released counts. We verified this directly for
-\emph{Bio2RDF-organic-2019}, the log where the class- and frequency-level analyses are most exposed because it
-is by far the sparsest; the Wikidata and Bio2RDF-2013 logs were unaffected by the correction in the first place
-(Table~\ref{tab:2}), so their counts are unchanged by construction.
+\paragraph{\textbf{Basis of the frequency analyses.}}
+The frequency-based results in this section (Figures~\ref{fig:l6} and~\ref{fig:l8}, Table~\ref{tab:concentration}, and the Wilcoxon and Spearman statistics) are computed from the released per-element usage-count files. Those files are derived with the corrected preprocessing of Section~\ref{s3}.3 and, since the schema revision of Section~\ref{s3}.2, are restricted to the conforming schema, so every Bio2RDF figure in the paper rests on one consistently defined element set.
 
-\begin{comment}
-I suggest deleting the entire paragraph beginning with `\paragraph{\textbf{Basis of the frequency analyses, and its robustness to the corrected preprocessing.}}`, as it reads primarily as a response to a reviewer comment rather than as part of the manuscript itself.
-More importantly, the current explanation is somewhat confusing. The paragraph states that the improved preprocessing parses more queries but has only a limited effect on schema coverage and produces relatively small changes in element frequencies, and therefore the analyses retain the previously released counts. However, if the recomputed results are based on the corrected and more accurate preprocessing pipeline, it is not clear why the manuscript should continue to report results based on the earlier counts simply because the differences are small.
-I am not necessarily suggesting that all subsequent experiments must be rerun, since I understand that this would require recomputing a substantial part of the analysis. Nevertheless, ideally, the results reported throughout the paper would be based consistently on the corrected preprocessing pipeline, particularly since this pipeline is what the paper now presents as the accurate one. Even if the numerical differences are small, using the corrected results throughout would make the methodology and reported results more internally consistent.
+One check is worth recording, because the corrected parameter stripping raises the number of \emph{valid} Bio2RDF-2019 queries substantially (Table~\ref{tab:2}) and it is reasonable to ask whether the per-element counts move with it. Re-deriving the usage vector for \emph{Bio2RDF-organic-2019} directly from the corrected valid-query set gives a Spearman rank correlation of $\rho = 0.954$ with the released counts over the 109 shared elements, an identical set of ten most-used elements, and a largest single-element difference of 21 references. Coverage differs by 0.2 percentage points. The reason so large a change in valid-query count leaves the usage vector almost fixed is that 86.9\% of valid organic queries reference no schema element at all (Section~\ref{sec:bio2rdfresults}), so most of what the correction recovers contributes nothing to any element's count.
 
-\end{comment}
-    
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{image10.png} 
