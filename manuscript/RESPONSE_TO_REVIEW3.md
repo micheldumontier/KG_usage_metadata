@@ -2,8 +2,8 @@
 
 Thank you. Delivering the comments inline in `main.tex` worked far better than the sidebar
 did last round, and it is worth saying why beyond convenience: **three of the nine comments
-led to defects that were not visible from the text at all, and two of them had silently
-changed published numbers.** Two headline results moved as a result. The details are below;
+led to four defects that were not visible from the text at all, and three of them had
+silently changed published numbers.** Two headline results reversed as a result. The details are below;
 the short version is that the paper is now more defensible and slightly less dramatic.
 
 Comments are numbered in the order they appear in the source.
@@ -25,12 +25,16 @@ Comments are numbered in the order they appear in the source.
 | 2013 vs 2019 equal-effort | 1.58× | 1.28× |
 | Bio2RDF adoption claim | "growth outruns adoption" | **withdrawn** (retirement artifact) |
 | DBpedia class-demand core | …, Company, … | Place, **Airport**, Person, … |
+| consecutive-window Spearman | ρ = 0.47–0.51 | **0.52–0.59** (endpoint 0.44 → 0.43) |
+| Wilcoxon, adjacent windows | "not significant for most" | **5 of 6 significant**; claim withdrawn |
+| persistent top-50 core | 14 types | **15**, membership changed |
+| volume-weighted class position | "~27–29%" | **organic 90.7%, robotic 61.3%** |
 
 The build is clean throughout: 37 pages, no errors, no undefined references or citations.
 
 ---
 
-## The three defects
+## The four defects
 
 ### D1. `rdf:type` in the Bio2RDF schema (your comment [3])
 
@@ -112,6 +116,38 @@ it — and the answer disqualifies the Bio2RDF comparison rather than extending 
 
 ---
 
+### D4. The volume-weighted class/value contrast was inverted (found while re-running for D2)
+
+Re-running `wd_classvalue` to check D2 confirmed that **Table 9 reproduces exactly on both
+rows** — organic 12,773 / 8,968 (70.2%) / 3,805 (29.8%), robotic 58,689 / 54,534 (92.9%) /
+4,155 (7.1%). The set-based result was never exposed.
+
+The volume-weighted sentence in the same paragraph was wrong in magnitude and in direction.
+It read: *"Weighted by reference volume the contrast narrows (both query types are dominated
+by value references, since queries fetch values): only ~27–29% of all type-item references
+are in class position."* Recomputed, **90.7% of organic type-item references are in class
+position and 61.3% of robotic ones**. No denominator produces 27–29%; over all referenced
+entities the shares are 72.1% and 23.6%. The published figure looks like a value share
+reported as a class share.
+
+The correction is more interesting than the sentence it replaces, because volume weighting
+does not narrow the contrast — **it inverts it**. Counting elements, robotic queries are the
+more class-oriented (92.9% vs 70.2%); counting references, organic queries are (90.7% vs
+61.3%). Both are true and they measure different things: human value-position usage is a long
+tail of one-off mentions (29.8% of distinct type-items, 9.3% of references), while robotic
+value-position usage concentrates on few items referenced in enormous volume (7.1% of items,
+38.7% of references).
+
+The paper now also states which view bears on the metric. Coverage is a breadth measure, so
+it is the set-level figure that governs how inflated a coverage percentage is, and that
+inflation remains worst for human queries. The volume figures do not correct coverage; they
+show the two query types reach their schema usage by different routes.
+
+*A note on our own reasoning here.* We predicted from the set-level figures that the robotic
+volume-weighted share would also be around 90%. It is 61.3%. The prediction was wrong and the
+measurement stands; we mention it because it is exactly the kind of plausible inference that
+the set-level numbers invite and that the paper should not encourage.
+
 ## Point-by-point
 
 ### [1] "Raw schema coverage" is used in the abstract before being defined
@@ -138,20 +174,31 @@ anchor count to 2,752; the script now defaults to the correct scope.
 **Accepted in full.** See **D1**.
 
 ### [4] The supply–demand analysis is introduced abruptly; why Wikidata and not Bio2RDF?
-**Not yet addressed** — flagged here so it is not lost. This needs a justification paragraph
-before Table 10 rather than new computation, and we will draft one.
+**Accepted; the motivation is now stated, and so is the reason for the choice of KG.** The
+position analysis establishes that Wikidata's coverage figure over-counts, but it says
+nothing about whether the parts of the schema that *are* reached are the parts the KG is
+built around. If the heavily populated regions were also the heavily queried ones, a low
+coverage figure would simply mean users query a small but well-chosen core. Supply versus
+demand settles that, and the two together are what make the coverage number interpretable.
+
+On why not Bio2RDF: an inversion can only exist where a substantial part of the schema goes
+unqueried, and Bio2RDF has essentially none. The union of 2019 queries reaches 97% of the
+schema, leaving 16 elements of 541 untouched, so the comparison would have nothing to find.
+Wikidata's organic queries reach about 4% of the class universe, which makes *which* content
+goes unqueried a substantive question. This is now said in the text before Table 10.
 
 ### [5] Do not keep the pre-correction counts; the paper should be internally consistent
-**Largely resolved by D1, though not in the way either of us expected.** Your objection was
+**Resolved, though not in the way either of us expected.** Your objection was
 that reporting earlier counts because the differences are small is unsatisfying when the
 corrected pipeline is the one the paper presents as accurate. Agreed in principle. The
 schema correction has now forced a recomputation of every Bio2RDF figure from a single
 consistently-defined element set, so the inconsistency you objected to is gone at its source.
 What remains of the original paragraph is the narrower and still-useful statement that the
-corrected preprocessing does not materially change the frequency vectors (ρ = 0.954), which
-is a robustness check rather than a justification for using older numbers. Two Wikidata
-scripts (`wd_classvalue`, `wd_temporal`) are fixed for D2 but **not yet re-run**; that is
-tracked below.
+corrected preprocessing does not materially change the frequency vectors, which is a
+robustness check rather than a justification for using older numbers. Its figures are
+re-derived on the conforming basis: ρ = 0.954 over the 109 shared elements, an identical set
+of ten most-used elements, a largest single-element difference of 21 references, and coverage
+differing by 0.2 points. The reviewer-response framing you objected to is gone.
 
 ### [6] Why is adoption bounded only for predicates?
 **Accepted, and it changed the section.** Types can be analysed, and doing so exposed a
@@ -215,11 +262,17 @@ counterpart. Usage metadata helps most exactly where the content signal is weake
 
 ### [9] Repository comments
 
-**[9.1] Data provenance and a figure→script map — not yet done.** Accepted; tracked below.
+**[9.1] Data provenance and a figure→script map.** **Done.** New `REPRODUCIBILITY.md` gives
+the source of every input dataset, including the four you could not locate and that
+`data/download_all.sh` does not cover (the LSQ-derived Bio2RDF 2013 logs, `dbpedia_texts.txt`,
+the five intermediate Wikidata windows, and the WDQS example set), plus a figure→script and
+table→script map. Every path in that map was checked to exist. Linked from `README.md`.
 
-**[9.2] `sparql_log_preprocess.py` is misleadingly named — not yet done.** Accepted:
-it is the general preprocessing path for Wikidata and DBpedia too, and the name suggests
-otherwise. Rename pending.
+**[9.2] `parse_validate_bio2rdf2019.py` is misleadingly named.** **Done.** Renamed to
+`sparql_log_preprocess.py`, with all 18 referencing files updated and the module verified to
+still load. The docstring was the substance of the point and is fixed too: it also described
+the file as Bio2RDF-specific, and now states that only the CSV-streaming entry point is,
+while the preprocessing helpers are shared across all three KGs.
 
 **[9.3] The closure percentage should use the class universe, not TSE.** **Accepted, and it
 turns out not to matter.** `wd_closure_queries.py` now reports both: the closure spans
@@ -250,35 +303,46 @@ but it is now unambiguous which is meant.
 
 ---
 
+## Re-runs prompted by D2
+
+Both Wikidata scripts that D2 affected have been re-run. The prediction held in both cases:
+everything set-based reproduced, everything count-weighted had to be corrected.
+
+**`wd_classvalue`** — Table 9 reproduces exactly on both rows; the volume-weighted claim was
+inverted (see **D4**).
+
+**`wd_temporal`** — Table 13 reproduces exactly, all four columns across all seven windows.
+The frequency-derived statistics in §4.9.4 did not, and all three were wrong:
+
+- The consecutive-window Spearman band was reported as ρ = 0.47–0.51 with an endpoint value
+  of 0.44. It is **0.52–0.59** with endpoint **0.43** — slightly higher and just as narrow, so
+  the stability argument is unchanged and marginally stronger.
+- The persistent top-50 core is **fifteen** types, not fourteen, with *actor* and *airport*
+  out and *year*, *television film* and *scientific article* in. A downstream sentence citing
+  *actor* as a value-position core member is corrected accordingly.
+- **The Wilcoxon claim inverted.** The paper reported the test as not significant for most
+  adjacent windows and concluded that usage magnitude is "largely stationary month-to-month".
+  Five of six adjacent windows are in fact significant; only December–January is not
+  (p = 0.23). That conclusion is withdrawn. The stability finding now rests where the paper's
+  own argument about large-N p-values says it should: with 1,500–1,900 paired types the test
+  detects arbitrarily small differences, whereas coverage varying by under a percentage point
+  and a narrow rank-correlation band are the informative measures, and both still hold.
+
+Together with the DBpedia demand ranking, four independent analyses now show the same
+signature: sets survive the misordering, counts do not.
+
 ## Still open
 
-1. **[4]** justification for the supply–demand analysis.
-2. **[9.1]** data provenance and figure→script mapping; **[9.2]** the rename.
-3. **`wd_classvalue` and `wd_temporal` have now been re-run.** The prediction held in
-   both cases: everything set-based reproduced, and everything count-weighted had to be
-   corrected.
+Nothing from your review. All nine comments are addressed and no `\begin{comment}` blocks
+remain in the source.
 
-   *Table 9 (class vs value) reproduces exactly* — 12,773 used types, 8,968 (70.2%) in
-   class position, 3,805 (29.8%) value-only.
+Two items of our own housekeeping remain, neither affecting the manuscript:
 
-   *Table 13 (seven windows) reproduces exactly* on all four columns across all seven rows.
-
-   The frequency-derived statistics in §4.9.4 did not, and all three were wrong. The
-   consecutive-window Spearman band was reported as ρ = 0.47–0.51 with endpoint 0.44; it is
-   **0.52–0.59** with endpoint **0.43**. The persistent top-50 core is **fifteen** types, not
-   fourteen, with *actor* and *airport* out and *year*, *television film* and *scientific
-   article* in. And the Wilcoxon claim **inverted**: the paper reported the test as not
-   significant for most adjacent windows and concluded that usage magnitude is "largely
-   stationary month-to-month", whereas five of six adjacent windows are in fact significant
-   (only December–January is not, p = 0.23). That conclusion is withdrawn. The stability
-   finding itself stands on the effect-oriented measures, which is where the paper's own
-   argument about large-N p-values says it should have rested: coverage varies by under a
-   percentage point and the rank correlation stays in a narrow, slightly *higher* band.
-
-   The volume-weighted class/value share in §4.8.1 is still being reconciled; see below.
-4. **`RESPONSE_TO_REVIEW2.md` is superseded** wherever it quotes the Bio2RDF rarefaction
-   (it still says 1.80×), and `main_review2_diff.pdf` diffs against an older baseline. Both
-   should be regenerated once the remaining items settle.
+1. `RESPONSE_TO_REVIEW2.md` is superseded wherever it quotes the Bio2RDF rarefaction, since
+   it still reports 1.80×. It is left as the record of the previous round.
+2. The robotic arm of `wd_classvalue` takes about 40 minutes on 8.2M queries. The script now
+   persists its per-entity demand vectors to `out/`, so follow-up questions about these
+   numbers no longer require a re-parse.
 
 ## A note on local builds
 
