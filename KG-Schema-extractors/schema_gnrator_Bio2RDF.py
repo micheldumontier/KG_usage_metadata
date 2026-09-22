@@ -99,7 +99,10 @@ with open('schema.csv', mode='w', newline='') as file, \
         for subject_prop in properties:
             subject_types = fetch_subject_types(graph, subject_prop)
             for stype in subject_types:
-                if "_vocabulary" in stype:
+                # Exclude the generic *_vocabulary:Resource class, matching
+                # bio2rdf_release_schema.py's type exclusion, so the two Bio2RDF
+                # schema-extraction pipelines use the same class definition.
+                if "_vocabulary" in stype and not stype.endswith(":Resource"):
                     class_writer.writerow([stype])  # Write subject types to the all_classes.csv
                     for object_prop in object_properties:
                         query = f"""
