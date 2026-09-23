@@ -21,6 +21,7 @@ including the inputs that script does not yet cover.
 | `wdqs_examples/` | small | WDQS example set, revision 509986548 — <https://www.wikidata.org/w/index.php?title=Wikidata:SPARQL_query_service/queries/examples&oldid=509986548>. See `generated-usage-metadata/wdqs-examples/README.md`. |
 | Bio2RDF 2024 schema | — | Queried live from <https://bio2rdf.org/sparql>. Because a live endpoint drifts, the extracted schema is frozen in `generated-usage-metadata/bio2rdf-schema/` and *that*, not the endpoint, is the reproducible reference. |
 | Bio2RDF Release 2 / 3 schemas | small | Recovered from Bio2RDF's published per-dataset statistics files; frozen in `generated-usage-metadata/bio2rdf-schema-release{2,3}/`. |
+| `wd_closure_anchor_queries.tsv`, `wd_closure_bound_summary.txt` | small | **Pending** (review round 4, comment #14) — outputs of `KG-Usage-analysis/wd_closure_queries.py`/`wd_closure_bound.py`, exist on the co-author's machine but not yet committed; regenerating locally needs the raw Wikidata logs and `p279_edges_2017.tsv` (both absent here). See `generated-usage-metadata/wd-closure/README.md`. |
 
 ## 2. Which script produced which figure
 
