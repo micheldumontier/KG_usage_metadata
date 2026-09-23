@@ -65,16 +65,39 @@ def load(f):
     return df.dropna()
 
 # ---------- Fig 6: frequency distribution (rank vs normalized monthly count, log y) ----------
+# Axis limits are shared within each KG (comment #9, review round 4): panels were previously
+# independently auto-scaled, which let panels differing by orders of magnitude in true rate
+# (e.g. Bio2RDF robotic vs. organic) look like they had similar vertical extent. Bio2RDF and
+# Wikidata keep separate scales from each other, since their usage frequencies differ
+# substantially and are not meant to be visually compared panel-for-panel across KGs.
+BIO2RDF_PANELS = {"A", "B", "C", "D"}
+WIKIDATA_PANELS = {"E", "F", "G", "H", "L", "M"}
+series = {}
+for p, f, dur, col, title in PANELS:
+    df = load(f); y = sorted(df["count"]/dur, reverse=True); x = list(range(1, len(y)+1))
+    series[p] = (x, y, col, title)
+
+def group_limits(panels):
+    xs_max = max(len(series[p][0]) for p in panels)
+    ys_all = [v for p in panels for v in series[p][1]]
+    return (1, xs_max), (min(ys_all), max(ys_all))
+
+xlim_bio, ylim_bio = group_limits(BIO2RDF_PANELS)
+xlim_wd, ylim_wd = group_limits(WIKIDATA_PANELS)
+
 fig, axes = plt.subplots(2, 5, figsize=(18, 7)); axes = axes.ravel()
 for ax, (p, f, dur, col, title) in zip(axes, PANELS):
-    df = load(f); y = sorted(df["count"]/dur, reverse=True); x = range(1, len(y)+1)
+    x, y, col, title = series[p]
     ax.plot(x, y, color=col, lw=1.2)
     ax.set_yscale("log"); ax.set_xscale("log")
+    xlim, ylim = (xlim_bio, ylim_bio) if p in BIO2RDF_PANELS else (xlim_wd, ylim_wd)
+    ax.set_xlim(xlim); ax.set_ylim(ylim)
     ax.set_title(f"{p}) {title}", fontsize=9)
     ax.set_xlabel("schema element rank", fontsize=8)
     ax.set_ylabel("uses / month", fontsize=8)
     ax.tick_params(labelsize=7)
-fig.suptitle("Frequency distribution of schema-element usage (log-scaled axes)", fontsize=12)
+fig.suptitle("Frequency distribution of schema-element usage (log-scaled axes, "
+             "shared within each KG)", fontsize=12)
 fig.tight_layout(rect=[0,0,1,0.97]); fig.savefig(os.path.join(OUT,"image10.png"), dpi=200); plt.close(fig)
 print("wrote Fig 6 -> image10.png")
 
