@@ -1,6 +1,10 @@
 // DBpedia class/value worker. NDJSON in -> {"v":,"cls":[type-object IRIs],
 //   "ents":[all subject/object IRIs],"preds":[predicate IRIs]}.
 // Type-properties for DBpedia: rdf:type and rdfs:subClassOf.
+// Class-position also includes the SUBJECT of rdfs:subClassOf (review round 4,
+// comment #8): unlike rdf:type (subject is an instance, object is a class),
+// rdfs:subClassOf relates two classes, so its subject is itself a class too.
+// rdf:type's subject is deliberately NOT included here -- only subClassOf.
 const readline = require('readline');
 const { Parser } = require('sparqljs');
 const parser = new Parser({ baseIRI: 'http://dbpedia.org/' });
@@ -8,8 +12,11 @@ const TYPEPROPS = new Set([
   'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
   'http://www.w3.org/2000/01/rdf-schema#subClassOf',
 ]);
+const SUBCLASS_PROP = 'http://www.w3.org/2000/01/rdf-schema#subClassOf';
 function pathHasType(p){ if(!p)return false; if(p.termType==='NamedNode')return TYPEPROPS.has(p.value);
   if(p.items)return p.items.some(pathHasType); return false; }
+function pathHasSubClass(p){ if(!p)return false; if(p.termType==='NamedNode')return p.value===SUBCLASS_PROP;
+  if(p.items)return p.items.some(pathHasSubClass); return false; }
 function collectPathIris(p,s){ if(!p)return; if(p.termType==='NamedNode'){s.add(p.value);return;}
   if(p.items)for(const it of p.items)collectPathIris(it,s); }
 function walk(node,triples){
@@ -28,10 +35,11 @@ function extract(query){
     if(t.subject&&t.subject.termType==='NamedNode')ents.add(t.subject.value);
     if(t.object&&t.object.termType==='NamedNode')ents.add(t.object.value);
     const p=t.predicate;
-    let isType=false;
-    if(p&&p.termType==='NamedNode'){preds.add(p.value);isType=TYPEPROPS.has(p.value);}
-    else if(p&&(p.type==='path'||p.pathType)){collectPathIris(p,preds);isType=pathHasType(p);}
+    let isType=false, isSubClass=false;
+    if(p&&p.termType==='NamedNode'){preds.add(p.value);isType=TYPEPROPS.has(p.value);isSubClass=p.value===SUBCLASS_PROP;}
+    else if(p&&(p.type==='path'||p.pathType)){collectPathIris(p,preds);isType=pathHasType(p);isSubClass=pathHasSubClass(p);}
     if(isType&&t.object&&t.object.termType==='NamedNode')cls.add(t.object.value);
+    if(isSubClass&&t.subject&&t.subject.termType==='NamedNode')cls.add(t.subject.value);
   }
   return {v:1,cls:[...cls],ents:[...ents],preds:[...preds]};
 }

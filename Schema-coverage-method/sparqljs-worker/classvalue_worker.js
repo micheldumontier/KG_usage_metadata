@@ -1,8 +1,12 @@
 // Classify Wikidata entity references by query position.
-// NDJSON in (JSON-encoded query) -> {"v":0|1,"cls":[Qids used as object of P31/P279],
-//   "ents":[all Qids referenced as subject/object]}.
+// NDJSON in (JSON-encoded query) -> {"v":0|1,"cls":[Qids used as object of P31/P279,
+//   or subject of P279],"ents":[all Qids referenced as subject/object]}.
 // An entity is "class-position" if it is the object of a triple whose predicate is
 // wdt:P31 or wdt:P279, OR a property path that contains P31/P279 (e.g. P31/P279*).
+// Class-position also includes the SUBJECT of P279 (review round 4, comment #8):
+// unlike P31 (subject is an instance, object is a class), P279 relates two
+// classes, so its subject is itself a class too. P31's subject is deliberately
+// NOT included -- only P279.
 const readline = require('readline');
 const { Parser } = require('sparqljs');
 const parser = new Parser({ baseIRI: 'http://www.wikidata.org/' });
@@ -10,10 +14,17 @@ const TYPEPROPS = new Set([
   'http://www.wikidata.org/prop/direct/P31',
   'http://www.wikidata.org/prop/direct/P279',
 ]);
+const SUBCLASS_PROP = 'http://www.wikidata.org/prop/direct/P279';
 function pathHasType(p) {
   if (!p) return false;
   if (p.termType === 'NamedNode') return TYPEPROPS.has(p.value);
   if (p.items) return p.items.some(pathHasType);
+  return false;
+}
+function pathHasSubClass(p) {
+  if (!p) return false;
+  if (p.termType === 'NamedNode') return p.value === SUBCLASS_PROP;
+  if (p.items) return p.items.some(pathHasSubClass);
   return false;
 }
 function qid(t){ const m=t&&t.value&&t.value.match(/\/entity\/(Q\d+)$/); return m?m[1]:null; }
@@ -34,7 +45,9 @@ function extract(query){
     if(so) ents.add(so); if(oo) ents.add(oo);
     const p=t.predicate;
     const isType = (p&&p.termType==='NamedNode'&&TYPEPROPS.has(p.value)) || (p&&(p.type==='path'||p.pathType)&&pathHasType(p));
+    const isSubClass = (p&&p.termType==='NamedNode'&&p.value===SUBCLASS_PROP) || (p&&(p.type==='path'||p.pathType)&&pathHasSubClass(p));
     if(isType && oo) cls.add(oo);
+    if(isSubClass && so) cls.add(so);
   }
   return {v:1, cls:[...cls], ents:[...ents]};
 }
