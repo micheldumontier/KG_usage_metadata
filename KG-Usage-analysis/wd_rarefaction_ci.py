@@ -8,9 +8,9 @@ import os, csv, numpy as np
 DATA="generated-usage-metadata"
 PAIRS=[
  ("Bio2RDF 2019","Bio2RDF organic log2019KG2024_combined_schema_elements.csv",
-  "Bio2RDF robotic log2019_kg2024_combined_schema_elements.csv",545),
+  "Bio2RDF robotic log2019_kg2024_combined_schema_elements.csv",541),
  ("Wikidata 2017","Wikidata log2017kg2017_combined_schema_elements.csv",
-  "Wikidata robotic log2017_kg2017_combined_schema_elements.csv",104314),
+  "Wikidata robotic log2017_kg2017_combined_schema_elements.csv",104286),
 ]
 def load(fname):
     cs=[]

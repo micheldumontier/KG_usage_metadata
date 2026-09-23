@@ -82,6 +82,16 @@ corresponding script; both have silently gone stale after a numeric correction b
   `sparqljs`. `Schema-coverage-method/sparqljs-worker/` holds the worker sources.
 - **LaTeX**: TinyTeX suffices. `main.tex` uses `comment.sty`, which a default TinyTeX
   install lacks: `tlmgr install comment`.
+- **numpy version affects Monte-Carlo reproducibility despite a fixed seed.**
+  `wd_rarefaction_ci.py`'s bootstrap uses `numpy.random.Generator.choice(...,
+  replace=False)`, whose internal sampling algorithm has changed across numpy
+  releases; the same script, data, and seed (`20260612`) can therefore give
+  slightly different CIs on different numpy versions (verified: numpy 2.2.1
+  reproduces Bio2RDF's ratio and conclusion exactly but not its exact CI bounds
+  — 95% CI [0.73, 1.03] here vs. the published [0.75, 1.02] — while Wikidata's
+  much larger sample size happens to reproduce exactly). Neither CI is wrong;
+  a fixed seed alone does not guarantee bit-identical Monte-Carlo output across
+  environments for this method.
 
 ## 5. Note on the parallel workers
 

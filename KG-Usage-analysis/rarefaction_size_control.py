@@ -30,7 +30,7 @@ PAIRS = [
     ("Wikidata 2017",
      "Wikidata log2017kg2017_combined_schema_elements.csv",
      "Wikidata robotic log2017_kg2017_combined_schema_elements.csv",
-     104314),
+     104286),
 ]
 
 
@@ -81,7 +81,11 @@ def chao1(counts):
 
 def curve(counts, npts=40):
     N = int(counts.sum())
-    xs = np.unique(np.linspace(1, N, npts).astype(int))
+    # Log-spaced sample sizes: the figure's x-axis is log-scaled, and linearly
+    # spaced points would cluster almost entirely near N, leaving the low-effort
+    # region (where the manuscript discusses relative richness) resolved by only
+    # one or two points.
+    xs = np.unique(np.geomspace(1, N, npts).astype(int))
     ys = [hurlbert_expected_richness(counts, int(x)) for x in xs]
     return xs, np.array(ys)
 
