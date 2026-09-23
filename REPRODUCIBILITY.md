@@ -32,15 +32,28 @@ Figure numbers are those of the current `main.pdf`.
 | 2 | `image17.png` | hand-drawn (variable standardization) |
 | 3, 4 | `image9.png`, `image8.png` | hand-drawn Venn diagrams |
 | 5 | `rarefaction.png` | `KG-Usage-analysis/rarefaction_size_control.py` |
-| 6 | `image21.png` | external, <https://marmhm.github.io/Schema-usage-graph/> |
-| 7 | `image24.png` | `KG-Usage-analysis/Bio2RDF-federated-querying/` |
-| 8 | `wd_mismatch.png` | `KG-Usage-analysis/wd_mismatch.py` |
-| 9 | `image10.png` | `KG-Usage-analysis/regenerate_figures.py` |
-| 10 | `image7.png` | `KG-Usage-analysis/regenerate_figures.py` |
-| 11 | `image16.png` | hand-drawn (usage-metadata model) |
-| 12 | `utility_autocomplete.png` | `KG-Usage-analysis/wd_utility.py` |
+| 6 | `wd_mismatch.png` | `KG-Usage-analysis/wd_mismatch.py` |
+| 7 | `image10.png` | `KG-Usage-analysis/regenerate_figures.py` |
+| 8 | `image7.png` | `KG-Usage-analysis/regenerate_figures.py` |
+| 9 | `image16.png` | hand-drawn (usage-metadata model) |
+| 10 | `utility_autocomplete.png` | `KG-Usage-analysis/wd_utility.py` |
+| 11 | `image21.png` | external, <https://marmhm.github.io/Schema-usage-graph/> |
 
-**Figures 5, 9 and 10 read the per-element count files in `generated-usage-metadata/`.**
+The old Figure 6 (`image24.png`, the Bio2RDF 2013-vs-2019 pairwise-subgraph heatmap
+from `KG-Usage-analysis/Bio2RDF-federated-querying/`) was removed along with the
+"Pairwise Schema Type Usage of Bio2RDF" subsection (comment #7, review round 4):
+the method couldn't distinguish genuine 2013 `SERVICE`-based cross-dataset joins
+from the 2019 unified-endpoint architecture, so the reported "3 vs 22" comparison
+conflated a real usage question with an architectural artifact. `image21.png` also
+moved position (comment #6): it now illustrates a usage-aware exploration
+interface in the Utility subsection rather than sitting in the Bio2RDF results,
+which is why it is Figure 11, not Figure 6, despite being one of the
+earlier-produced images. The `Bio2RDF-federated-querying/` notebooks and their
+`generated-usage-metadata/Bio2RDF-federated-querying-datasets/` outputs are no
+longer cited by the manuscript; they have not been removed from the repository
+pending the broader repository-documentation pass (comment #5).
+
+**Figures 5, 7 and 8 read the per-element count files in `generated-usage-metadata/`.**
 Any change to the schema definition or to those counts requires re-running the
 corresponding script; both have silently gone stale after a numeric correction before.
 
