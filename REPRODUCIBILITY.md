@@ -17,11 +17,11 @@ including the inputs that script does not yet cover.
 | `logs/bio2rdf_2019-2021.csv` | 1.6 GB | <https://download.dumontierlab.com/Bio2RDF/logs/bio2rdf_sparql_logs_processed_01-2019_to_07-2021.csv> |
 | `logs/wikidata/*_organic.tsv.gz`, `*_all.tsv.gz` | 4.5 GB | Wikimedia one-off SPARQL query logs, <https://analytics.wikimedia.org/datasets/one-off/wikidata/sparql_query_logs/> — one directory per 28-day interval; we use intervals 1 and 7 plus the five intermediate windows |
 | `logs/lsq2013/`, `logs/lsq2013_exec/` | 2.7 GB | Extracted from the LSQ 2.0 SPARQL endpoint, <https://lsq.data.dice-research.org/sparql>, with the query in Listing 1 of the paper (one file per Bio2RDF subgraph). `lsq2013_exec/` is the subset with a recorded remote execution. |
-| `logs/dbpedia/dbpedia_texts.txt` | 1.7 GB | Distinct executed DBpedia query texts, extracted from the same LSQ 2.0 endpoint |
+| `logs/dbpedia/dbpedia_texts.txt` | 1.7 GB | Distinct executed DBpedia query texts, extracted from the same LSQ 2.0 endpoint via `KG-Schema-extractors/dbpedia_lsq_extract.py` (dataset name `dbpedia`, confirmed against the live endpoint; paginated, since this Virtuoso instance caps `ORDER BY`+`LIMIT`/`OFFSET` at 10,000 rows combined) |
 | `wdqs_examples/` | small | WDQS example set, revision 509986548 — <https://www.wikidata.org/w/index.php?title=Wikidata:SPARQL_query_service/queries/examples&oldid=509986548>. See `generated-usage-metadata/wdqs-examples/README.md`. |
 | Bio2RDF 2024 schema | — | Queried live from <https://bio2rdf.org/sparql>. Because a live endpoint drifts, the extracted schema is frozen in `generated-usage-metadata/bio2rdf-schema/` and *that*, not the endpoint, is the reproducible reference. |
 | Bio2RDF Release 2 / 3 schemas | small | Recovered from Bio2RDF's published per-dataset statistics files; frozen in `generated-usage-metadata/bio2rdf-schema-release{2,3}/`. |
-| `wd_closure_anchor_queries.tsv`, `wd_closure_bound_summary.txt` | small | **Pending** (review round 4, comment #14) — outputs of `KG-Usage-analysis/wd_closure_queries.py`/`wd_closure_bound.py`, exist on the co-author's machine but not yet committed; regenerating locally needs the raw Wikidata logs and `p279_edges_2017.tsv` (both absent here). See `generated-usage-metadata/wd-closure/README.md`. |
+| `wd_closure_anchor_queries.tsv`, `wd_closure_bound_summary.txt` | small | Outputs of `KG-Usage-analysis/wd_closure_queries.py` (review round 4, comment #14), regenerated locally from the 2017 Wikidata dump and the interval-1 2017 organic log; verified against the published closure numbers. See `generated-usage-metadata/wd-closure/README.md`. |
 
 ## 2. Which script produced which figure
 

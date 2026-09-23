@@ -1,0 +1,16 @@
+Closure-based ('effective usage') bound, Wikidata organic 2017
+
+  distinct P279*/P31-P279* anchors in queries : 1276
+  subclass closure of those anchors (classes) : 64906
+  explicitly-referenced classes               : 3831
+  additional classes credited by closure      : 62410
+
+  class universe (types_2017)                 : 103355
+  predicate universe (preds_2017)             : 931
+  TSE (classes + predicates)                  : 104286
+
+  closure as % of CLASS universe              : 62.8%   <- the figure the manuscript quotes
+  closure as % of TSE                         : 62.2%
+
+The manuscript's ~62%% refers to the class universe. Reporting it against TSE would give
+the smaller second figure, because TSE's denominator also contains the ~1k predicates.

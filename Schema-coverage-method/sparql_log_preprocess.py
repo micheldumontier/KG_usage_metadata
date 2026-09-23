@@ -45,7 +45,10 @@ import argparse, csv, json, os, re, sys, urllib.parse
 from collections import Counter
 from multiprocessing import Pool
 
-csv.field_size_limit(sys.maxsize)
+# sys.maxsize overflows the C `long` the csv module uses internally on Windows
+# (32-bit long even under 64-bit Python). 2**31-1 is the largest value safe on
+# every platform and is already far larger than any single SPARQL query field.
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))
 
 # ----- agent classification ------------------------------------------------
 BROWSER = re.compile(r'mozilla|chrome|safari|firefox|edge|opera', re.I)
