@@ -72,8 +72,17 @@ for r in csv.DictReader(open("generated-usage-metadata/wikidata-supply/triples_p
     try: supply[r["pred"]] = int(r["triples"])
     except Exception: pass
 
-U = [k for k, _ in sorted(train.items(), key=lambda x: -x[1])]
-S = [k for k, _ in sorted(supply.items(), key=lambda x: -x[1])]
+# Common candidate universe (review round 4, comment #13): usage and supply previously
+# drew from different candidate sets -- usage only from predicates observed in TRAIN,
+# supply from whatever triples_per_pred_2017.csv happens to list (3,668 predicates --
+# MORE than the 930-predicate schema universe, since that file isn't restricted to the
+# wdt:P-direct namespace the schema definition uses). Align both to the actual 2017
+# predicate schema instead: this both restricts supply's over-inclusive candidate set
+# and extends usage's under-inclusive one, so a coverage/nDCG difference reflects
+# ranking quality, not which candidate set happened to be larger.
+SCHEMA = [l.strip() for l in open("generated-usage-metadata/wikidata-schema/preds_2017.txt") if l.strip()]
+U = sorted(SCHEMA, key=lambda k: (-train.get(k, 0), k))
+S = sorted(SCHEMA, key=lambda k: (-supply.get(k, 0), k))
 total = sum(test.values())
 print("TRAIN distinct preds=%d  TEST distinct=%d  TEST refs=%d" % (len(train), len(test), total))
 
@@ -91,7 +100,12 @@ def wmrr(rank):
 
 print("\n%6s | %14s %15s | %11s %12s" % ("k", "nDCG usage", "nDCG supply", "cov usage", "cov supply"))
 rows = []
-for k in [10, 50, 100, 500, 1000]:
+# Comment #13 also flagged reporting a top-1000 cutoff against a 930-predicate schema
+# (the old, pre-Wikidata-native-definition figure was 934; the predicate universe is
+# now 930): past k=len(SCHEMA), coverage trivially saturates for both rankings by
+# construction, so the last reported k is the schema size itself, not a fixed 1000.
+K_VALUES = sorted(set([10, 50, 100, 500] + [len(SCHEMA)]))
+for k in K_VALUES:
     r = (k, ndcg(U, k), ndcg(S, k), cov(U, k), cov(S, k)); rows.append(r)
     print("%6d | %13.1f%% %14.1f%% | %10.1f%% %11.1f%%" % r)
 mu, ms = wmrr(U), wmrr(S)

@@ -64,8 +64,15 @@ for r in csv.DictReader(open("generated-usage-metadata/wikidata-supply/instances
     try: supply[r["class"]]=int(r["instances"])
     except: pass
 
-U=[k for k,_ in sorted(train.items(),key=lambda x:-x[1])]
-S=[k for k,_ in sorted(supply.items(),key=lambda x:-x[1])]
+# Common candidate universe (review round 4, comment #13): usage and supply previously
+# drew from different candidate sets -- usage only from classes observed in TRAIN,
+# supply from whatever instances_per_class_2017.csv happens to list (43,708 classes,
+# a strict subset of the 103,354-class 2017 schema universe, since it only covers
+# instantiated classes). Align both to the full 2017 schema universe instead, so a
+# coverage/nDCG difference reflects ranking quality, not which candidate set was larger.
+SCHEMA=[l.strip() for l in open("generated-usage-metadata/wikidata-schema/types_2017.txt") if l.strip()]
+U=sorted(SCHEMA,key=lambda k:(-train.get(k,0),k))
+S=sorted(SCHEMA,key=lambda k:(-supply.get(k,0),k))
 total=sum(test.values())
 print(f"TRAIN distinct={len(train):,}  TEST distinct={len(test):,}  TEST total refs={total:,}")
 
