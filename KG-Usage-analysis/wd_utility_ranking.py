@@ -34,7 +34,7 @@ def parallel(prepped,nw=14):
     out=[None]*len(prepped)
     for i,(p,ti,to) in enumerate(procs):
         p.wait()
-        rs=[json.loads(l) for l in open(to)]
+        rs=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]
         for j,r in enumerate(rs): out[i+j*nw]=r
         os.remove(ti); os.remove(to)
     return out

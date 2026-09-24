@@ -1,3 +1,9 @@
+# OBSOLETE / exploratory scratch script -- not part of any current pipeline, not referenced by
+# any other script (verified 2026-09-24). Queries a fixed, hand-picked list of (graph, type)
+# pairs, apparently for spot-checking specific class-predicate-class relationships (including
+# ctd_vocabulary:Gene-Disease-Association, the one element behind the 17-subgraph schema file's
+# understood discrepancy -- see build_bio2rdf_canonical_schema.py's docstring). Kept for
+# historical reference only.
 import csv
 import time
 from SPARQLWrapper import SPARQLWrapper, JSON

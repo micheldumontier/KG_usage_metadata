@@ -1,7 +1,7 @@
 """Wikidata schema-coverage from real logs: parse queries, intersect referenced
 entities/predicates with the TSE sets extracted from the KG dump. Validates Tables 4-5."""
 import csv, gzip, sys, json, os, subprocess, tempfile, urllib.parse, re, glob, importlib.util
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); EXW=os.path.expanduser("~/.local/sparqljs-worker/extract_worker.js")
@@ -24,7 +24,7 @@ def parallel_extract(prepped, nw=14):
         procs.append((subprocess.Popen([NODE,EXW],stdin=open(ti.name),stdout=open(to,'w')),ti.name,to,j))
     res=[None]*nw
     for p,ti,to,j in procs:
-        p.wait(); res[j]=[json.loads(l) for l in open(to)]; os.remove(ti); os.remove(to)
+        p.wait(); res[j]=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]; os.remove(ti); os.remove(to)
     # reinterleave to original order not needed (we only tally), just concat
     out=[]
     for j in range(nw): out.extend(res[j])

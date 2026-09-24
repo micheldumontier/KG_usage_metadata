@@ -1,5 +1,18 @@
 # Regenerated & validated tables — full reproducibility audit
 
+**STALE (2026-09-24) — historical snapshot, kept for reference only, not current.** Predates
+several later corrections: the Bio2RDF-26-subgraph totals below (545 total / 195 predicates)
+are pre-Resource-exclusion values, since replaced by the canonical 541 total / 191 predicates
+(`generated-usage-metadata/bio2rdf-schema/`, review round 4 comment #5); the "federated
+querying: 3 → 22" line refers to the "Pairwise Schema Type Usage of Bio2RDF" subsection removed
+entirely in review round 4 (comment #7). `RESPONSE_TO_REVIEW2.md` already noted this file's
+"reproduces exactly" wording overstates what was actually verified (Table 3's Bio2RDF check
+recomputed from the committed CSV, not end-to-end) and recommended labelling it as such — this
+header is that label, added late but not forgotten. For current, up-to-date reproducibility
+information, see `REPRODUCIBILITY.md` and the per-round `RESPONSE_TO_REVIEWn.md` files.
+
+---
+
 Re-derived from raw logs and the source KG dumps. "paper" = published values.
 Bold = the only consequential correction (Bio2RDF-2019 HTTP-param prep defect).
 

@@ -1,7 +1,7 @@
 """Coverage of a Bio2RDF query set against a given (version-matched) schema.
 Usage: python3 bio2rdf_coverage_vs_schema.py <queries.txt> <types.txt> <preds.txt> <label>"""
 import csv, sys, json, os, subprocess, tempfile, importlib.util, re
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); EXW=os.path.expanduser("~/.local/sparqljs-worker/extract_worker.js")
@@ -16,7 +16,7 @@ def par(prepped,nw=14):
         for x in c: ti.write(json.dumps(x)+"\n")
         ti.close(); to=ti.name+".o"; P.append((subprocess.Popen([NODE,EXW],stdin=open(ti.name),stdout=open(to,'w')),ti.name,to))
     o=[]
-    for p,ti,to in P: p.wait(); o+=[json.loads(l) for l in open(to)]; os.remove(ti); os.remove(to)
+    for p,ti,to in P: p.wait(); o+=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]; os.remove(ti); os.remove(to)
     return o
 seen={}
 for line in open(QF,encoding="utf-8",errors="replace"):

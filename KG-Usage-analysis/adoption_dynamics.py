@@ -10,7 +10,7 @@ Bio2RDF: Release 3 (mid-2014) added datasets/vocabulary over Release 2. We ask
 how much of the Release-3-added predicate vocabulary is queried, and its rank,
 in the 2019 log."""
 import csv, sys, os, re
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 WDS = "generated-usage-metadata/wikidata-schema"
 PID = re.compile(r'^wdt:(P\d+)$')
 

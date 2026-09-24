@@ -5,7 +5,7 @@ and recompute coverage@k for each ranking, reporting 2.5/50/97.5 percentiles and
 Coverage@k = (reference-weighted) fraction of test class-type references whose type is in top-k."""
 import csv, gzip, sys, json, os, subprocess, tempfile, urllib.parse, importlib.util, bisect
 import numpy as np
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); PAW=os.path.expanduser("~/.local/sparqljs-worker/pathanchor_worker.js")
@@ -28,7 +28,7 @@ def parallel(prepped,nw=14):
     out=[None]*len(prepped)
     for i,(p,ti,to) in enumerate(procs):
         p.wait()
-        rs=[json.loads(l) for l in open(to)]
+        rs=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]
         for j,r in enumerate(rs): out[i+j*nw]=r
         os.remove(ti); os.remove(to)
     return out

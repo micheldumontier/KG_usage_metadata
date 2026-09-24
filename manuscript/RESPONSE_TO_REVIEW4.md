@@ -1,10 +1,13 @@
 # Response to Maryam's fourth review (inline `\begin{comment}` blocks, `paper/main` 4a2e09a)
 
-**Status: all 15 comments closed except [1]/[5]'s deferred repo-reorganization half.** This
-file was originally written while comments [8] and [13] were still mid-flight; both have
-since closed out (all data reruns done, manuscript updated) and their sections below were
-revised in place rather than left as stale in-progress notes — same treatment
-`RESPONSE_TO_REVIEW3.md` got after its round finished.
+**Status: all 15 comments closed, including [1]/[5]'s repo-reorganization half.** This file was
+originally written while comments [8] and [13] were still mid-flight, and [1]/[5]'s
+per-analysis-README pass was deferred until they closed; all of that is now done. Sections below
+were revised in place rather than left as stale in-progress notes — same treatment
+`RESPONSE_TO_REVIEW3.md` got after its round finished. The repo-reorg work itself (READMEs
+added, superseded scripts marked obsolete, several real bugs found and fixed along the way) is
+logged in detail in `CLAUDE.md` and `generated-usage-metadata/README.md` rather than duplicated
+here in full.
 
 This round differs in character from the last one. Round 3 was mostly about finding defects
 in the existing pipeline. This round is more about **reconciling code, data, and the
@@ -26,7 +29,7 @@ Comments are numbered in the order they appear in the source.
 | Wikidata TSE 2018 (types/preds/total) | 97,470 / 992 / 98,462 | **97,445 / 991 / 98,436** |
 | Temporal-table TSE caption | 104,289 (mismatched Table 3) | **104,286** (now consistent) |
 | Bio2RDF `*_vocabulary:Resource` | excluded in release extractor only, not in the live/2019 extractor's code | excluded in **both** (already Resource-free in committed data; code now matches) |
-| Bio2RDF rarefaction denominator (`wd_rarefaction_ci.py`) | 545 (stale) | **541** |
+| Bio2RDF rarefaction denominator (`rarefaction_ci.py`) | 545 (stale) | **541** |
 | Rarefaction Bio2RDF/Wikidata claim | "neither shows a robotic breadth advantage" | per-KG: Bio2RDF fully removed, **Wikidata retains a small real residual** |
 | Rarefaction Wikidata curve (Fig. 5) shape | described as "organic richer at lower effort" | **crosses twice**: organic substantially richer across most of the range, robotic ahead only right at the common effort |
 | Pairwise Schema Type Usage of Bio2RDF | "3→22, ~sevenfold increase" | **removed** — method couldn't separate a real usage question from the 2013→2019 architecture shift |
@@ -45,12 +48,24 @@ Comments are numbered in the order they appear in the source.
 ## Point-by-point
 
 ### [1] Bio2RDF pipeline traceability — dev branch mixes old and new logic
-**Deferred**, along with [5]'s repo-organization half — see "Still open" below. The specific
-example you gave (`bio2rdf2013_organic_coverage.py` still printing the pre-correction
-545-element/21.28% comparison) is confirmed real and unchanged for now; it's intentionally
-historical, not a live bug, but nothing currently says so in the repo. Per-analysis READMEs
-and a pass over which scripts are still current are queued for after the remaining
-scientific comments close out.
+**Resolved (2026-09-24), along with [5]'s repo-organization half.** The specific example you
+gave — `bio2rdf2013_organic_coverage.py` printing a stale pre-correction comparison — was fixed
+directly (updated to the current canonical 113/541=20.89%; 525/541=97.04%, from the previous
+116/545; 529/545). More generally: every analysis in the manuscript's Results section now has a
+README stating its authoritative script(s), inputs, intermediate files, and which table/figure
+it produces (model: `generated-usage-metadata/wdqs-examples/README.md`, as you suggested).
+Superseded scripts (`schema_generator_wikidata.py`, `schema_gnrator_Bio2RDF_simpler_queries.py`)
+are marked obsolete in their own docstrings rather than removed, per your "make clear which is
+current" ask without discarding history. Full detail in `CLAUDE.md`'s repo-reconstruction
+section and `generated-usage-metadata/README.md`.
+
+Doing this pass thoroughly (actually re-running scripts rather than just reading them) also
+surfaced several real, previously-unknown bugs, all now fixed: a stale pre-Resource-exclusion
+TSE denominator hardcoded in `concentration_metrics.py` (caused small errors in Table 12's
+full-universe Gini/evenness columns), and two separate Windows-only portability bugs
+(`csv.field_size_limit` overflow and a missing UTF-8 encoding on worker-output reads) that
+between them affected 15 scripts — none had ever been run on Windows before, since they'd
+always been run on your server.
 
 ### [2] Predicate definition drift — newer Wikidata extractor doesn't match the class–predicate–class pseudocode
 **This was correct, and traced to its root: two independent extraction pipelines exist.**
@@ -84,7 +99,7 @@ paragraph's own numbers two sentences later (Wikidata's 1.03× has a 95% CI of [
 which excludes 1). Reworded to state the real asymmetry: Bio2RDF's advantage is fully
 removed, Wikidata's is substantially reduced but leaves a small, real residual.
 
-*Denominator.* Confirmed real: `wd_rarefaction_ci.py` hardcoded Bio2RDF's TSE as 545;
+*Denominator.* Confirmed real: `rarefaction_ci.py` hardcoded Bio2RDF's TSE as 545;
 `rarefaction_size_control.py` already had 541 correct. Fixed both scripts (and updated
 Wikidata's denominator in both from the pre-fix 104,314 to 104,286 while there). The
 published ratios/CIs don't depend on this constant at all — it only affects displayed
@@ -92,7 +107,7 @@ percentages — and rerunning confirmed the corrected constant reproduces the al
 Bio2RDF percentages exactly (18.4%, 20.9%).
 
 *A reproducibility finding surfaced while verifying that fix, not a data or code bug:*
-rerunning `wd_rarefaction_ci.py` with identical script, data, and seed reproduced Bio2RDF's
+rerunning `rarefaction_ci.py` with identical script, data, and seed reproduced Bio2RDF's
 ratio and conclusion but not its exact CI bounds (`[0.73, 1.03]` here vs. the published
 `[0.75, 1.02]`) — traced to `numpy.random.Generator.choice(replace=False)`'s sampling
 algorithm differing across numpy versions despite a fixed seed. Documented in
@@ -370,17 +385,16 @@ question doesn't apply to them by construction, not because of any fix.
 
 ---
 
-## Still open
+## Everything closed — minor loose ends only
 
-1. **[8] Resolved.** Wikidata robotic-2017 rerun succeeded after a clean re-download of
-   `int1_2017_all.tsv.gz`; both DBpedia and Wikidata (organic + robotic) halves are done and
-   the manuscript is updated (Table 9, `tab:generality`, and the §sec:classvalue prose).
-2. **[13] Resolved.** Rerun with real data on the server; both the type and predicate utility
-   rankings are updated in the manuscript (Tables `tab:utility`, `tab:ranking`,
-   `tab:predranking`, and the "Predicate suggestion" prose, which needed a substantive rewrite
-   since the predicate-side numbers moved a lot, not just cosmetically).
-3. **[1] and [5]'s repo-organization half**: deliberately deferred until the above close out
-   — per-analysis READMEs (model: `generated-usage-metadata/wdqs-examples/README.md`),
-   deciding what to do with now-superseded or now-orphaned scripts (including the
-   `Bio2RDF-federated-querying/` notebooks orphaned by [7]'s removal), and the 17-subgraph
-   canonical schema file's still-unconfirmed derivation rule (flagged under [5]).
+All 15 comments are resolved, including [1]/[5]'s repo-organization half (per-analysis READMEs
+added throughout `generated-usage-metadata/`, superseded scripts marked obsolete in place, the
+17-subgraph canonical schema file's derivation recovered and documented — see
+`KG-Schema-extractors/build_bio2rdf_canonical_schema.py`'s docstring for that one specifically).
+
+Two small things remain, neither blocking anything:
+1. `KG-Usage-analysis/usage_pattern_analysis.ipynb` (the likely source of the Spearman/Wilcoxon
+   rank-correlation numbers in §sec:concentration's prose) hasn't been independently re-run to
+   confirm those exact figures this session — flagged, not verified.
+2. `REPRODUCIBILITY.md`'s table/figure mapping doesn't yet credit that notebook for those
+   specific prose statistics, a gap worth closing once (1) is confirmed.

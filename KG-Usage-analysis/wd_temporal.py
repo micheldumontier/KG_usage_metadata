@@ -6,7 +6,7 @@ Per interval: schema coverage, type-frequency vector. Across intervals: coverage
 consecutive- and endpoint Spearman rank correlation on type frequencies, Wilcoxon on per-type
 frequency change, and the persistent top-50 'core'."""
 import csv, gzip, sys, json, os, subprocess, tempfile, urllib.parse, re, importlib.util
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 from scipy.stats import spearmanr, wilcoxon
@@ -37,7 +37,7 @@ def parallel_extract(prepped, nw=14):
     out=[None]*len(prepped)
     for i,(p,ti,to) in enumerate(procs):
         p.wait()
-        rs=[json.loads(l) for l in open(to)]
+        rs=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]
         for j,r in enumerate(rs): out[i+j*nw]=r
         os.remove(ti); os.remove(to)
     return out

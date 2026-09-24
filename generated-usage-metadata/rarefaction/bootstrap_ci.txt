@@ -1,0 +1,23 @@
+Output of KG-Usage-analysis/rarefaction_ci.py (named wd_rarefaction_ci.py when this was run,
+renamed 2026-09-25), run 2026-09-24 against the already-committed
+generated-usage-metadata/*_combined_schema_elements.csv files. This script covers BOTH Bio2RDF
+and Wikidata -- it was never Wikidata-only, despite the old "wd_" filename prefix.
+
+[Bio2RDF 2019]  equal effort n=1,220 occurrences (= organic total)
+  organic observed:        113 distinct (20.9% of TSE)
+  robotic (full sample):   525 distinct (97.0%)
+  robotic rarefied to n:   99 distinct  95% CI [83, 116]  (18.3% [15.3, 21.4])
+  robotic/organic ratio at equal effort: 0.88x  95% CI [0.73, 1.03]  -> not significant
+
+[Wikidata 2017]  equal effort n=1,279,731 occurrences (= organic total)
+  organic observed:        13,394 distinct (12.8% of TSE)
+  robotic (full sample):   59,603 distinct (57.2%)
+  robotic rarefied to n:   13856 distinct  95% CI [13682, 14014]  (13.3% [13.1, 13.4])
+  robotic/organic ratio at equal effort: 1.03x  95% CI [1.02, 1.05]  -> SIGNIFICANT (CI excludes organic)
+
+NOTE: the Bio2RDF CI reproduces the manuscript's ratio and conclusion (0.88x, not
+significant) but not its exact bounds -- [0.73, 1.03] here vs. the published
+[0.75, 1.02]. This is a known numpy-version effect (Generator.choice(replace=False)'s
+sampling algorithm differs across numpy releases despite the fixed seed 20260612),
+already documented in REPRODUCIBILITY.md and CLAUDE.md, not a new discrepancy.
+The Wikidata CI reproduces exactly (1.03x [1.02, 1.05]).

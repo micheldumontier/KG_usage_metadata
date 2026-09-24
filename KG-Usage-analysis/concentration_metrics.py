@@ -8,14 +8,14 @@ report, beside the breadth metric (coverage / N distinct elements):
   - P80           = fraction of used elements needed to capture 80% of references
 Outputs out/concentration_metrics.csv and prints LaTeX rows."""
 import csv, sys, math, os
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 
 # All vectors are the PUBLISHED *_combined_schema_elements.csv artifacts, i.e. the
 # exact datasets behind Tables 4-5 (verified: implied coverage reproduces Table 5).
 # TSE = total schema elements of the reference KG version, so we can also report
 # concentration over the FULL schema universe (unused elements enter as zeros).
 G = "generated-usage-metadata"
-TSE_BIO_26, TSE_BIO_17 = 545, 399           # 2019/2013 Bio2RDF reference sets
+TSE_BIO_26, TSE_BIO_17 = 541, 395           # 2019/2013 Bio2RDF reference sets (canonical, Resource-excluded)
 TSE_WD_2017, TSE_WD_2018 = 104286, 98436    # types+preds per dump
 DATASETS = [
     ("Bio2RDF All-2013",      f"{G}/Bio2RDF log2013kg2024_combined_schema_elements.csv",       TSE_BIO_17),

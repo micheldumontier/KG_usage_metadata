@@ -15,7 +15,7 @@ enough to answer the reviewer's two questions:
 
 Run: python3 KG-Usage-analysis/template_linkage.py [bio2rdf|wikidata|both]"""
 import csv, gzip, sys, json, os, subprocess, tempfile, glob, urllib.parse, re, importlib.util
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec = importlib.util.spec_from_file_location("pv", "Schema-coverage-method/sparql_log_preprocess.py")
 pv = importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE = os.path.expanduser("~/.local/bin/node")
@@ -72,7 +72,7 @@ def extract(queries, base, typeprops, nw=14):
     results = [None]*len(prepped)
     for p, ti, to, idxs in procs:
         p.wait()
-        for j, line in zip(idxs, open(to)): results[j] = json.loads(line)
+        for j, line in zip(idxs, open(to, encoding='utf-8', errors='replace')): results[j] = json.loads(line)
         os.remove(ti); os.remove(to)
     return results
 

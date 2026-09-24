@@ -1,9 +1,11 @@
 """Bio2RDF-2013 ORGANIC coverage from the raw server log's browser-UA queries
 (Option A: lift the 'cannot split 2013' limitation). Parse organic queries, extract
-referenced bio2rdf vocabulary elements, intersect with the canonical 545-element TSE,
+referenced bio2rdf vocabulary elements, intersect with the canonical 541-element TSE,
 report coverage. Mirrors the 2019 organic method (extract_worker, TSE intersection)."""
 import csv, sys, json, os, subprocess, tempfile, importlib.util, re
-csv.field_size_limit(sys.maxsize)
+# sys.maxsize overflows the C `long` the csv module uses internally on Windows (32-bit long
+# even under 64-bit Python) -- see Schema-coverage-method/sparql_log_preprocess.py and CLAUDE.md.
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); EXW=os.path.expanduser("~/.local/sparqljs-worker/extract_worker.js")
@@ -25,7 +27,7 @@ def parallel(prepped,nw=14):
     out=[None]*len(prepped)
     for i,(p,ti,to) in enumerate(procs):
         p.wait()
-        rs=[json.loads(l) for l in open(to)]
+        rs=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]
         for j,r in enumerate(rs): out[i+j*nw]=r
         os.remove(ti); os.remove(to)
     return out
@@ -50,7 +52,7 @@ USE=len(ut)+len(up)
 print(f"valid: {valid:,} ({100*valid/len(qs):.1f}% of unique)")
 print(f"used types: {len(ut)}/{len(TYPES)}   used preds: {len(up)}/{len(PREDS)}")
 print(f"COVERAGE (organic 2013): {USE}/{TSE} = {100*USE/TSE:.2f}%")
-print(f"  [compare: organic-2019 = 116/545 = 21.28%; robotic/all-2019 = 529/545 = 97.06%]")
+print(f"  [compare: organic-2019 = 113/541 = 20.89%; robotic/all-2019 = 525/541 = 97.04%]")
 os.makedirs("out",exist_ok=True)
 with open("out/bio2rdf2013_organic_used.csv","w",newline='') as f:
     w=csv.writer(f); w.writerow(["element","kind","count"])

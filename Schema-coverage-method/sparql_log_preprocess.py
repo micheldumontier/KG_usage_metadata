@@ -34,8 +34,12 @@ robotic = everything else. Use --strict-robotic to require the stated keyword li
 Usage:
   python3 sparql_log_preprocess.py \
       --log   data/logs/bio2rdf_2019-2021.csv \
-      --schema generated-usage-metadata/schema-Bio2RDF-26Subgraphs.csv \
+      --schema generated-usage-metadata/bio2rdf-schema/schema_elements_26subgraphs.csv \
       --agent organic --out out/bio2rdf2019_organic
+
+  (generated-usage-metadata/schema-Bio2RDF-26Subgraphs.csv, formerly shown here, is a raw
+  non-deduplicated pattern file that still includes *_vocabulary:Resource entries -- not the
+  canonical schema. See generated-usage-metadata/README.md.)
 
 Outputs (per run):
   <out>_used_schema_elements.csv   element,TotalCount   (unique-query occurrence counts)
@@ -267,9 +271,11 @@ def load_schema(path):
        predicates = distinct IRIs in the Predicate column (incl. rdf:type, subClassOf,
                     owl:sameAs, which the published used-set also contains)
     NOTE: this universe is derived from the committed pattern CSV. The paper's published
-    TSE (350 types / 195 predicates) comes from the KG-Schema-extractors run against the
-    live endpoint and is NOT byte-reproducible from this file (its predicate column lists
-    ~545 distinct vocabulary predicates). Coverage is therefore reported against the
+    TSE (350 types / 191 predicates, generated-usage-metadata/bio2rdf-schema/) comes from
+    the KG-Schema-extractors run against the live endpoint and is NOT byte-reproducible from
+    this file (its predicate column lists more distinct vocabulary predicates, since it is
+    not restricted to predicates connecting two typed vocabulary classes -- see
+    generated-usage-metadata/README.md). Coverage is therefore reported against the
     universe actually provided here; pass a flat one-column element list as --schema to
     override with the canonical TSE when available.
     """

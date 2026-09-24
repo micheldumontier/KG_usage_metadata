@@ -86,17 +86,46 @@ Written under generated-usage-metadata/bio2rdf-schema/:
 WHAT THIS SCRIPT DOES NOT COVER
 ----------------------------------
 generated-usage-metadata/schema-Bio2RDF-17Subgraphs.csv (the 395-element subset
-behind Table 3's 17-subgraph column) is NOT produced by this script. The
-manuscript describes its scope as "the 17 [of 26] subgraphs [that] have
-corresponding query logs available in the Bio2RDF log2013 dataset" -- a
-data-driven criterion, not a fixed editorial list. A prefix-based hypothesis
-(excluding the affymetrix/clinicaltrials/ctd/... universe down to 16 dataset
-prefixes, dropping clinicaltrials/lsr/mesh/ndc/obo) reproduces the manuscript's
-191/125-predicate figure exactly but the type count off by one (271 vs. the
-reported 270), so this reconstruction is close but not confirmed exact. Rather
-than encode an unverified guess as though it were the real derivation, that file
-is left as-is (it is already committed, already used, and not in question) and
-its exact build step remains undocumented pending further check.
+behind Table 3's 17-subgraph column) is NOT produced by this script, but its
+derivation is now understood (2026-09-24) rather than an open question.
+
+The manuscript describes its scope as "the 17 [of 26] subgraphs [that] have
+corresponding query logs available in the Bio2RDF log2013 dataset". The exact
+17-dataset allowlist survives in an orphaned notebook,
+KG-Usage-analysis/Bio2RDF-federated-querying/2013KG-get_datasets_relationships_bio2rdf.ipynb
+(cell 3, `allowed_vocabularies`), written for the now-removed "Pairwise Schema
+Type Usage" analysis (review round 4, comment #7) but never deleted:
+
+    sgd, taxonomy, homologene, bioportal, kegg, pharmgkb, hgnc, omim, ctd,
+    drugbank, mgi, goa, wormbase, affymetrix, ncbigene, irefindex, sider
+
+Filtering this script's own types_26subgraphs.txt/predicates_26subgraphs.txt
+output to only elements whose Bio2RDF dataset-name prefix (the DATASET in
+http://bio2rdf.org/DATASET_vocabulary:... or DATASET_resource:...) is in that
+17-name list reproduces the committed schema-Bio2RDF-17Subgraphs.csv almost
+exactly:
+
+  - predicates: 125/125 match exactly
+  - types: 271 reconstructed vs. the published 270 -- every published type is
+    reproduced; the only discrepancy is one extra element,
+    http://bio2rdf.org/ctd_vocabulary:Gene-Disease-Association, present in the
+    live 2024 endpoint's ctd subgraph (this script's input) but absent from
+    the committed 2013-scoped file. Most likely explanation: Bio2RDF's ctd
+    dataset added this class sometime after 2013, so it is dataset-name
+    "ctd" today but was not part of ctd's actual 2013-era schema -- a single
+    dated schema-drift exception, not a flaw in the 17-name filtering rule.
+  - `bioportal` is on the 17-name allowlist but contributes zero elements to
+    the file: that subgraph had 2013 query-log data but no schema elements
+    survived the earlier vocabulary/Resource filtering. Consistent with "17
+    subgraphs have log data", not "17 subgraphs each contribute schema
+    elements" -- not a contradiction.
+
+Given this, schema-Bio2RDF-17Subgraphs.csv is left as-is (already committed,
+already used, and the one discrepancy is explained rather than mysterious).
+A future rebuild, should the raw all_classes.csv/schema.csv ever need
+regenerating, should apply this same 17-name allowlist filter and keep the
+one dated ctd exception rather than blindly trusting a pure name-prefix
+filter against whatever the live endpoint returns at rebuild time.
 """
 import csv
 

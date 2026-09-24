@@ -2,7 +2,7 @@
 Shows how much of the "used schema types" are genuinely used as classes (object of
 P31/P279) vs merely referenced as property values. Evidence for the reframing /R2-1.1/."""
 import csv, gzip, sys, json, os, subprocess, tempfile, urllib.parse, importlib.util, glob
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); CVW=os.path.expanduser("~/.local/sparqljs-worker/classvalue_worker.js")
@@ -24,7 +24,7 @@ def parallel(prepped,nw=14):
     out=[None]*len(prepped)
     for i,(p,ti,to) in enumerate(procs):
         p.wait()
-        rs=[json.loads(l) for l in open(to)]
+        rs=[json.loads(l) for l in open(to, encoding='utf-8', errors='replace')]
         for j,r in enumerate(rs): out[i+j*nw]=r
         os.remove(ti); os.remove(to)
     return out

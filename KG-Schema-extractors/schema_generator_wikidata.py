@@ -1,3 +1,13 @@
+"""SUPERSEDED (2026-09-21) -- kept for historical reference only, not used by any current
+pipeline or script. This implements the original Bio2RDF-style restricted class-predicate-class
+join definition of Wikidata predicates/types. Wikidata now uses the native definition (types via
+wdt:P31/wdt:P279, predicates as the full wdt:P namespace) -- see wd_schema_extract.py, which
+produces the canonical generated-usage-metadata/wikidata-schema/ files actually used throughout
+the manuscript. See CLAUDE.md's "Wikidata schema definition" note and
+manuscript/RESPONSE_TO_REVIEW4.md comment [2] for the full decision history. This script's own
+output (schema-wiki2017.csv/schema-wiki2018.csv) is likewise orphaned -- referenced by zero
+current scripts.
+"""
 import csv
 import time
 from SPARQLWrapper import SPARQLWrapper, JSON

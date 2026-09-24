@@ -2,7 +2,8 @@
 
 This file answers two questions raised in review: **where does each input dataset come
 from**, and **which script produced each figure**. It complements `README.md`, which
-describes the method.
+describes the method, and `generated-usage-metadata/README.md`, which indexes every
+committed output file (canonical vs. superseded/legacy) in more detail than the tables below.
 
 ## 1. Input data
 
@@ -51,12 +52,21 @@ interface in the Utility subsection rather than sitting in the Bio2RDF results,
 which is why it is Figure 11, not Figure 6, despite being one of the
 earlier-produced images. The `Bio2RDF-federated-querying/` notebooks and their
 `generated-usage-metadata/Bio2RDF-federated-querying-datasets/` outputs are no
-longer cited by the manuscript; they have not been removed from the repository
-pending the broader repository-documentation pass (comment #5).
+longer cited by the manuscript. Decision (2026-09-24, comment #5's repo-reorg pass):
+**keep** rather than remove — one of the notebooks turned out to be the only
+surviving source of the 17-subgraph schema allowlist (see
+`KG-Schema-extractors/build_bio2rdf_canonical_schema.py`'s docstring). See
+`KG-Usage-analysis/Bio2RDF-federated-querying/README.md`.
 
 **Figures 5, 7 and 8 read the per-element count files in `generated-usage-metadata/`.**
 Any change to the schema definition or to those counts requires re-running the
 corresponding script; both have silently gone stale after a numeric correction before.
+
+**Figure 5 needs a manual copy step.** `rarefaction_size_control.py` writes its figure next to
+itself, as `KG-Usage-analysis/rarefaction_organic_vs_robotic.png`, which must be manually copied
+to `manuscript/texsupport.iospress-sw-master/rarefaction.png` — confirmed byte-identical as of
+2026-09-24, so this had already been done correctly, just undocumented. See
+`generated-usage-metadata/rarefaction/README.md`.
 
 ## 3. Which script produced which table
 
@@ -74,6 +84,10 @@ corresponding script; both have silently gone stale after a numeric correction b
 | 14, 15 (utility, ranking) | `KG-Usage-analysis/wd_utility.py`, `wd_utility_ranking.py` |
 | 16 (predicate ranking) | `KG-Usage-analysis/wd_utility_predicates.py` |
 
+The utility subsection's bootstrap-CI robustness check (2,000 query-level resamples confirming
+the usage-minus-supply coverage difference stays positive at every evaluated *k*; not its own
+numbered table) is produced by `KG-Usage-analysis/wd_utility_ci.py`.
+
 ## 4. Environment
 
 - **Python**: the analysis scripts need `pandas`, `numpy` and `matplotlib`. On macOS with
@@ -84,7 +98,7 @@ corresponding script; both have silently gone stale after a numeric correction b
 - **LaTeX**: TinyTeX suffices. `main.tex` uses `comment.sty`, which a default TinyTeX
   install lacks: `tlmgr install comment`.
 - **numpy version affects Monte-Carlo reproducibility despite a fixed seed.**
-  `wd_rarefaction_ci.py`'s bootstrap uses `numpy.random.Generator.choice(...,
+  `rarefaction_ci.py`'s bootstrap uses `numpy.random.Generator.choice(...,
   replace=False)`, whose internal sampling algorithm has changed across numpy
   releases; the same script, data, and seed (`20260612`) can therefore give
   slightly different CIs on different numpy versions (verified: numpy 2.2.1

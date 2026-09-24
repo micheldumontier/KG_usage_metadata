@@ -1,0 +1,12 @@
+Output of KG-Usage-analysis/rarefaction_size_control.py, run 2026-09-24 against the
+already-committed generated-usage-metadata/*_combined_schema_elements.csv files.
+Reproduces the manuscript's Table 6 exactly.
+
+Dataset                   Sobs     N(uses)     Chao1   E[S] @organic-N  Cov@equalN
+Bio2RDF 2019 organic       113        1220       141             113.0      20.89%
+Bio2RDF 2019 robotic       525      313200       525              99.5      18.39%
+  --> at equal effort (N=1,220 occurrences), robotic recovers 99 elements vs organic's 113 (coverage 18.39% vs 20.89%)
+
+Wikidata 2017 organic    13394     1279731     15546           13394.0      12.84%
+Wikidata 2017 robotic    59603    12320184    266626           13846.4      13.28%
+  --> at equal effort (N=1,279,731 occurrences), robotic recovers 13846 elements vs organic's 13394 (coverage 13.28% vs 12.84%)
