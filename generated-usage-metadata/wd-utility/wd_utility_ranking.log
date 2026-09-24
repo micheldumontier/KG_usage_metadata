@@ -1,0 +1,14 @@
+nohup: ignoring input
+parsing TRAIN (early 2017 organic)...
+parsing TEST (2018 organic int7)...
+TRAIN distinct=7,572  TEST distinct=3,523  TEST total refs=55,080
+
+     k |  nDCG@k usage |  nDCG@k supply |  cov usage |  cov supply
+    10 |         94.9% |          44.5% |      40.3% |       32.1%
+    50 |         94.1% |          46.3% |      54.1% |       42.3%
+   100 |         93.8% |          47.2% |      61.8% |       49.0%
+   500 |         92.7% |          48.6% |      75.9% |       62.5%
+  1000 |         92.6% |          49.3% |      80.2% |       68.1%
+
+demand-weighted MRR:  usage=0.3384   supply=0.1172   ratio=2.9x
+wrote out/wd_utility_ranking.csv

@@ -1,0 +1,23 @@
+nohup: ignoring input
+[organic2017] unique=859,290; parsing class/value positions...
+  --- restricted to KG-schema types (the paper's 'used types' metric) ---
+  used types (referenced & in KG type set): 12,773
+    used as a class (class-position):        9,286 (72.7%)
+    referenced ONLY as a value:              3,487 (27.3%)
+  -------------------------------------------------------------
+  distinct entities referenced (any position): 82,835
+  ...ever used in CLASS position (object of P31/P279):        22,777 (27.5%)
+  ...VALUE-only (never class position):                       60,058 (72.5%)
+  class-position entities that are actually instantiated:     7,413
+  demand-weighted (all referenced entities): class-position refs=2,834,131  value-position refs=1,062,066 (72.7% of references are class-position)
+  demand-weighted (KG-schema types only):    class-position refs=2,787,050  value-position refs=280,440 (90.9% of type-item references are class-position)
+  wrote out/wd_classvalue_demand_organic2017.json
+  top class-position (genuine class demand):
+     Q515 demand=887,597 instances=20,743
+     Q644371 demand=872,993 instances=375
+     Q5 demand=588,804 instances=3,562,978
+     Q11424 demand=28,451 instances=198,056
+     Q146 demand=12,815 instances=113
+     Q6256 demand=10,395 instances=205
+     Q13442814 demand=9,710 instances=4,861,842
+     Q7397 demand=9,185 instances=11,888

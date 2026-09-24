@@ -1,9 +1,10 @@
 # Response to Maryam's fourth review (inline `\begin{comment}` blocks, `paper/main` 4a2e09a)
 
-**Status: in progress.** Unlike the previous two rounds, this file is being written while
-two comments ([8] and [13]) are still mid-flight, not after everything closed out. They're
-marked honestly below as in-progress rather than backfilled as done. This file will need a
-refresh once they land, same as `RESPONSE_TO_REVIEW3.md` got after its round finished.
+**Status: all 15 comments closed except [1]/[5]'s deferred repo-reorganization half.** This
+file was originally written while comments [8] and [13] were still mid-flight; both have
+since closed out (all data reruns done, manuscript updated) and their sections below were
+revised in place rather than left as stale in-progress notes — same treatment
+`RESPONSE_TO_REVIEW3.md` got after its round finished.
 
 This round differs in character from the last one. Round 3 was mostly about finding defects
 in the existing pipeline. This round is more about **reconciling code, data, and the
@@ -33,7 +34,10 @@ Comments are numbered in the order they appear in the source.
 | Adoption subsection | "...Newly Introduced Schema Elements" (predicates only) | retitled **"...Predicates"**, scope explained |
 | Figure 6 (`fig:l6`) panel axes | independently auto-scaled | **shared within each KG** |
 | DBpedia class-position | 675/47 (93.5%/6.5%) | **682/40 (94.5%/5.5%)** |
-| Wikidata organic-2017 class-position | 8,968/3,805 (70.2%/29.8%) | **9,286/3,487 (72.7%/27.3%)** — robotic still pending |
+| Wikidata organic-2017 class-position | 8,968/3,805 (70.2%/29.8%) | **9,286/3,487 (72.7%/27.3%)** |
+| Wikidata robotic-2017 class-position | 54,534/4,155 (92.9%/7.1%) | **55,698/2,991 (94.9%/5.1%)** |
+| Predicate utility ranking (top-10 nDCG/cov) | 85.9%/58.6% usage, 43.3%/23.0% cov | **76.4%/62.5% usage, 35.8%/26.8% cov** |
+| Predicate utility ranking MRR ratio | 1.3× | **1.1×** |
 | `wd_closure_anchor_queries.tsv` | missing from the repo | **added**, verified exact match to published closure numbers |
 
 ---
@@ -173,7 +177,7 @@ from [6]'s figure move, independently of this removal. The now-orphaned
 deferred [1]/[5] pass rather than removed now.
 
 ### [8] Class-position definition incomplete — subject of P279/`rdfs:subClassOf` should count too
-**In progress. DBpedia half done and verified; Wikidata half partially done.**
+**Resolved. DBpedia and Wikidata (organic + robotic) halves done, verified, and reflected in the manuscript.**
 
 The fix itself needed no KG dump or ontology data — it's a property of how an entity appears
 *within the query text*, not an external lookup. `P279`/`rdfs:subClassOf` relate two classes
@@ -200,12 +204,24 @@ distinct `P279*`-anchored organic-2017 queries). Demand-weighted (KG-schema type
 90.7%→**90.9%** — barely moves, as expected, since a handful of very-high-volume elements
 dominate that view.
 
-**Wikidata robotic-2017: failed, pending rerun.** The 2.7 GB `int1_2017_all.tsv.gz` download
-was truncated (`EOFError: Compressed file ended before the end-of-stream marker`) — a
-data-integrity issue, not a code problem. Manuscript not updated yet: Table 9 has both an
-organic and a robotic row, plus the volume-weighted reconciliation paragraph (the "inverts"
-finding from round 3) that discusses both together, so this needs the robotic numbers before
-any of it can be corrected consistently.
+**Wikidata robotic-2017: re-downloaded and rerun successfully.** The original attempt at the
+2.7 GB `int1_2017_all.tsv.gz` was truncated (`EOFError: Compressed file ended before the
+end-of-stream marker`) — a data-integrity issue, not a code problem; the clean re-download
+reproduced the same query counts already published in Table 2 (8,234,089 unique queries),
+confirming it's the same dataset. Used types 58,689 (unchanged, same universe); class-position
+54,534→**55,698** (92.9%→**94.9%**), value-only 4,155→**2,991** (7.1%→**5.1%**) — 1,164 types
+shifted, both ways consistent. A smaller shift than organic's (+2.0 points vs organic's +2.5),
+consistent with organic queries doing more subclass-hierarchy navigation. Demand-weighted (KG-
+schema types only): 61.3%→**61.5%** — barely moves, same as organic's +0.2-point shift, for the
+same reason (a handful of very-high-volume elements dominate that view either way).
+
+The set-level contrast the manuscript draws (robotic more class-oriented by count, organic more
+class-oriented by volume) survives unchanged in direction and magnitude: set-level gap 22.7→22.2
+points, volume-weighted inversion ~29 points either way. Only the specific percentages needed
+correcting, not the argument. Manuscript updated: Table 9 (`tab:classvalue`), Table
+`tab:generality`, and the §sec:classvalue prose (both rows' percentages, the demand-weighted
+reference counts, and the two derived shares — organic/robotic value-only-by-elements and
+value-position-by-volume).
 
 ### [9] Figure 9 (now Figure 7 after [7]'s removal) — shared axis scales within each KG
 **Accepted and implemented as specified.** `regenerate_figures.py` now computes shared x/y
@@ -247,7 +263,7 @@ later in the paragraph. Softened "more queries in a window do not expand coverag
 suggested descriptive wording.
 
 ### [13] Candidate-universe mismatch in the type/predicate ranking experiments
-**In progress — code fixed, not yet rerun with data.** Confirmed the concern precisely: the
+**Resolved — code fixed and rerun with real data; manuscript updated.** Confirmed the concern precisely: the
 usage ranking is built only from elements observed in the 2017 training logs, while the
 supply ranking is built from whatever the supply CSV lists — and for predicates specifically,
 that CSV (`triples_per_pred_2017.csv`, 3,668 entries) is actually **larger** than the
@@ -265,8 +281,46 @@ explicitly framed in the manuscript as computed "without using query-log informa
 restricting it to observed-in-logs elements would quietly contradict that. Also addressed the
 companion point (top-1000 for a 934-predicate — now 930-predicate — schema is redundant past
 saturation): the predicate table's reported k-values now end at the actual schema size
-instead of a fixed 1000. Pending: rerun on the server once [8]'s Wikidata data is confirmed
-good (needs the same TRAIN/TEST organic log files, already part of that download).
+instead of a fixed 1000.
+
+**Rerun on the server (2026-09-24), using the same organic TRAIN/TEST files as [8]'s Wikidata
+half.** The two experiments were affected very differently by the fix, which itself confirms
+the diagnosis above.
+
+**Types** (`wd_utility_ranking.py`): candidate universe (103,355 types) is far larger than any
+evaluated $k$ (max 1,000), so the fix barely moved anything — only usage-side coverage/nDCG at
+$k$=100/500/1000 shifted by 0.1–0.3 points (e.g. top-1000 coverage 79.9%→**80.2%**, nDCG@1000
+92.5%→**92.6%**); supply-side and $k$=10/50 are bit-for-bit unchanged. MRR: 0.338/0.117/2.9×
+→ 0.3384/0.1172/2.9× — unchanged. No argument in the manuscript needed to change here, only
+cosmetic table/prose touch-ups.
+
+**Predicates** (`wd_utility_predicates.py`): a much bigger shift, because the pre-fix supply
+side used the unrestricted `triples_per_pred_2017.csv` (3,668 entries) rather than the
+931-predicate schema. Coverage at top-10: 43.3%/23.0% → **35.8%/26.8%**; nDCG@10: 85.9%/58.6%
+→ **76.4%/62.5%**; MRR: 0.258/0.202/1.3× → **0.227/0.200/1.1×**. The table's max-$k$ row is
+now 931 (schema size, computed dynamically) instead of a fixed 1000, and at that row usage and
+supply coverage are now **exactly equal (51.3% = 51.3%)** — precisely the check you proposed
+(a top-$k$ cutoff that already includes every candidate must give identical coverage), which
+the pre-fix numbers (94.8% vs 93.3% at $k$=1000) never actually satisfied. That equality is a
+mechanical consequence of both rankings including the full schema at $k$=931, not itself
+evidence about ranking quality — the manuscript's revised prose says so explicitly.
+
+More substantively, coverage now saturates at only ~51%, not ~94%, once the full schema is
+included, because roughly half of predicate references in the query logs use something other
+than the `wdt:P`-namespace predicates that define the schema (the Method section's predicate-
+identification paragraph) — statement/qualifier predicates, general RDF vocabulary, etc. —
+which are structurally uncoverable by a schema-restricted ranking regardless of method. This is
+the predicate-side counterpart of the class/value-position issue from comment [8]'s section.
+The manuscript's "predicate suggestion" paragraph and its explanatory paragraph were both
+rewritten to reflect this — the
+old explanation ("a content-ranked predicate list runs out of room to be wrong... reaches most
+of the demand within a few hundred suggestions") was itself an artifact of the unrestricted,
+buggy supply candidate set and is no longer accurate.
+
+The qualitative conclusion survives — usage-based ranking still wins, especially at low $k$,
+with a narrower margin than for types — but every quantitative claim in that paragraph and
+Table `tab:predranking` needed correcting, not just small rounding. Run logs saved to
+`generated-usage-metadata/wd-utility/`.
 
 ### [14] Missing `wd_closure_anchor_queries.tsv` artifact
 **Resolved — regenerated locally, not obtained from the co-author, and cheaper than the
@@ -318,12 +372,13 @@ question doesn't apply to them by construction, not because of any fix.
 
 ## Still open
 
-1. **[8] Wikidata robotic-2017**: rerun pending a clean re-download of `int1_2017_all.tsv.gz`
-   (the previous attempt was truncated). Manuscript not updated for [8] until both the
-   organic and robotic rows, and the volume-weighted reconciliation paragraph, can be
-   corrected together.
-2. **[13]**: code fix is in; pending a rerun with real data on the server once [8]'s Wikidata
-   data is confirmed good (shares the same input files).
+1. **[8] Resolved.** Wikidata robotic-2017 rerun succeeded after a clean re-download of
+   `int1_2017_all.tsv.gz`; both DBpedia and Wikidata (organic + robotic) halves are done and
+   the manuscript is updated (Table 9, `tab:generality`, and the §sec:classvalue prose).
+2. **[13] Resolved.** Rerun with real data on the server; both the type and predicate utility
+   rankings are updated in the manuscript (Tables `tab:utility`, `tab:ranking`,
+   `tab:predranking`, and the "Predicate suggestion" prose, which needed a substantive rewrite
+   since the predicate-side numbers moved a lot, not just cosmetically).
 3. **[1] and [5]'s repo-organization half**: deliberately deferred until the above close out
    — per-analysis READMEs (model: `generated-usage-metadata/wdqs-examples/README.md`),
    deciding what to do with now-superseded or now-orphaned scripts (including the

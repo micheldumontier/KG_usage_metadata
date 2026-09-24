@@ -700,11 +700,11 @@ A schema-coverage metric assumes that the elements it counts are referenced as c
 \end{comment}
 
 
-Table~\ref{tab:classvalue} shows the split. Among the entities our extraction counts as Wikidata \emph{used types} (those referenced in queries that are also objects of \texttt{wdt:P31}/\texttt{wdt:P279} in the KG), only \textbf{70.2\% of organic} ones are ever used as a class, \textbf{29.8\% are referenced solely as values}, whereas robotic queries use 92.9\% of their counted types as classes. Weighting by reference volume rather than by distinct element does not narrow this contrast; it inverts it, and the inversion is the more informative result. Counting references rather than elements, \textbf{90.7\% of organic type-item references are in class position} (2.78M of 3.07M) against \textbf{61.3\% of robotic ones} (6.24M of 10.19M). So on the set-level view robotic queries look the more class-oriented of the two (92.9\% vs 70.2\%), while on the volume-weighted view organic queries do (90.7\% vs 61.3\%).
+Table~\ref{tab:classvalue} shows the split. Among the entities our extraction counts as Wikidata \emph{used types} (those referenced in queries that are also objects of \texttt{wdt:P31}/\texttt{wdt:P279} in the KG), only \textbf{72.7\% of organic} ones are ever used as a class, \textbf{27.3\% are referenced solely as values}, whereas robotic queries use 94.9\% of their counted types as classes. Weighting by reference volume rather than by distinct element does not narrow this contrast; it inverts it, and the inversion is the more informative result. Counting references rather than elements, \textbf{90.9\% of organic type-item references are in class position} (2.79M of 3.07M) against \textbf{61.5\% of robotic ones} (6.27M of 10.19M). So on the set-level view robotic queries look the more class-oriented of the two (94.9\% vs 72.7\%), while on the volume-weighted view organic queries do (90.9\% vs 61.5\%).
 
-Both views are correct and they measure different things. For organic queries the value-only items are numerous but individually rare: they are 29.8\% of the distinct type-items a human touches yet draw under a tenth of the references to type-items. Human value-position usage is thus a long tail of one-off mentions. Robotic traffic shows the opposite profile: few distinct type-items are value-only (7.1\%), but those that are get referenced in enormous volume, so nearly two fifths of robotic type-item references sit in value position.
+Both views are correct and they measure different things. For organic queries the value-only items are numerous but individually rare: they are 27.3\% of the distinct type-items a human touches yet draw under a tenth of the references to type-items. Human value-position usage is thus a long tail of one-off mentions. Robotic traffic shows the opposite profile: few distinct type-items are value-only (5.1\%), but those that are get referenced in enormous volume, so nearly two fifths of robotic type-item references sit in value position.
 
-This matters for how the over-counting should be understood. Because coverage is a breadth measure (Section~\ref{sec:concentration}), it is the \emph{set-level} figure that determines how much a coverage percentage is inflated, and that inflation is worst for human queries. The volume-weighted figures do not correct the coverage metric; they show that the two query types arrive at their schema usage by different routes, which the single set-level contrast conceals. These results have two implications. First, the published Wikidata coverage \emph{over-counts schema usage}, most so for human queries, where roughly a third of the ``used types'' are mis-counted value-items (\emph{actor}, \emph{female}, \emph{India}). Second, the class/value split differs systematically between the two query types in these logs, though the direction depends on whether one counts elements or references: a larger \emph{share of the distinct type-items} organic queries touch is value-only (29.8\% vs 7.1\%), whereas a larger \emph{share of the references} robotic queries make to type-items is value-position (38.7\% vs 9.3\%). We report this as a difference between the analysed logs; establishing that it reflects querying behavior in general, rather than characteristics of this particular sample of clients and time period, would require further evidence. 
+This matters for how the over-counting should be understood. Because coverage is a breadth measure (Section~\ref{sec:concentration}), it is the \emph{set-level} figure that determines how much a coverage percentage is inflated, and that inflation is worst for human queries. The volume-weighted figures do not correct the coverage metric; they show that the two query types arrive at their schema usage by different routes, which the single set-level contrast conceals. These results have two implications. First, the published Wikidata coverage \emph{over-counts schema usage}, most so for human queries, where roughly a third of the ``used types'' are mis-counted value-items (\emph{actor}, \emph{female}, \emph{India}). Second, the class/value split differs systematically between the two query types in these logs, though the direction depends on whether one counts elements or references: a larger \emph{share of the distinct type-items} organic queries touch is value-only (27.3\% vs 5.1\%), whereas a larger \emph{share of the references} robotic queries make to type-items is value-position (38.5\% vs 9.1\%). We report this as a difference between the analysed logs; establishing that it reflects querying behavior in general, rather than characteristics of this particular sample of clients and time period, would require further evidence.
 
 
 \begin{table}[ht]
@@ -715,8 +715,8 @@ This matters for how the over-counting should be understood. Because coverage is
 \hline
 Query type & \#Used types & Used as a class & Value-only \\
 \hline
-Wikidata organic 2017 & 12,773 & 8,968 (70.2\%) & 3,805 (29.8\%) \\
-Wikidata robotic 2017 & 58,689 & 54,534 (92.9\%) & 4,155 (7.1\%) \\
+Wikidata organic 2017 & 12,773 & 9,286 (72.7\%) & 3,487 (27.3\%) \\
+Wikidata robotic 2017 & 58,689 & 55,698 (94.9\%) & 2,991 (5.1\%) \\
 \hline
 \end{tabular}
 \end{table}
@@ -774,7 +774,7 @@ KG (queries) & Schema model & Used as a class & Value-only \\
 \hline
 Bio2RDF 2019 (organic) & OWL classes-with-instances & $\sim$100\% & $\sim$0\% (by construction) \\
 DBpedia (all executed) & OWL ontology (\texttt{dbo:}) & 675 (93.5\%) & 47 (6.5\%) \\
-Wikidata 2017 (organic) & item-based & 8,968 (70.2\%) & 3,805 (29.8\%) \\
+Wikidata 2017 (organic) & item-based & 9,286 (72.7\%) & 3,487 (27.3\%) \\
 \hline
 \end{tabular}
 \end{table}
@@ -996,14 +996,14 @@ Top-$k$ suggestions & Ranked by past usage & Ranked by KG supply \\
 \hline
 10   & 40.3\% & 32.1\% \\
 50   & 54.1\% & 42.3\% \\
-100  & 61.7\% & 49.0\% \\
-500  & 75.7\% & 62.5\% \\
-1000 & 79.9\% & 68.1\% \\
+100  & 61.8\% & 49.0\% \\
+500  & 75.9\% & 62.5\% \\
+1000 & 80.2\% & 68.1\% \\
 \hline
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:utility} and Table~\ref{tab:utility} present the results of this experiment. The top 50 classes in the usage-based ranking cover 54.1\% of the class demand observed in the 2018 organic log, compared with 42.3\% for the top 50 classes in the KG-supply ranking. For the top 1000 classes, the corresponding coverage is 79.9\% and 68.1\%, respectively. The higher coverage achieved by the usage-based ranking is consistent with the relationship between KG content and query demand observed in Section~\ref{sec:classvalue}. Several classes with many instances in the KG, including \emph{scholarly article}, \emph{Wikimedia category}, \emph{taxon}, \emph{disambiguation page}, \emph{Wikimedia template}, \emph{gene}, and \emph{protein}, occur relatively infrequently in the organic query log. In contrast, the usage-based ranking places frequently queried classes such as \emph{human}, \emph{film}, \emph{city}, \emph{country}, \emph{human settlement}, \emph{university}, and \emph{business} near the top.
+Figure~\ref{fig:utility} and Table~\ref{tab:utility} present the results of this experiment. The top 50 classes in the usage-based ranking cover 54.1\% of the class demand observed in the 2018 organic log, compared with 42.3\% for the top 50 classes in the KG-supply ranking. For the top 1000 classes, the corresponding coverage is 80.2\% and 68.1\%, respectively. The higher coverage achieved by the usage-based ranking is consistent with the relationship between KG content and query demand observed in Section~\ref{sec:classvalue}. Several classes with many instances in the KG, including \emph{scholarly article}, \emph{Wikimedia category}, \emph{taxon}, \emph{disambiguation page}, \emph{Wikimedia template}, \emph{gene}, and \emph{protein}, occur relatively infrequently in the organic query log. In contrast, the usage-based ranking places frequently queried classes such as \emph{human}, \emph{film}, \emph{city}, \emph{country}, \emph{human settlement}, \emph{university}, and \emph{business} near the top.
 
 
 Top-$k$ coverage considers whether a class appears within the first $k$
@@ -1026,7 +1026,7 @@ Top-$k$ & nDCG@$k$ (past usage) & nDCG@$k$ (KG supply) \\
 50   & 94.1\% & 46.3\% \\
 100  & 93.8\% & 47.2\% \\
 500  & 92.7\% & 48.6\% \\
-1000 & 92.5\% & 49.3\% \\
+1000 & 92.6\% & 49.3\% \\
 \hline
 \multicolumn{3}{l}{$\mathrm{MRR}_w$: past usage $0.338$ \quad KG supply $0.117$ \quad (ratio $2.9\times$)} \\
 \hline
@@ -1062,38 +1062,48 @@ KGs, schema-element types, and time periods remains future work.
 \paragraph{\textbf{Predicate suggestion.}}
 The evaluation above ranks types, but the usage metadata covers predicates too, and predicate
 suggestion matters at least as much in a query builder. We therefore repeated the experiment over
-predicates, with the same train/test split and the content-side analogue of instances-per-class,
-namely triples per predicate in the 2017 dump (Table~\ref{tab:predranking}). Usage again wins, but
-by a visibly smaller margin than for types, and the gap closes as the list grows: nDCG@10 is 85.9\%
-against 58.6\%, and top-10 demand coverage 43.3\% against 23.0\%, yet by top-1000 the two rankings
-are nearly indistinguishable (94.8\% vs 93.3\%). Demand-weighted MRR is $0.258$ against $0.202$, a
-$1.3\times$ ratio rather than the $2.9\times$ seen for types.
+predicates, with the same train/test split, both rankings restricted to the 931-predicate 2017
+schema, and the content-side analogue of instances-per-class, namely triples per predicate in the
+2017 dump, likewise restricted to that schema (Table~\ref{tab:predranking}). Usage again wins, but
+by a visibly smaller margin than for types, and the margin narrows sharply as the list grows: nDCG@10
+is 76.4\% against 62.5\%, and top-10 demand coverage 35.8\% against 26.8\%, while at $k=931$, the
+full predicate schema, coverage is \emph{exactly} equal for both rankings (51.3\% vs 51.3\%) --
+a mathematical consequence of both rankings including every schema predicate once $k$ reaches schema
+size, not itself a finding about ranking quality. Demand-weighted MRR is $0.227$ against $0.200$, a
+$1.1\times$ ratio, narrower still than the $2.9\times$ seen for types.
 
-The asymmetry is informative rather than disappointing, and it has a straightforward explanation.
-Wikidata has roughly a thousand predicates against a hundred thousand classes, so a content-ranked
-predicate list runs out of room to be wrong: even an indifferent ordering reaches most of the demand
-within a few hundred suggestions. The content--demand inversion of Section~\ref{sec:classvalue} is
-also specifically a class-side pathology, driven by bulk- and bot-imported categories that carry
-enormous instance counts and attract no queries; predicates have no comparable population of
-heavily-instantiated-but-unqueried members. Usage metadata therefore helps most exactly where the
-content signal is weakest, which is on the class side. Reporting only the type experiment would have
-overstated how uniform that benefit is.
+The asymmetry is informative rather than disappointing, though the explanation has two parts. First,
+Wikidata's predicate schema is small (931 elements) relative to its class universe (103,355 types;
+Section~\ref{s3}.2), so once $k$ approaches schema size both rankings necessarily include the same
+candidates and coverage must converge regardless of ranking quality -- this is why the gap narrows
+toward $k=931$ specifically, not evidence that usage and content-based ranking are equally informative.
+Second, and more informative, coverage saturates well below 100\% for either ranking: at most 51.3\%
+of demand-weighted test references are ever reachable once the entire predicate schema is included.
+Because the Wikidata predicate schema is defined as the \texttt{wdt:P} namespace only
+(Section~\ref{s3}.2), predicate references that use other patterns, such as statement/qualifier
+predicates or general RDF vocabulary, fall outside it by construction and cannot be covered by a
+schema-restricted ranking regardless of method -- the predicate-side counterpart of the class/value-
+position issue examined in Section~\ref{sec:classvalue}, where a non-trivial share of what queries
+reference sits outside the definition used for ranking. Even so, at every $k$ short of the full
+schema the usage-based ranking recovers meaningfully more of the reachable demand than the
+content-based one, indicating that usage metadata carries real predictive signal on the predicate
+side too, just a smaller and more quickly saturating one than for classes.
 
 \begin{table}[ht]
 \centering
-\caption{Predicate-suggestion counterpart to Table~\ref{tab:ranking}, same train/test split. Predicates are ranked by past usage or by KG supply (triples per predicate). The usage advantage is real but smaller than for types, and narrows as $k$ grows.}
+\caption{Predicate-suggestion counterpart to Table~\ref{tab:ranking}, same train/test split, both rankings restricted to the 931-predicate 2017 schema. Predicates are ranked by past usage or by KG supply (triples per predicate). $k$ runs up to 931, the full schema size, rather than a fixed 1000, since the schema itself is smaller than that. The usage advantage is real but smaller than for types, and narrows as $k$ grows, reaching exact coverage parity by construction at $k=931$.}
 \label{tab:predranking}
 \begin{tabular}{r|r|r|r|r}
 \hline
 Top-$k$ & nDCG@$k$ (past usage) & nDCG@$k$ (KG supply) & Coverage (usage) & Coverage (supply) \\
 \hline
-10   & 85.9\% & 58.6\% & 43.3\% & 23.0\% \\
-50   & 90.4\% & 67.1\% & 73.1\% & 54.3\% \\
-100  & 90.9\% & 72.6\% & 81.4\% & 72.5\% \\
-500  & 91.3\% & 75.3\% & 92.3\% & 88.7\% \\
-1000 & 91.6\% & 76.1\% & 94.8\% & 93.3\% \\
+10  & 76.4\% & 62.5\% & 35.8\% & 26.8\% \\
+50  & 69.8\% & 62.7\% & 44.5\% & 42.8\% \\
+100 & 68.9\% & 62.0\% & 47.7\% & 45.8\% \\
+500 & 67.7\% & 61.4\% & 51.2\% & 50.7\% \\
+931 & 67.5\% & 61.4\% & 51.3\% & 51.3\% \\
 \hline
-\multicolumn{5}{l}{$\mathrm{MRR}_w$: past usage $0.258$ \quad KG supply $0.202$ \quad (ratio $1.3\times$)} \\
+\multicolumn{5}{l}{$\mathrm{MRR}_w$: past usage $0.227$ \quad KG supply $0.200$ \quad (ratio $1.1\times$)} \\
 \hline
 \end{tabular}
 \end{table}

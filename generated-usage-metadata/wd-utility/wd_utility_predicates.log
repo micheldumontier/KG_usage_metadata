@@ -1,0 +1,14 @@
+nohup: ignoring input
+parsing TRAIN...
+parsing TEST...
+TRAIN distinct preds=2688  TEST distinct=2103  TEST refs=308526
+
+     k |     nDCG usage     nDCG supply |   cov usage   cov supply
+    10 |          76.4%           62.5% |       35.8%        26.8%
+    50 |          69.8%           62.7% |       44.5%        42.8%
+   100 |          68.9%           62.0% |       47.7%        45.8%
+   500 |          67.7%           61.4% |       51.2%        50.7%
+   931 |          67.5%           61.4% |       51.3%        51.3%
+
+demand-weighted MRR: usage=0.2269  supply=0.1999  ratio=1.1x
+wrote out/wd_utility_predicates.csv
