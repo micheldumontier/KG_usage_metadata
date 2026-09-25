@@ -9,7 +9,7 @@ Wikidata and DBpedia analyses in KG-Usage-analysis/ import it for `normalize_ws`
 `add_prefixes`, `clean` and `HTTP_TAIL`; only the CSV-streaming entry point below is
 Bio2RDF-log-specific.
 
-It replaces the notebook chain (Schema_coverage_calculation_BIO2RDF.ipynb) with a
+It replaces the notebook chain (archive/Schema_coverage_calculation_BIO2RDF.ipynb) with a
 single, streaming, parameterized command. It addresses the issues found in that chain:
 
   * NUL-safe, quote/newline-safe CSV streaming (the raw log has embedded newlines,
@@ -37,9 +37,9 @@ Usage:
       --schema generated-usage-metadata/bio2rdf-schema/schema_elements_26subgraphs.csv \
       --agent organic --out out/bio2rdf2019_organic
 
-  (generated-usage-metadata/schema-Bio2RDF-26Subgraphs.csv, formerly shown here, is a raw
-  non-deduplicated pattern file that still includes *_vocabulary:Resource entries -- not the
-  canonical schema. See generated-usage-metadata/README.md.)
+  (archive/schema-Bio2RDF-26Subgraphs.RAW.csv, formerly shown here, is a raw non-deduplicated
+  pattern file that still includes *_vocabulary:Resource entries -- not the canonical schema.
+  See generated-usage-metadata/README.md.)
 
 Outputs (per run):
   <out>_used_schema_elements.csv   element,TotalCount   (unique-query occurrence counts)

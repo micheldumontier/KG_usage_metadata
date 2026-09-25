@@ -22,7 +22,7 @@ including the inputs that script does not yet cover.
 | `wdqs_examples/` | small | WDQS example set, revision 509986548 — <https://www.wikidata.org/w/index.php?title=Wikidata:SPARQL_query_service/queries/examples&oldid=509986548>. See `generated-usage-metadata/wdqs-examples/README.md`. |
 | Bio2RDF 2024 schema | — | Queried live from <https://bio2rdf.org/sparql>. Because a live endpoint drifts, the extracted schema is frozen in `generated-usage-metadata/bio2rdf-schema/` and *that*, not the endpoint, is the reproducible reference. |
 | Bio2RDF Release 2 / 3 schemas | small | Recovered from Bio2RDF's published per-dataset statistics files; frozen in `generated-usage-metadata/bio2rdf-schema-release{2,3}/`. |
-| `wd_closure_anchor_queries.tsv`, `wd_closure_bound_summary.txt` | small | Outputs of `KG-Usage-analysis/wd_closure_queries.py` (review round 4, comment #14), regenerated locally from the 2017 Wikidata dump and the interval-1 2017 organic log; verified against the published closure numbers. See `generated-usage-metadata/wd-closure/README.md`. |
+| `wd_closure_anchor_queries.tsv`, `wd_closure_bound_summary.txt` | small | Outputs of `KG-Usage-analysis/wd_closure_queries.py` (review round 4, comment #14), regenerated locally from the 2017 Wikidata dump and the interval-1 2017 organic log; verified against the published closure numbers. See `analysis-results/wikidata-closure/README.md`. |
 
 ## 2. Which script produced which figure
 
@@ -66,7 +66,7 @@ corresponding script; both have silently gone stale after a numeric correction b
 itself, as `KG-Usage-analysis/rarefaction_organic_vs_robotic.png`, which must be manually copied
 to `manuscript/texsupport.iospress-sw-master/rarefaction.png` — confirmed byte-identical as of
 2026-09-24, so this had already been done correctly, just undocumented. See
-`generated-usage-metadata/rarefaction/README.md`.
+`analysis-results/rarefaction/README.md`.
 
 ## 3. Which script produced which table
 

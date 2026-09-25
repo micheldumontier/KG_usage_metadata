@@ -1,14 +1,14 @@
 """DBpedia (OWL-style, 3rd KG): coverage + class-vs-value + supply/demand.
 Tests whether the value-position inflation seen in Wikidata is item-based-KG-specific.
 Inputs: data/logs/dbpedia/dbpedia_texts.txt (distinct executed query texts),
-generated-usage-metadata/dbpedia-schema/{classes,predicates,instances_per_class}.txt/csv."""
+analysis-results/dbpedia-schema/{classes,predicates,instances_per_class}.txt/csv."""
 import csv, sys, json, os, subprocess, tempfile, importlib.util
 csv.field_size_limit(min(sys.maxsize, 2**31 - 1))  # Windows 32-bit C long overflow guard
 spec=importlib.util.spec_from_file_location("pv","Schema-coverage-method/sparql_log_preprocess.py")
 pv=importlib.util.module_from_spec(spec); spec.loader.exec_module(pv)
 NODE=os.path.expanduser("~/.local/bin/node"); CVW=os.path.expanduser("~/.local/sparqljs-worker/classvalue_worker_dbo.js")
 DBO="http://dbpedia.org/ontology/"
-B="generated-usage-metadata/dbpedia-schema"
+B="analysis-results/dbpedia-schema"
 classes={DBO+l.strip() for l in open(f"{B}/classes.txt") if l.strip()}
 preds_set={DBO+l.strip() for l in open(f"{B}/predicates.txt") if l.strip()}
 inst={}

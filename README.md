@@ -30,22 +30,27 @@ The query logs were retrieved from multiple sources:
 
 ## Calculating Schema Coverage and Usage Analysis
 
-To calculate **SPARQL Schema Coverage (SC)**, use the following steps:
+**SPARQL Schema Coverage (SC)** is:  
+\[
+SC (\%) = \left( \frac{USE}{TSE} \right) \times 100
+\]
+where **TSE** (Total Schema Elements) is all distinct types and predicates in the KG, and
+**USE** (Used Schema Elements) is the subset found in user SPARQL queries.
 
-1. **Extract all schema elements** by running the code in the **`KG-Schema-extractors`** folder.  
-2. **Extract used schema elements from SPARQL query logs** by running the code in the **`Schema-coverage-method`** folder.  
-3. **Compute SC (%)** using the formula:  
-   \[
-   SC (\%) = \left( \frac{USE}{TSE} \right) \times 100
-   \]
-   where:  
-   - **TSE (Total Schema Elements):** All distinct types and predicates in the KG.  
-   - **USE (Used Schema Elements):** The subset of schema elements found in user SPARQL queries.  
+1. **Extract all schema elements** — run the code in **`KG-Schema-extractors`** (both KGs).
+2. **Extract used schema elements and compute coverage**:
+   - **Bio2RDF** — `Schema-coverage-method/sparql_log_preprocess.py`.
+   - **Wikidata** — `KG-Usage-analysis/wd_coverage.py` (`Schema-coverage-method/sparql_log_preprocess.py`
+     is still used as a shared library here for query cleanup/normalization, but the Wikidata
+     entry point itself lives in `KG-Usage-analysis`, not `Schema-coverage-method`).
 
-To perform the **usage pattern analysis** as proposed in the paper, run the code in the **`KG-Usage-analysis`** folder.
+To perform the **usage pattern analysis** as proposed in the paper, run the rest of the code in
+**`KG-Usage-analysis`**. See `REPRODUCIBILITY.md` for exact commands, inputs, and which script
+produced each published number.
 
 
-The **generated usage metadata** for **Bio2RDF** and **Wikidata** KGs can be found in the **`generated-usage-metadata`** folder.  
+The **generated usage metadata** for **Bio2RDF** and **Wikidata** KGs can be found in the **`generated-usage-metadata`** folder. Downstream analyses computed from that metadata (rarefaction,
+concentration, utility ranking, etc.) live in **`analysis-results`**, one folder per analysis. Superseded scripts and files are kept, not deleted, in **`archive`**.
 
 
 ## Reproducing the analyses
@@ -87,8 +92,9 @@ Two things to keep in mind:
 - **A push lands directly in the live Overleaf project**, where co-authors may be editing.
   Coordinate before pushing, and pull first.
 
-Review comments belong **in this repository** (as plain text files, e.g. `reviews.txt`,
-`review2.txt`) rather than in Overleaf's commenting sidebar. Overleaf comments are not part
+Review comments belong **in this repository** (as plain text files under `manuscript/`, e.g.
+`manuscript/reviews.txt`, `manuscript/review2.txt`) rather than in Overleaf's commenting
+sidebar. Overleaf comments are not part
 of the document source and therefore never reach git, so they are invisible to anyone
 working from a clone.
 

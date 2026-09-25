@@ -54,10 +54,11 @@ directly (updated to the current canonical 113/541=20.89%; 525/541=97.04%, from 
 116/545; 529/545). More generally: every analysis in the manuscript's Results section now has a
 README stating its authoritative script(s), inputs, intermediate files, and which table/figure
 it produces (model: `generated-usage-metadata/wdqs-examples/README.md`, as you suggested).
-Superseded scripts (`schema_generator_wikidata.py`, `schema_gnrator_Bio2RDF_simpler_queries.py`)
-are marked obsolete in their own docstrings rather than removed, per your "make clear which is
-current" ask without discarding history. Full detail in `CLAUDE.md`'s repo-reconstruction
-section and `generated-usage-metadata/README.md`.
+Superseded scripts and files (`schema_generator_wikidata.py`,
+`schema_gnrator_Bio2RDF_simpler_queries.py`, two stale data files, and one outdated validation
+summary) are moved to a single top-level `archive/`, per your "make clear which is current" ask,
+rather than left scattered through the live tree or discarded. Full detail in `CLAUDE.md`'s
+repo-reconstruction section and `generated-usage-metadata/README.md`.
 
 Doing this pass thoroughly (actually re-running scripts rather than just reading them) also
 surfaced several real, previously-unknown bugs, all now fixed: a stale pre-Resource-exclusion
@@ -335,7 +336,7 @@ buggy supply candidate set and is no longer accurate.
 The qualitative conclusion survives — usage-based ranking still wins, especially at low $k$,
 with a narrower margin than for types — but every quantitative claim in that paragraph and
 Table `tab:predranking` needed correcting, not just small rounding. Run logs saved to
-`generated-usage-metadata/wd-utility/`.
+`analysis-results/wikidata-utility/`.
 
 ### [14] Missing `wd_closure_anchor_queries.tsv` artifact
 **Resolved — regenerated locally, not obtained from the co-author, and cheaper than the
@@ -352,7 +353,7 @@ ratio was much higher than the compressed size alone suggested). Output verified
 published closure numbers, all matching exactly: 1,276 distinct anchors, `Q35120` → 12
 queries (not 13 — the pre-round-3-fix count), 62,410 additional classes credited by the
 closure, 62.8%/62.2% closure share against the class universe/TSE. Both requested files
-committed to `generated-usage-metadata/wd-closure/`.
+committed to `analysis-results/wikidata-closure/`.
 
 ### [15] Confirm the D2 `parallel()` ordering fix propagated across all three KGs
 **Resolved, with one precision the blanket "yes, fixed everywhere" framing would have
